@@ -5,22 +5,11 @@
     "canEdit": true,
     "canAdmin": true,
     "canStar": true,
-    "slug": "logging-gap",
-    "url": "/d/VaOEGhoZk/logging-gap",
-    "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-07-17T22:50:23Z",
-    "updated": "2020-07-20T21:46:22Z",
-    "updatedBy": "admin",
-    "createdBy": "admin",
-    "version": 6,
     "hasAcl": false,
-    "isFolder": false,
-    "folderId": 37,
-    "folderTitle": "Gap",
-    "folderUrl": "/dashboards/f/CSJG_Q7Mk/gap",
-    "provisioned": false,
-    "provisionedExternalId": ""
+    "isFolder": false
   },
+  "folderId": 10,
+  "overwrite": true,
   "dashboard": {
     "annotations": {
       "list": [
@@ -39,7 +28,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 2,
-    "id": 34,
+    "id": null,
     "links": [],
     "panels": [
       {
@@ -48,20 +37,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  200000
-                ],
+                "params": [200000],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -279,20 +262,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  0.25
-                ],
+                "params": [0.25],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -528,17 +505,7 @@
         "2h",
         "1d"
       ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
+      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
     },
     "timezone": "",
     "title": "Logging Gap",

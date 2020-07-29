@@ -9,6 +9,7 @@
     "hasAcl": false
   },
   "folderId": 10,
+  "overwrite": true,
   "dashboard": {
     "annotations": {
       "list": [

@@ -5,22 +5,11 @@
     "canEdit": true,
     "canAdmin": true,
     "canStar": true,
-    "slug": "routing-gap",
-    "url": "/d/QnXXGKTWz/routing-gap",
-    "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-07-17T21:20:39Z",
-    "updated": "2020-07-24T20:39:29Z",
-    "updatedBy": "admin",
-    "createdBy": "admin",
-    "version": 16,
     "hasAcl": false,
-    "isFolder": false,
-    "folderId": 37,
-    "folderTitle": "Gap",
-    "folderUrl": "/dashboards/f/CSJG_Q7Mk/gap",
-    "provisioned": false,
-    "provisionedExternalId": ""
+    "isFolder": false
   },
+  "folderId": 10,
+  "overwrite": true,
   "dashboard": {
     "annotations": {
       "list": [
@@ -39,7 +28,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 0,
-    "id": 33,
+    "id": null,
     "links": [],
     "panels": [
       {
@@ -48,20 +37,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  200
-                ],
+                "params": [200],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -206,20 +189,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  25
-                ],
+                "params": [25],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -345,20 +322,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  20
-                ],
+                "params": [20],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -493,20 +464,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  50
-                ],
+                "params": [50],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -647,20 +612,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  50
-                ],
+                "params": [50],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -786,20 +745,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  400
-                ],
+                "params": [400],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -925,20 +878,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  15
-                ],
+                "params": [15],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -1246,20 +1193,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  600
-                ],
+                "params": [600],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -1405,17 +1346,7 @@
         "2h",
         "1d"
       ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
+      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
     },
     "timezone": "",
     "title": "Routing Gap",

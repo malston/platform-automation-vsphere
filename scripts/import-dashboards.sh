@@ -24,6 +24,6 @@ set -o nounset
 
 DASHBOARDS_DIR=$BASE_DIR/../dashboards
 
-for file in $(ls $DASHBOARDS_DIR | grep -i gap.json); do
+for file in $(ls $DASHBOARDS_DIR | grep -iv '^hw2.*.json'); do
   curl -X POST -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$(cat $DASHBOARDS_DIR/$file)" $GRAFANA_URL/api/dashboards/import
 done
