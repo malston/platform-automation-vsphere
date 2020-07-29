@@ -8,8 +8,8 @@
     "slug": "canary-app-health",
     "url": "/d/hw2-canary/canary-app-health",
     "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-03-29T21:21:17Z",
-    "updated": "2020-07-08T04:02:17Z",
+    "created": "2020-07-28T23:22:25Z",
+    "updated": "2020-07-28T23:26:30Z",
     "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
     "version": 2,
@@ -17,7 +17,7 @@
     "isFolder": false,
     "folderId": 5,
     "folderTitle": "Foundation",
-    "folderUrl": "/dashboards/f/1zh6_P9Zk/foundation",
+    "folderUrl": "/dashboards/f/hzIgB2VGk/foundation",
     "provisioned": true,
     "provisionedExternalId": "canary.json"
   },
@@ -135,7 +135,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "probe_success{instance=~\"$blackbox_url\"}",
+            "expr": "probe_success{instance=~\"$blackbox_url\", instance!~\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
             "format": "time_series",
             "instant": false,
             "interval": "",
@@ -256,7 +256,7 @@
         "pluginVersion": "6.7.1",
         "targets": [
           {
-            "expr": "probe_success{instance=~\"$blackbox_url\"}",
+            "expr": "probe_success{instance=~\"$blackbox_url\", instance!~\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
             "interval": "",
             "legendFormat": "{{instance}}",
             "refId": "A"
@@ -323,7 +323,7 @@
             "steppedLine": false,
             "targets": [
               {
-                "expr": "probe_duration_seconds{instance=~\"$blackbox_url\"}",
+                "expr": "probe_duration_seconds{instance=~\"$blackbox_url\", instance!~\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
                 "instant": false,
                 "interval": "",
                 "legendFormat": "{{instance}}",
@@ -420,7 +420,7 @@
             ],
             "targets": [
               {
-                "expr": "probe_http_status_code{instance=~\"$blackbox_url\"}",
+                "expr": "probe_http_status_code{instance=~\"$blackbox_url\", instance!~\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
                 "interval": "",
                 "legendFormat": "{{instance}}",
                 "refId": "A"

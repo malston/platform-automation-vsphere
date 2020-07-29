@@ -5,11 +5,11 @@
     "canEdit": true,
     "canAdmin": true,
     "canStar": true,
-    "slug": "bosh-director-health",
-    "url": "/d/hw2-bosh-director/bosh-director-health",
+    "slug": "ops-manager-health",
+    "url": "/d/hw2-opsman/ops-manager-health",
     "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-07-28T23:22:25Z",
-    "updated": "2020-07-28T23:22:25Z",
+    "created": "2020-07-28T23:29:56Z",
+    "updated": "2020-07-28T23:29:56Z",
     "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
     "version": 1,
@@ -19,7 +19,7 @@
     "folderTitle": "Foundation",
     "folderUrl": "/dashboards/f/hzIgB2VGk/foundation",
     "provisioned": true,
-    "provisionedExternalId": "bosh-director.json"
+    "provisionedExternalId": "opsmanager.json"
   },
   "dashboard": {
     "annotations": {
@@ -35,10 +35,11 @@
         }
       ]
     },
+    "description": "Status of the Ops Manager TAS component",
     "editable": true,
     "gnetId": null,
     "graphTooltip": 1,
-    "id": 7,
+    "id": 9,
     "links": [],
     "panels": [
       {
@@ -53,10 +54,10 @@
         "id": 10,
         "panels": [
           {
-            "content": "\n# BOSH Director Health\n\nThis dashboard lets you know if the BOSH Director is healthy, meaning that it is responsive and functional. \n\nLosing the BOSH Director does not significantly impact the experience of the foundation's end users. However, this issue means a loss of resiliency for BOSH-managed VMs.\n\nIn the event that the BOSH Director has failed, investigate by SSHing onto the Director VM and checking the logs for errors.",
+            "content": "\n# Ops Manager Health\n\nThe Ops Manager Health Check is an automated process that uses the Blackbox Exporter to call the configured Ops Manager URL and validate successful responses.\n\nIssues with Ops Manager health should have no direct end user impacts, however it can can impact an operator’s ability to perform an upgrade or to rescale the PCF platform when necessary. \n\nTherefore, it is recommended to continuously monitor Ops Manager availability.",
             "datasource": null,
             "gridPos": {
-              "h": 5,
+              "h": 6,
               "w": 24,
               "x": 0,
               "y": 1
@@ -69,7 +70,7 @@
             "type": "text"
           }
         ],
-        "title": "About BOSH Director Health",
+        "title": "About Ops Manager Health",
         "type": "row"
       },
       {
@@ -83,16 +84,16 @@
         },
         "id": 8,
         "panels": [],
-        "title": "Service Level Indicator",
+        "title": "Service Level Indicators",
         "type": "row"
       },
       {
         "dashboardFilter": "",
         "dashboardTags": [],
         "datasource": null,
-        "folderId": null,
+        "folderId": -1,
         "gridPos": {
-          "h": 8,
+          "h": 9,
           "w": 6,
           "x": 0,
           "y": 2
@@ -106,7 +107,7 @@
         "stateFilter": [],
         "timeFrom": null,
         "timeShift": null,
-        "title": "BOSH Director Alerts",
+        "title": "OpsMan Alerts",
         "transparent": true,
         "type": "alertlist"
       },
@@ -133,33 +134,34 @@
               },
               "reducer": {
                 "params": [],
-                "type": "last"
+                "type": "min"
               },
               "type": "query"
             }
           ],
-          "executionErrorState": "keep_state",
-          "for": "20m",
+          "executionErrorState": "alerting",
+          "for": "5m",
           "frequency": "1m",
           "handler": 1,
-          "message": "A BOSH Director is down.\n\nLosing the BOSH Director does not significantly impact the experience of PCF end users. However, this issue means a loss of resiliency for BOSH-managed VMs.\n\nTroubleshooting Steps:\n\nSSH into the `bosh-health-exporter` VM in the \"Healthwatch Exporter\" deployment, and view logs to find out why the BOSH Director is failing.",
-          "name": "BOSH Director Status",
-          "noDataState": "keep_state",
+          "message": "The Ops Manager health check failed. \n\nIssues with Ops Manager health should have no direct end user impacts, however it can can impact an operator’s ability to perform an upgrade or to rescale the PCF platform when necessary.",
+          "name": "OpsMan Status alert",
+          "noDataState": "no_data",
           "notifications": []
         },
         "aliasColors": {
-          "Bosh Director Health Check Success (1 = success)": "super-light-blue"
+          "OpsMan Health Check Success": "super-light-blue",
+          "OpsMan Health Check Success (1 = success)": "super-light-blue"
         },
         "bars": false,
         "cacheTimeout": null,
         "dashLength": 10,
         "dashes": false,
         "datasource": null,
-        "description": "Health Check Test Results \n\nBOSH Director health check runs once every 10 minutes. The results are based on an automated process that exercises the BOSH Director by ensuring a VM can be deployed, started, stopped and deleted. Because this bosh-health-check deployment is highly specific and repetitive for its given purpose, the product does not record the event as a BOSH deployment occurring, and the representative deployment occurred visualization does not appear in the UI. Visualization of results in this graph are based on the health.check.bosh.director.success metric.\n\nIn the event that the BOSH Director has failed, investigate by SSHing onto the Director VM and checking the logs for errors.",
+        "description": "Ops Man uptime check runs once per minute. The results are based on an automated process that calls the Ops Man API and verifies a 200 status code and a response body that ends with '----END CERTIFICATE-----' is received. Visualization of results in this graph are based on the health.check.OpsMan.available metric.\n\nIssues with Ops Manager health should have no direct end user impacts, however it can can impact an operator’s ability to perform an upgrade or to rescale the PCF platform when necessary. Therefore, it is recommended to continuously monitor Ops Manager availability.",
         "fill": 0,
-        "fillGradient": 5,
+        "fillGradient": 0,
         "gridPos": {
-          "h": 8,
+          "h": 9,
           "w": 12,
           "x": 6,
           "y": 2
@@ -193,10 +195,10 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "clamp_min(1 - increase(bosh_sli_failures_total{scrape_instance_group=\"bosh-health-exporter\"}[10m]),0)",
-            "hide": false,
-            "interval": "",
-            "legendFormat": "BOSH Director Status",
+            "expr": "probe_success{instance=\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
+            "format": "time_series",
+            "instant": false,
+            "legendFormat": "OpsMan Health Check Success (1 = success)",
             "refId": "A"
           }
         ],
@@ -212,7 +214,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "BOSH Director Status History",
+        "title": "OpsMan Status History",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -231,7 +233,7 @@
           {
             "decimals": 0,
             "format": "short",
-            "label": "0 = failure, 1 = success",
+            "label": null,
             "logBase": 1,
             "max": "1.2",
             "min": "-0.2",
@@ -255,7 +257,7 @@
         "datasource": null,
         "description": "Health Check Test Results \n\nBOSH Director health check runs once every 10 minutes. The results are based on an automated process that exercises the BOSH Director by ensuring a VM can be deployed, started, stopped and deleted. Because this bosh-health-check deployment is highly specific and repetitive for its given purpose, the product does not record the event as a BOSH deployment occurring, and the representative deployment occurred visualization does not appear in the UI. Visualization of results in this graph are based on the health.check.bosh.director.success metric.",
         "gridPos": {
-          "h": 8,
+          "h": 9,
           "w": 6,
           "x": 18,
           "y": 2
@@ -265,7 +267,7 @@
           "colorMode": "value",
           "fieldOptions": {
             "calcs": [
-              "lastNotNull"
+              "mean"
             ],
             "defaults": {
               "mappings": [
@@ -312,15 +314,13 @@
         "pluginVersion": "6.7.1",
         "targets": [
           {
-            "expr": "1 - increase(bosh_sli_failures_total{scrape_instance_group=\"bosh-health-exporter\"}[5m])",
-            "interval": "",
-            "legendFormat": "",
+            "expr": "probe_success{instance=\"https://opsmgr-02.haas-439.pez.vmware.com\"}",
             "refId": "A"
           }
         ],
         "timeFrom": null,
         "timeShift": null,
-        "title": "BOSH Director Status",
+        "title": "OpsMan Status",
         "transparent": true,
         "type": "stat"
       }
@@ -333,7 +333,7 @@
       "list": []
     },
     "time": {
-      "from": "now-6h",
+      "from": "now-24h",
       "to": "now"
     },
     "timepicker": {
@@ -351,8 +351,8 @@
       ]
     },
     "timezone": "",
-    "title": "BOSH Director Health",
-    "uid": "hw2-bosh-director",
+    "title": "Ops Manager Health",
+    "uid": "hw2-opsman",
     "variables": {
       "list": []
     },
