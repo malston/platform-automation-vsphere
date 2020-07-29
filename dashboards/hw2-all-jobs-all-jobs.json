@@ -1,0 +1,928 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "all-jobs",
+    "url": "/d/hw2-all-jobs/all-jobs",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-07-08T04:28:35Z",
+    "updated": "2020-07-08T04:28:35Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 5,
+    "folderTitle": "Foundation",
+    "folderUrl": "/dashboards/f/1zh6_P9Zk/foundation",
+    "provisioned": true,
+    "provisionedExternalId": "all-jobs.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "All jobs (VMs) running on the foundation",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 28,
+    "iteration": 1585583892730,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 42,
+        "panels": [
+          {
+            "content": "\n# Job Health\n\nJob Health is the most important BOSH-generated metric to monitor. It indicates whether the VM emitting the metric is healthy. \n\nThe `system_healthy` metric is emitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not. For purposes of this section, individual jobs are rolled into their larger job grouping in order to convey the health of the system across the primary component areas.\n\nReview this metric across all jobs, and within job grouping, to estimate the overall health of the system.\n\n# Troubleshooting\n\nReview detailed VM metrics in the Job Details section and investigate VM Logs for the unhealthy component(s).",
+            "datasource": null,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 319,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Job Health",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 1010,
+        "panels": [],
+        "repeat": null,
+        "title": "Overview",
+        "type": "row"
+      },
+      {
+        "content": "\n# Job Health Overview\n\nPercentage of jobs reporting healthy for each deployment. View detailed Job and VM metrics by clicking on any panel and following the data link to the Job Details dashboard.\n\n\n\n",
+        "datasource": null,
+        "gridPos": {
+          "h": 3,
+          "w": 24,
+          "x": 0,
+          "y": 2
+        },
+        "id": 1624,
+        "mode": "markdown",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "type": "text"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 5
+        },
+        "id": 1451,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": "deployment",
+        "repeatDirection": "h",
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "cf-d926274538193bfc3c60",
+            "value": "cf-d926274538193bfc3c60"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 4,
+          "y": 5
+        },
+        "id": 1646,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-healthwatch-c160e49fa42765708a78",
+            "value": "p-healthwatch-c160e49fa42765708a78"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 5
+        },
+        "id": 1647,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-healthwatch2-127138748e6db781e34d",
+            "value": "p-healthwatch2-127138748e6db781e34d"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 12,
+          "y": 5
+        },
+        "id": 1648,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-healthwatch2-pas-exporter-ba3977b1a9579f66d28e",
+            "value": "p-healthwatch2-pas-exporter-ba3977b1a9579f66d28e"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 16,
+          "y": 5
+        },
+        "id": 1649,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-isolation-segment-1c6d6963f66faf08ae61",
+            "value": "p-isolation-segment-1c6d6963f66faf08ae61"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 20,
+          "y": 5
+        },
+        "id": 1650,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-metric-store-17f85af830d7f482df60",
+            "value": "p-metric-store-17f85af830d7f482df60"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 11
+        },
+        "id": 1651,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-monitoring-indicator-protocol-4718ed8dc29676b38619",
+            "value": "p-monitoring-indicator-protocol-4718ed8dc29676b38619"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 4,
+          "y": 11
+        },
+        "id": 1652,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-rabbitmq-08a745e555844c521f63",
+            "value": "p-rabbitmq-08a745e555844c521f63"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 11
+        },
+        "id": 1653,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "p-redis-eaceb9648df8e78ba02b",
+            "value": "p-redis-eaceb9648df8e78ba02b"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nEmitted by each VM on a 1 minute frequency. 1 means the system is healthy, 0 means it is not.\nFor purposes of this section, health status is summarized by job (e.g. `diego`, `uaa`).\n\n## Troubleshooting\n\nReview detailed VM metrics by clicking on the data link for this panel, and investigate VM Logs for the unhealthy component(s).",
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 12,
+          "y": 11
+        },
+        "id": 1654,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Deployment Details",
+                  "url": "/d/hw2-job-details/job-details?orgId=1&var-health_status=All&var-deployment=${__field.labels.deployment}&var-index=All"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.1",
+        "repeat": null,
+        "repeatDirection": "h",
+        "repeatIteration": 1585583892730,
+        "repeatPanelId": 1451,
+        "scopedVars": {
+          "deployment": {
+            "selected": false,
+            "text": "pivotal-telemetry-om-b85172971aea93087eee",
+            "value": "pivotal-telemetry-om-b85172971aea93087eee"
+          }
+        },
+        "targets": [
+          {
+            "expr": "avg(system_healthy{origin=\"system_metrics_agent\",deployment=~\"$deployment\"}) by (deployment)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{deployment}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "stat"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "prometheus",
+          "definition": "query_result(system_healthy{origin=\"system_metrics_agent\"}) ",
+          "hide": 0,
+          "includeAll": true,
+          "index": -1,
+          "label": "Deployment",
+          "multi": true,
+          "name": "deployment",
+          "options": [],
+          "query": "query_result(system_healthy{origin=\"system_metrics_agent\"}) ",
+          "refresh": 1,
+          "regex": "/deployment=\"((?!bosh-health-).*?)\"/",
+          "skipUrlSync": false,
+          "sort": 5,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "All Jobs",
+    "uid": "hw2-all-jobs",
+    "variables": {
+      "list": []
+    },
+    "version": 1
+  }
+}

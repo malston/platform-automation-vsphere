@@ -1,0 +1,754 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "logging-and-metrics-pipeline",
+    "url": "/d/hw2-logging-metrics/logging-and-metrics-pipeline",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-07-08T04:28:35Z",
+    "updated": "2020-07-08T04:28:35Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 10,
+    "folderTitle": "Tanzu Application Service",
+    "folderUrl": "/dashboards/f/m-3blwrZz/tanzu-application-service",
+    "provisioned": true,
+    "provisionedExternalId": "logging-and-metrics.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Performance of the Logging and Metrics Pipeline (aka Firehose)",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 26,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 8,
+        "panels": [
+          {
+            "content": "\n# Logging and Metrics\n\nThe Logging and Metrics Firehose (also known as Loggregator) helps gather logs and metrics from across the foundation, to be sent to a number of downstream consumers. \n\nThe health of the components below will dictate whether developers can see logs and metrics for their apps, and whether that information will be sent to tools like Healthwatch, App Metrics and external partners.\n\n(Note: this does not affect platform logs sent over syslog.)",
+            "datasource": null,
+            "gridPos": {
+              "h": 5,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 10,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Logging and Metrics",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 15,
+        "panels": [],
+        "title": "Service Level Indicator",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "% of messages successfully ingressed by dopplers": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nIndicates whether the foundation's Dopplers are scaled to handle the message load coming from the platform.\n\nExcessive dropped messages can indicate the load coming from the platform exceeds the combined capacity of the Dopplers.\n\n## Troubleshooting Steps\nScale up the number of `doppler` instances.\n\n**Note:** At approximately 40 `doppler` instances and 20 `loggregator_trafficcontroller` instances,\nhorizontal scaling is no longer useful for improving Firehose performance.\nTo improve performance, add vertical scale to the existing `doppler` and\n`loggregator_trafficcontroller` instances by increasing CPU resources.",
+        "editable": false,
+        "error": false,
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 17,
+          "x": 0,
+          "y": 2
+        },
+        "hiddenSeries": false,
+        "id": 1,
+        "isNew": true,
+        "legend": {
+          "alignAsTable": false,
+          "avg": false,
+          "current": false,
+          "hideEmpty": false,
+          "hideZero": false,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "connected",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "span": 12,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "100 - (100*sum(rate(dropped{source_id=\"doppler\",direction=\"ingress\"}[5m])) / sum(rate(ingress{source_id=\"doppler\"}[5m])))",
+            "legendFormat": "% of messages successfully ingressed by dopplers",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "warning",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 99,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 95,
+            "yaxis": "left"
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Firehose Ingress Success Rate",
+        "tooltip": {
+          "shared": false,
+          "sort": 0,
+          "value_type": ""
+        },
+        "transparent": true,
+        "type": "graph",
+        "x-axis": true,
+        "xaxis": {
+          "buckets": null,
+          "format": "time",
+          "logBase": 0,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "y-axis": true,
+        "yaxes": [
+          {
+            "format": "percent",
+            "logBase": 0,
+            "max": "100",
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 0,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nIndicates whether the foundation's Dopplers are scaled to handle the message load coming from the platform.\n\nExcessive dropped messages can indicate the load coming from the platform exceeds the combined capacity of the Dopplers.\n\n## Troubleshooting Steps\nScale up the number of `doppler` instances.\n\n**Note:** At approximately 40 `doppler` instances and 20 `loggregator_trafficcontroller` instances,\nhorizontal scaling is no longer useful for improving Firehose performance.\nTo improve performance, add vertical scale to the existing `doppler` and\n`loggregator_trafficcontroller` instances by increasing CPU resources.",
+        "gridPos": {
+          "h": 8,
+          "w": 7,
+          "x": 17,
+          "y": 2
+        },
+        "id": 18,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 95
+                  },
+                  {
+                    "color": "green",
+                    "value": 99
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.1",
+        "targets": [
+          {
+            "expr": "100 - (100*sum(rate(dropped{source_id=\"doppler\",direction=\"ingress\"}[5m])) / sum(rate(ingress{source_id=\"doppler\"}[5m])))",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Firehose Ingress Success Rate",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "Panels": null,
+        "collapsed": true,
+        "datasource": null,
+        "editable": false,
+        "error": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 11
+        },
+        "id": 6,
+        "isNew": false,
+        "panels": [
+          {
+            "aliasColors": {
+              "Doppler Index: 146bb1c7-a6e3-4ec6-909b-c64a2f7efc38": "light-purple",
+              "index: 146bb1c7-a6e3-4ec6-909b-c64a2f7efc38": "light-purple"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\nThis metric indicates the number of messages (logs and metrics) per second emitted by the firehose. The recommended scaling indicator is to look at the average load on the Doppler instances, and increase the number of Doppler instances when the derived rate is 16,000 envelopes per second, or 1 million envelopes per minute.\n\n\n## Troubleshooting Steps\nIncrease the number of `doppler` instances.",
+            "editable": false,
+            "error": false,
+            "fill": 0,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 24,
+              "x": 0,
+              "y": 17
+            },
+            "hiddenSeries": false,
+            "id": 2,
+            "isNew": true,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "connected",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(ingress{source_id=\"doppler\"}[5m])",
+                "interval": "",
+                "legendFormat": "Doppler Index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "warning",
+                "fill": true,
+                "line": true,
+                "op": "gt",
+                "value": 16000,
+                "yaxis": "left"
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Messages per Doppler per Second",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": ""
+            },
+            "transparent": true,
+            "type": "graph",
+            "x-axis": true,
+            "xaxis": {
+              "buckets": null,
+              "format": "time",
+              "logBase": 0,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "y-axis": true,
+            "yaxes": [
+              {
+                "format": "short",
+                "logBase": 0,
+                "max": "20000",
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "logBase": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {
+              "Doppler Index: 146bb1c7-a6e3-4ec6-909b-c64a2f7efc38": "light-purple",
+              "Index: 146bb1c7-a6e3-4ec6-909b-c64a2f7efc38": "light-purple"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\nWithin PAS, logs and metrics enter Loggregator for transport and then egress\nthrough Doppler. Doppler drops messages when consumers of the RLP, such as\nmonitoring tool nozzles, ingest the exiting stream of logs and metrics too slowly.\n\n\n## Troubleshooting Steps\nScale up the number of nozzle instances. The number of nozzle instances should match\nthe number of Traffic Controller instances. You can scale a nozzle using the subscription\nID specified when the nozzle connects to the RLP. If you use the same subscription ID on\neach nozzle instance, the RLP evenly distributes data across all instances of the nozzle.\nFor example, if you have two nozzle instances with the same subscription ID, the RLP sends\nhalf of the data to one nozzle instance and half to the other. Similarly, if you have\nthree nozzle instances with the same subscription ID, the RLP sends one-third of the data\nto each instance.",
+            "editable": false,
+            "error": false,
+            "fill": 0,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 24,
+              "x": 0,
+              "y": 26
+            },
+            "hiddenSeries": false,
+            "id": 3,
+            "isNew": true,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "connected",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "rate(dropped{source_id=\"doppler\", direction=\"egress\"}[5m])",
+                "interval": "",
+                "legendFormat": "Doppler Index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Doppler Egress Dropped Messages",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": ""
+            },
+            "transparent": true,
+            "type": "graph",
+            "x-axis": true,
+            "xaxis": {
+              "buckets": null,
+              "format": "time",
+              "logBase": 0,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "y-axis": true,
+            "yaxes": [
+              {
+                "format": "short",
+                "logBase": 0,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "logBase": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {
+              "RLP Index: 7ae10d17-c776-4fcf-86d3-bbe1074aa1c8": "light-purple",
+              "{index=\"7ae10d17-c776-4fcf-86d3-bbe1074aa1c8\"}": "light-purple"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\nExcessive dropped messages can indicate that the RLP is overloaded and\nthat the Traffic Controllers need to be scaled.\n\nThe recommended scaling indicator is to look at the maximum per minute\nloss rate over a 5-minute window and scale if the derived loss rate\nvalue grows greater than `10%`.\n\n\n## Troubleshooting Steps\nScale up the number of log-api instances to further balance log load.",
+            "editable": false,
+            "error": false,
+            "fill": 0,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 24,
+              "x": 0,
+              "y": 34
+            },
+            "hiddenSeries": false,
+            "id": 4,
+            "isNew": true,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "connected",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "100*sum(rate(dropped{source_id=\"reverse_log_proxy\"}[5m])) by (index)\n/sum(rate(ingress{source_id=\"reverse_log_proxy\"}[5m])) by (index)\n",
+                "interval": "",
+                "legendFormat": "RLP Index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "warning",
+                "fill": true,
+                "line": true,
+                "op": "gt",
+                "value": 1,
+                "yaxis": "left"
+              },
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "gt",
+                "value": 10,
+                "yaxis": "left"
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "RLP Message Loss Rate",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": ""
+            },
+            "transparent": true,
+            "type": "graph",
+            "x-axis": true,
+            "xaxis": {
+              "buckets": null,
+              "format": "time",
+              "logBase": 0,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "y-axis": true,
+            "yaxes": [
+              {
+                "format": "percent",
+                "logBase": 0,
+                "max": "12",
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "logBase": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {
+              "avg(avg_over_time(subscriptions{source_id=\"reverse_log_proxy\"}[5m]))": "super-light-blue"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\nWithin PAS, the Reverse Log Proxy (RLP) limits the number of subscriptions.\nA subscription is a consumer of the RLP; this metric concerns the number of\nconcurrent consumers of an RLP instance. The maximum subscription count is 1000\nper RLP.\n\nThis metric indicates that the RLP has reached its concurrent consumer limit.\n\n\n## Troubleshooting Steps\nIncrease the number of RLPs when the average number of `rlp.subscription`s is greater\nthan 900.",
+            "editable": false,
+            "error": false,
+            "fill": 0,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 42
+            },
+            "hiddenSeries": false,
+            "id": 5,
+            "isNew": true,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "hideEmpty": false,
+              "hideZero": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "connected",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "span": 12,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "avg(avg_over_time(subscriptions{source_id=\"reverse_log_proxy\"}[5m]))",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [
+              {
+                "colorMode": "critical",
+                "fill": true,
+                "line": true,
+                "op": "gt",
+                "value": 900,
+                "yaxis": "left"
+              }
+            ],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "RLP Subscriptions",
+            "tooltip": {
+              "shared": false,
+              "sort": 0,
+              "value_type": ""
+            },
+            "transparent": true,
+            "type": "graph",
+            "x-axis": true,
+            "xaxis": {
+              "buckets": null,
+              "format": "time",
+              "logBase": 0,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "y-axis": true,
+            "yaxes": [
+              {
+                "format": "short",
+                "logBase": 0,
+                "max": "1000",
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "logBase": 0,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          }
+        ],
+        "span": 0,
+        "title": "Key Performance Indicators for Loggregator",
+        "type": "row"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": null
+    },
+    "timezone": "browser",
+    "title": "Logging and Metrics Pipeline",
+    "uid": "hw2-logging-metrics",
+    "variables": {
+      "list": []
+    },
+    "version": 1
+  }
+}

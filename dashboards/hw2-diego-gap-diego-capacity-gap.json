@@ -1,0 +1,1548 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "diego-capacity-gap",
+    "url": "/d/hw2-diego-gap/diego-capacity-gap",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-07-20T20:56:39Z",
+    "updated": "2020-07-20T21:26:10Z",
+    "updatedBy": "admin",
+    "createdBy": "admin",
+    "version": 5,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 37,
+    "folderTitle": "Gap",
+    "folderUrl": "/dashboards/f/CSJG_Q7Mk/gap",
+    "provisioned": false,
+    "provisionedExternalId": ""
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "$$hashKey": "object:745",
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "The status and capacity of Diego cells on a TAS foundation",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 35,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 31,
+        "panels": [
+          {
+            "content": "\n# Diego\n\nDiego is a self-healing container management system that attempts to keep the correct number of instances running in Diego cells to avoid network failures and crashes. \n\nDiego schedules and runs Tasks and Long-Running Processes (LRPs). \n\nFor more information about Tasks and LRPs, see [How the Diego Auction Allocates Jobs](https://docs.cloudfoundry.org/concepts/diego/diego-auction.html).\n\n### Chunks\nIn order to stage an application, there must be a sufficient chunk of free memory and disk on a cell. \nFor example, in pushing an app requiring 4GB of memory and 6GB of disk, Diego would have trouble placing that app if there is no one cell with sufficient capacity.\n\n\n",
+            "datasource": null,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 29,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Diego",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 47,
+        "panels": [],
+        "title": "Alerts",
+        "type": "row"
+      },
+      {
+        "dashboardFilter": "",
+        "dashboardTags": [],
+        "datasource": null,
+        "description": "",
+        "folderId": -1,
+        "gridPos": {
+          "h": 4,
+          "w": 6,
+          "x": 0,
+          "y": 2
+        },
+        "id": 4,
+        "limit": 10,
+        "nameFilter": "",
+        "onlyAlertsOnDashboard": true,
+        "show": "current",
+        "sortOrder": 3,
+        "stateFilter": [],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Diego Alerts",
+        "transparent": true,
+        "type": "alertlist"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 6
+        },
+        "id": 8,
+        "panels": [],
+        "title": "Memory",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "Total": "red",
+          "Used": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\nThe number of calculated chunks of free memory available, across all cells.\n\n## Use\t\nInsufficient free chunks of memory can prevent pushing and scaling apps. The amount of Free Chunks remaining is a much more valuable indicator of impending cf push errors due to lack of memory than relying on the outputted Memory Remaining metrics alone.\n\nIn order to stage an application, there must be a sufficient chunk of free memory on a cell. For example, in pushing a 4GB app, Diego would have trouble placing that app if there is no one cell with sufficient capacity of 4GB or greater. Pivotal Cloud Ops uses a standard of 4GB, which is the default configuration value provided out-of-the-box. When the number of cells with at least 4GB falls below a desired threshold, this is a scaling indicator to increase capacity. This default 4GB free memory chunk calculation value should be tuned to the the standard size of apps being pushed to this deployment.\n\nNote: A stopped app does not count against used or allocated memory capacity (assuming that any prior AIs were successfully destroyed), because Diego frees the memory and disk allocation it made for that container. The total amount of memory that the Diego cells have allocated is equal to the sum of the memory limit of all started apps * number of instances.\n\n## Possible Next Steps\t\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile. Consider optimizing the size of the cells for the size of a standard app deployment plus overhead. Stopping any non-business-critical apps on the Foundation PAS/Isolation Segment can free up memory without adding resources. If stopping apps does not free up memory chunks, a rebalance could help: `bosh restart` some or all of the cells, that tends to free chunks by clearing out those cells.",
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 10,
+          "x": 0,
+          "y": 7
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [
+          {
+            "targetBlank": true,
+            "title": "info",
+            "url": "https://healthwatch.sys.hw-pas26.cf-denver.com/contextualHelp/diegoDetails#disk-chunks"
+          }
+        ],
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Used",
+            "fill": 5,
+            "fillGradient": 7
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(floor(CapacityTotalMemory / ($memChunkSize*1024)))",
+            "legendFormat": "Total",
+            "refId": "B"
+          },
+          {
+            "expr": "label_replace(\n  sum by (placement_tag)(floor(CapacityTotalMemory / ($memChunkSize*1024)))\n    -\n  sum by (placement_tag)(floor(CapacityRemainingMemory / ($memChunkSize*1024)))\n  , \"placement_tag\", \"cf\", \"placement_tag\", \"\"\n)",
+            "legendFormat": "{{placement_tag}} Used",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Memory: # of [[memChunkSize]]GB Chunks Used",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  0.85
+                ],
+                "type": "gt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "C",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "min"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "10m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "You have exceeded 65% of your available Diego memory capacity for at least 10 minutes.\n\nLow memory can prevent app scaling and new deployments. The overall sum of capacity can indicate that you need to scale the platform. Pivotal strongly recommends that you have enough memory available to suffer a possible failure of an entire availability zone (AZ). If following Pivotal best practice guidance of three AZs, your % Available Memory should always be at least 35%.\n\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile.",
+          "name": "Diego Memory Capacity alert",
+          "noDataState": "no_data",
+          "notifications": [
+            {
+              "uid": "hzKuzuMGk"
+            }
+          ]
+        },
+        "aliasColors": {
+          "% Used": "super-light-blue",
+          "Total": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe memory used metric indicates the remaining amount of memory available for cells to allocate to their containers.\n\n## Use\n\nLow memory can prevent app scaling and new deployments. The overall sum of capacity can indicate that you need to scale the platform. Pivotal strongly recommends that you have enough memory available to suffer a possible failure of an entire availability zone (AZ). If following Pivotal best practice guidance of three AZs, your % Available Memory should always be at least 35%.\n\n## Troubleshooting Steps\n\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile.",
+        "fill": 5,
+        "fillGradient": 6,
+        "gridPos": {
+          "h": 9,
+          "w": 10,
+          "x": 10,
+          "y": 7
+        },
+        "hiddenSeries": false,
+        "id": 12,
+        "interval": "",
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "pct",
+            "yaxis": 1
+          },
+          {
+            "alias": "Total",
+            "yaxis": 2
+          },
+          {
+            "alias": "Used",
+            "yaxis": 2
+          },
+          {
+            "alias": "Total",
+            "fill": 0,
+            "fillGradient": 0
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalMemory)",
+            "hide": true,
+            "interval": "",
+            "legendFormat": "Total",
+            "refId": "B"
+          },
+          {
+            "expr": "# label replace the empty placement tag to cf\nlabel_replace(\n  (sum by (placement_tag) (CapacityTotalMemory) - sum by (placement_tag) (CapacityRemainingMemory))\n    /\n  sum by (placement_tag) (CapacityTotalMemory)\n  , \"placement_tag\", \"cf\", \"placement_tag\", \"\"\n)",
+            "hide": false,
+            "instant": false,
+            "legendFormat": "{{placement_tag}} % Used",
+            "refId": "C"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "gt",
+            "value": 0.85
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Diego Memory Used / Total",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percentunit",
+            "label": "",
+            "logBase": 1,
+            "max": "1",
+            "min": "0",
+            "show": true
+          },
+          {
+            "decimals": null,
+            "format": "decmbytes",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 7
+        },
+        "id": 42,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "super-light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "(sum(CapacityTotalMemory)- sum(CapacityRemainingMemory))",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Memory Used",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 11
+        },
+        "id": 43,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalMemory)",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Total Memory Capacity",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 16
+        },
+        "id": 6,
+        "panels": [],
+        "title": "Disk",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "Total": "red",
+          "Used": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe number of calculated chunks of free disk available, across all cells.\n\n## Use\t\n\nInsufficient free chunks of disk can prevent pushing and scaling apps. The amount of Free Chunks remaining is a much more valuable indicator of impending cf push errors due to lack of disk than relying on the outputted Disk Remaining metrics alone.\n\nIn order to stage an application, there must be a sufficient chunk of free disk on a cell. For example, in pushing a 6GB app, Diego would have trouble placing that app if there is no one cell with sufficient capacity of 6GB or greater. Pivotal Cloud Ops uses a standard of 6GB, which is the default configuration value provided out-of-the-box. When the number of cells with at least 6GB falls below a desired threshold, this is a scaling indicator to increase capacity. This default 6GB free disk chunk calculation value should be tuned to the the standard size of apps being pushed to this deployment.\n\nNote: A stopped app does not count against used or allocated disk capacity (assuming that any prior AIs were successfully destroyed), because Diego frees the memory and disk allocation it made for that container.\n\n## Troubleshooting Steps\n\t\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile. Consider optimizing the size of the cells for the size of a standard app deployment plus overhead (BOSH will allocate 32 GB of disk for swap file). Stopping any non-business-critical apps on the Foundation PAS/Isolation Segment can free up disk without adding resources. If stopping apps does not free up disk, a rebalance could help: `bosh restart` some or all of the cells, that tends to free chunks by clearing out those cells.",
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 10,
+          "x": 0,
+          "y": 17
+        },
+        "hiddenSeries": false,
+        "id": 14,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Used",
+            "fill": 5,
+            "fillGradient": 7
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(floor(CapacityTotalDisk / ($diskChunkSize*1024)))",
+            "legendFormat": "Total",
+            "refId": "B"
+          },
+          {
+            "expr": "label_replace(\n  sum by (placement_tag) (floor(CapacityTotalDisk / ($diskChunkSize*1024)))\n    -\n  sum by (placement_tag) (floor(CapacityRemainingDisk / ($diskChunkSize*1024)))\n  , \"placement_tag\", \"cf\", \"placement_tag\", \"\"\n)",
+            "legendFormat": "{{placement_tag}} Used",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Disk: # of [[diskChunkSize]]GB Chunks Used",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  0.65
+                ],
+                "type": "gt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "C",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "10m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "You have exceeded 65% of your available Diego disk capacity for at least 10 minutes.\n\nLow disk capacity can prevent app scaling and new deployments. The overall sum of capacity can indicate that you need to scale the platform. Pivotal strongly recommends that you have enough disk available to suffer a possible failure of an entire availability zone (AZ). If following Pivotal best practice guidance of three AZs, your % Available Disk should always be at least 35%.\n\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile.",
+          "name": "Diego Disk Capacity alert",
+          "noDataState": "no_data",
+          "notifications": [
+            {
+              "uid": "hzKuzuMGk"
+            }
+          ]
+        },
+        "aliasColors": {
+          "% Used": "super-light-blue",
+          "Total": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe disk used metric indicates the percentage of available disk being used  as a percentage of the total.\n\n## Use\n\t\nLow disk capacity can prevent app scaling and new deployments. The overall sum of capacity can indicate that you need to scale the platform. Pivotal strongly recommends that you have enough disk available to suffer a possible failure of an entire availability zone (AZ). If following Pivotal best practice guidance of three AZs, your % Available Disk should always be at least 35%.\n\n## Troubleshooting Steps\n\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile.",
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 10,
+          "x": 10,
+          "y": 17
+        },
+        "hiddenSeries": false,
+        "id": 32,
+        "interval": "",
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "pct",
+            "yaxis": 1
+          },
+          {
+            "alias": "Total",
+            "yaxis": 2
+          },
+          {
+            "alias": "Used",
+            "yaxis": 2
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalDisk)",
+            "hide": true,
+            "legendFormat": "Total",
+            "refId": "B"
+          },
+          {
+            "expr": "label_replace(\n  (sum by (placement_tag) (CapacityTotalDisk) - sum by (placement_tag) (CapacityRemainingDisk))\n    /\n  sum by (placement_tag) (CapacityTotalDisk)\n  , \"placement_tag\", \"cf\", \"placement_tag\", \"\"\n)",
+            "hide": false,
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{placement_tag}} % Used",
+            "refId": "C"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "gt",
+            "value": 0.65
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Diego Disk Used / Total",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percentunit",
+            "label": "",
+            "logBase": 1,
+            "max": "1",
+            "min": "0",
+            "show": true
+          },
+          {
+            "decimals": null,
+            "format": "decmbytes",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 17
+        },
+        "id": 40,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "super-light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "(sum(CapacityTotalDisk)- sum(CapacityRemainingDisk))",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Disk Used",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 21
+        },
+        "id": 41,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decmbytes"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalDisk)",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Total Disk Capacity",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 26
+        },
+        "id": 17,
+        "panels": [],
+        "title": "Containers",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "Remaining Containers": "super-light-blue",
+          "Total": "red",
+          "Unused": "super-light-blue",
+          "Used": "super-light-blue",
+          "Used Containers": "light-orange",
+          "sum(CapacityRemainingContainers)": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe used containers metric indicates the number of containers this cell is using. Unused containers indicates the number of cells remaining to be used on this cell.\n\n## Use\n\nPivotal strongly recommends that you have enough container capacity available to suffer a possible failure of an entire availability zone (AZ). If following Pivotal best practice guidance of three AZs, your % Available Container Capacity should always be at least 35%.\n\n## Troubleshooting Steps\n\nAssign more resources to the cells or assign more cells by scaling Diego cells in the Resource Config pane of the Pivotal Application Service tile.",
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 20,
+          "x": 0,
+          "y": 27
+        },
+        "hiddenSeries": false,
+        "id": 19,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Used Containers",
+            "fill": 5,
+            "fillGradient": 7
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalContainers)",
+            "interval": "",
+            "legendFormat": "Total",
+            "refId": "A"
+          },
+          {
+            "expr": "label_replace(\n  sum by (placement_tag) (CapacityTotalContainers)\n    -\n  sum by (placement_tag) (CapacityRemainingContainers)\n  , \"placement_tag\", \"cf\", \"placement_tag\", \"\"\n)",
+            "interval": "",
+            "legendFormat": "{{placement_tag}} Used",
+            "refId": "B"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Containers",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 27
+        },
+        "id": 44,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "super-light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "(sum(CapacityTotalContainers)- sum(CapacityRemainingContainers))",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Containers Used",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 20,
+          "y": 31
+        },
+        "id": 45,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "light-blue",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "sum(CapacityTotalContainers)",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Total Container Capacity",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 35
+        },
+        "id": 34,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "cacheTimeout": null,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\nTime that the Diego Cell Rep took to sync the ActualLRPs that it claimed with its actual garden containers.\n\n\n## Use\nSync times that are too high compared to normal can indicate issues with the BBS.\n\n\n## Possible Next Steps\t\nInvestigate BBS logs for faults and errors. If a particular cell or cells appear problematic, pull logs for the cells and the BBS logs before contacting Pivotal Support.\n",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 36
+            },
+            "hiddenSeries": false,
+            "id": 36,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "RepBulkSyncDuration",
+                "legendFormat": "index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Cell Rep Time to Sync",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ns",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "cacheTimeout": null,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Definition\nTime that the route-emitter took to perform its synchronization pass.\n\n## Use \nIncreases in this metric indicate that the route emitter may have trouble maintaining an accurate routing table to broadcast to the Gorouters. High sync times on this metric can indicate that the BBS may be failing.\n\n## Possible Next Steps\nIf all or many jobs showing as impacted, there is likely an issue with Diego. Investigate the route_emitter and Diego BBS logs for errors. Verify that app routes are functional by making a request to an app, pushing an app and pinging it, or alternatively, validating that the CLI Command Health smoke tests have passed.\n\nIf one or a few jobs showing as impacted, there is likely a connectivity issue and the impacted job should be investigated further.\n",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 43
+            },
+            "hiddenSeries": false,
+            "id": 37,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "RouteEmitterSyncDuration",
+                "legendFormat": "index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Route Emitter Time to Sync",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "ns",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {
+              "synced check": "super-light-blue"
+            },
+            "bars": false,
+            "cacheTimeout": null,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Definition\n\nIndicates if the cf-apps Domain is up-to-date, meaning that CF App requests from Cloud Controller are synchronized to bbs.LRPsDesired (Diego-desired AIs) for execution. For this metric, 1 means cf-apps Domain is up-to-date.\n\n## Use \nIf the cf-apps Domain does not stay up-to-date, changes requested in the Cloud Controller are not guaranteed to propagate throughout the system. If the Cloud Controller and Diego are out of sync, then apps running could vary from those desired.\n\n## Troubleshooting Steps\n\nCheck the BBS and Clock Global (Cloud Controller clock) logs. If the problem continues, pull the BBS logs and and Clock Global (Cloud Controller clock) logs and contact Pivotal Support to say that the cf-apps domain is not being kept fresh.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 50
+            },
+            "hiddenSeries": false,
+            "id": 38,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pluginVersion": "6.6.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "Domain_cf_apps",
+                "legendFormat": "synced check",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Diego & Cloud Controller Synced Check",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": 0,
+                "format": "short",
+                "label": "1 means cf",
+                "logBase": 1,
+                "max": "1.2",
+                "min": "-0.2",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          }
+        ],
+        "title": "Troubleshooting",
+        "type": "row"
+      }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "6",
+            "value": "6"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Mem Chunk Size (GB)",
+          "multi": false,
+          "name": "memChunkSize",
+          "options": [
+            {
+              "selected": false,
+              "text": "1",
+              "value": "1"
+            },
+            {
+              "selected": false,
+              "text": "2",
+              "value": "2"
+            },
+            {
+              "selected": true,
+              "text": "4",
+              "value": "4"
+            },
+            {
+              "selected": false,
+              "text": "6",
+              "value": "6"
+            },
+            {
+              "selected": false,
+              "text": "8",
+              "value": "8"
+            },
+            {
+              "selected": false,
+              "text": "12",
+              "value": "12"
+            },
+            {
+              "selected": false,
+              "text": "16",
+              "value": "16"
+            }
+          ],
+          "query": "1,2,4,6,8,12,16",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "4",
+            "value": "4"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Disk Chunk Size (GB)",
+          "multi": false,
+          "name": "diskChunkSize",
+          "options": [
+            {
+              "selected": false,
+              "text": "1",
+              "value": "1"
+            },
+            {
+              "selected": false,
+              "text": "2",
+              "value": "2"
+            },
+            {
+              "selected": false,
+              "text": "4",
+              "value": "4"
+            },
+            {
+              "selected": true,
+              "text": "6",
+              "value": "6"
+            },
+            {
+              "selected": false,
+              "text": "8",
+              "value": "8"
+            },
+            {
+              "selected": false,
+              "text": "12",
+              "value": "12"
+            },
+            {
+              "selected": false,
+              "text": "16",
+              "value": "16"
+            }
+          ],
+          "query": "1,2,4,6,8,12,16",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Diego/Capacity-Gap",
+    "uid": "hw2-diego-gap",
+    "variables": {
+      "list": []
+    },
+    "version": 5
+  }
+}

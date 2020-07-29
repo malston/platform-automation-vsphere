@@ -1,0 +1,502 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "canary-app-health",
+    "url": "/d/hw2-canary/canary-app-health",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-03-29T21:21:17Z",
+    "updated": "2020-07-08T04:02:17Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 2,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 5,
+    "folderTitle": "Foundation",
+    "folderUrl": "/dashboards/f/1zh6_P9Zk/foundation",
+    "provisioned": true,
+    "provisionedExternalId": "canary.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "State of a representative application running on the foundation",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 8,
+    "iteration": 1585177808009,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "panels": [
+          {
+            "content": "\n# Canary App Health\n\nA Canary App is a representative application running on your foundation. The URL of this application is configured in the Healthwatch tile. \n\nThe Canary Health Check is an automated process that uses the Blackbox Exporter to call the configured Canary App URLs and validate successful responses.",
+            "datasource": null,
+            "gridPos": {
+              "h": 4,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 12,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Canary App Health",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 8,
+        "panels": [],
+        "title": "Service Level Indicators",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "Canary App Health Check Success": "super-light-blue"
+        },
+        "bars": false,
+        "cacheTimeout": null,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "Canary Health uptime check runs once per minute. The results are based on an automated process that calls the configured Canary App and validates a successful response.",
+        "fill": 0,
+        "fillGradient": 5,
+        "gridPos": {
+          "h": 13,
+          "w": 18,
+          "x": 0,
+          "y": 2
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pluginVersion": "6.6.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "probe_success{instance=~\"$blackbox_url\"}",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 0,
+            "yaxis": "left"
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Canary App Status History",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": 0,
+            "format": "short",
+            "label": "0 = failure, 1 = success",
+            "logBase": 1,
+            "max": "1.2",
+            "min": "-0.2",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "description": "Canary Health uptime check runs once per minute. The results are based on an automated process that calls the configured Canary App and validates a successful response. Visualization of results in this graph are based on the health.check.CanaryApp.available metric. This service level indicator is currently configured to test the availability of: Apps Manager",
+        "gridPos": {
+          "h": 13,
+          "w": 6,
+          "x": 18,
+          "y": 2
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "Running ✓",
+                  "to": "",
+                  "type": 1,
+                  "value": "1"
+                },
+                {
+                  "from": "",
+                  "id": 2,
+                  "operator": "",
+                  "text": "Not Running ✘",
+                  "to": "",
+                  "type": 1,
+                  "value": "0"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.5
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.1",
+        "targets": [
+          {
+            "expr": "probe_success{instance=~\"$blackbox_url\"}",
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Canary App Status",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 15
+        },
+        "id": 16,
+        "panels": [
+          {
+            "aliasColors": {
+              "Canary app response time": "super-light-blue"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "The amount of time it took from the initiation of the call to the canary app to the receipt of a success response. The request goes out and back in through the gorouter to measure customer response time and not container-to-container request time. Visualization of results in this graph are based on the health.check.CanaryApp.responseTime metric.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 0,
+              "y": 16
+            },
+            "hiddenSeries": false,
+            "id": 18,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "probe_duration_seconds{instance=~\"$blackbox_url\"}",
+                "instant": false,
+                "interval": "",
+                "legendFormat": "{{instance}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Canary App Response Time",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "s",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "columns": [],
+            "datasource": null,
+            "description": "## Description\n\nHTTP Status Code for the request made to a given app. The status code can inform where errors are occurring, if there is an issue.\n\n1xx: Information\n\n2xx: Success\n\n3xx: Redirect\n\n4xx: Client Error\n\n5xx: Server Error\n",
+            "fontSize": "100%",
+            "gridPos": {
+              "h": 20,
+              "w": 12,
+              "x": 12,
+              "y": 16
+            },
+            "id": 20,
+            "pageSize": null,
+            "showHeader": true,
+            "sort": {
+              "col": 0,
+              "desc": true
+            },
+            "styles": [
+              {
+                "alias": "Time",
+                "align": "left",
+                "dateFormat": "YYYY-MM-DD HH:mm:ss",
+                "link": false,
+                "pattern": "Time",
+                "type": "date"
+              },
+              {
+                "alias": "",
+                "align": "right",
+                "colorMode": "value",
+                "colors": [
+                  "rgba(50, 172, 45, 0.97)",
+                  "rgba(245, 54, 54, 0.9)",
+                  "rgba(245, 54, 54, 0.9)"
+                ],
+                "decimals": null,
+                "pattern": "/.*/",
+                "thresholds": [
+                  "350",
+                  " 400"
+                ],
+                "type": "number",
+                "unit": "short"
+              }
+            ],
+            "targets": [
+              {
+                "expr": "probe_http_status_code{instance=~\"$blackbox_url\"}",
+                "interval": "",
+                "legendFormat": "{{instance}}",
+                "refId": "A"
+              }
+            ],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "Canary App HTTP Response Codes",
+            "transform": "timeseries_to_columns",
+            "type": "table"
+          }
+        ],
+        "title": "Supporting Metrics",
+        "type": "row"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": ".+",
+          "current": {
+            "text": "All",
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": "prometheus",
+          "definition": "probe_success",
+          "hide": 0,
+          "includeAll": true,
+          "index": -1,
+          "label": "Canary URL",
+          "multi": true,
+          "name": "blackbox_url",
+          "options": [],
+          "query": "probe_success",
+          "refresh": 1,
+          "regex": "/.*instance=\"([^\"]*).*/",
+          "skipUrlSync": false,
+          "sort": 5,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Canary App Health",
+    "uid": "hw2-canary",
+    "variables": {
+      "list": []
+    },
+    "version": 2
+  }
+}
