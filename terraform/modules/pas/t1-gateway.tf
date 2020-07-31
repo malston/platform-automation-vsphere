@@ -38,13 +38,6 @@ resource "nsxt_logical_port" "logical_port1_pas" {
   logical_switch_id = "${nsxt_logical_switch.pas.id}"
 }
 
-resource "nsxt_logical_port" "logical_port1_services" {
-  admin_state       = "UP"
-  description       = "LP-SERVICES provisioned by Terraform"
-  display_name      = "LP-SERVICES"
-  logical_switch_id = "${nsxt_logical_switch.services.id}"
-}
-
 resource "nsxt_logical_router_downlink_port" "downlink_port_pas" {
   description                   = "DP1 provisioned by Terraform"
   display_name                  = "PAS"
