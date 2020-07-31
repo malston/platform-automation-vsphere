@@ -116,7 +116,7 @@ resource "nsxt_lb_service" "pcf_lb" {
   ]
 
   depends_on        = [
-    "nsxt_logical_router_link_port_on_tier1.link_port_tier1_infrastructure",
+    "nsxt_logical_router_link_port_on_tier1.link_port_tier1_pas",
     "nsxt_lb_tcp_virtual_server.routers_virtual_server",
     "nsxt_lb_tcp_virtual_server.diego_brains_virtual_server",
     "nsxt_lb_tcp_virtual_server.istio_virtual_server",
