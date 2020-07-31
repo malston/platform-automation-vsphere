@@ -1,0 +1,56 @@
+env_name                        = "pcf"
+nsx_hostname                    = "nsxmgr-01.haas-439.pez.vmware.com"
+nsx_user                        = "admin"
+nsx_password                    = "gbCLia8hP8SKKjiinT!"
+
+pcf_ip_block_name               = "pcf-ip-block"
+pcf_ip_block_cidr               = "192.168.32.0/19"
+
+pas_snat_ip_pool_name           = "pcf-floating-ip-pool"
+pas_snat_ip_pool_range          = "10.0.1.35-10.0.1.45"
+pas_snat_ip_pool_cidr           = "10.0.0.0/23"
+
+router_t0                       = "PAS-ROUTER-T0"
+infrastructure_ls               = "INFRASTRUCTURE"
+pas_ls                          = "DEPLOYMENT"
+services_ls                     = "SERVICES"
+pks_ls                          = "PKS"
+
+uplink_router_ip                = "10.0.1.10/23"
+static_route_next_hop_ip        = "10.0.0.1"
+infrastructure_subnet_cidr      = "192.168.10.1/26"
+pas_subnet_cidr                 = "192.168.12.1/23"
+services_subnet_cidr            = "192.168.14.1/23"
+pks_subnet_cidr                 = "192.168.16.1/23"
+
+edge_cluster_name               = "edge-cluster-1"
+transport_zone_vlan_name        = "vlan-tz"
+transport_zone_overlay_name     = "overlay-tz"
+
+loadbalancer_type               = "MEDIUM" # SMALL | MEDIUM | LARGE
+
+router_server_pool_name         = "RouterServerPool"
+diego_brain_server_pool_name    = "DiegoBrainServerPool"
+istio_server_pool_name          = "IstioServerPool"
+
+ops_manager_private_ip          = "192.168.10.10"
+opsmanager_public_ip            = "10.0.1.30"
+pas_routers_public_ip           = "10.0.1.31"
+pas_diego_brains_public_ip      = "10.0.1.31"
+pas_istio_public_ip             = "10.0.1.32"
+
+snat_public_ip                  = "10.0.1.25"
+snat_cidr                       = "192.168.0.0/16"
+
+pks_api_private_ip              = "192.168.16.11"
+pks_public_ip                   = "10.0.1.33"
+
+pks_snat_ip_pool_name           = "pks-floating-ip-pool"
+pks_snat_ip_pool_range          = "10.0.1.46-10.0.1.55"
+pks_snat_ip_pool_cidr           = "10.0.0.0/23"
+
+pks_pods_ip_block_name           = "pks-pods-ip-block"
+pks_pods_ip_block_cidr           = "172.16.64.0/19"
+
+pks_nodes_ip_block_name          = "pks-nodes-ip-block"
+pks_nodes_ip_block_cidr          = "192.168.64.0/19"
