@@ -99,26 +99,3 @@ resource "nsxt_lb_tcp_virtual_server" "istio_virtual_server" {
     "nsxt_lb_tcp_virtual_server.diego_brains_virtual_server"
   ]
 }
-
-resource "nsxt_lb_service" "pcf_lb" {
-  description  = "pcf-lb provisioned by Terraform"
-  display_name = "pcf-lb"
-
-  enabled           = true
-  logical_router_id = "${nsxt_logical_tier1_router.infrastructure_t1.id}"
-  error_log_level   = "INFO"
-  size              = "${var.loadbalancer_type}"
-
-  virtual_server_ids  = [
-    "${nsxt_lb_tcp_virtual_server.routers_virtual_server.id}",
-    "${nsxt_lb_tcp_virtual_server.diego_brains_virtual_server.id}",
-    "${nsxt_lb_tcp_virtual_server.istio_virtual_server.id}"
-  ]
-
-  depends_on        = [
-    "nsxt_logical_router_link_port_on_tier1.link_port_tier1_infrastructure",
-    "nsxt_lb_tcp_virtual_server.routers_virtual_server",
-    "nsxt_lb_tcp_virtual_server.diego_brains_virtual_server",
-    "nsxt_lb_tcp_virtual_server.istio_virtual_server",
-  ]
-}
