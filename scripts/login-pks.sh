@@ -23,8 +23,13 @@ ADMIN_PASSWORD=$(om credentials \
 
 printf "\n\nAdmin password: %s\n\n" "${ADMIN_PASSWORD}"
 
+om credentials \
+  -p pivotal-container-service \
+  --credential-reference .pivotal-container-service.pks_tls \
+  --credential-field cert_pem > /tmp/pks-ca.crt
+
 pks login -a \
     "https://api.pks.${PKS_SUBDOMAIN_NAME}.${PKS_DOMAIN_NAME}" \
-    --skip-ssl-validation \
     -u admin \
-    -p "${ADMIN_PASSWORD}"
+    -p "${ADMIN_PASSWORD}" \
+    --ca-cert /tmp/pks-ca.crt
