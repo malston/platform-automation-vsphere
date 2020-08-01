@@ -30,9 +30,7 @@ DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
 mkdir -p $DASHBOARDS_DIR
 
 echo "Exporting Grafana dashboards from $GRAFANA_URL"
-set -x
-for dash in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$FOLDER_ID&query=&" | jq -r '.[]'); do
-  dash_uid=$(echo $dash | select(.type == "dash-db") | .uid)
+for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$FOLDER_ID&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
   curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $DASHBOARDS_DIR/${dash_uid}.json
   slug=$(cat $DASHBOARDS_DIR/${dash_uid}.json | jq -r '.meta.slug')
   mv $DASHBOARDS_DIR/${dash_uid}.json $DASHBOARDS_DIR/${slug}.json
