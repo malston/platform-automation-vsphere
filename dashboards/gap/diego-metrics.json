@@ -6,9 +6,10 @@
     "canAdmin": true,
     "canStar": true,
     "hasAcl": false,
+    "slug": "diego-metrics",
     "isFolder": false
   },
-  "folderId": 56,
+  "folderId": 61,
   "overwrite": true,
   "dashboard": {
     "annotations": {

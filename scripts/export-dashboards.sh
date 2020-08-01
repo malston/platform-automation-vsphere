@@ -10,6 +10,9 @@ set -o pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+DB_PATH="${1}"
+FOLDER_ID=61
+
 if [[ -z "$GRAFANA_URL" ]]; then
   echo -n "Enter the grafana url: ";
   read -rs GRAFANA_URL
@@ -22,13 +25,15 @@ fi
 
 set -o nounset
 
-DASHBOARDS_DIR=$BASE_DIR/../dashboards
+DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
 
 mkdir -p $DASHBOARDS_DIR
 
 echo "Exporting Grafana dashboards from $GRAFANA_URL"
-for dash in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
-  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash" | jq -r > $DASHBOARDS_DIR/${dash}.json
-  slug=$(cat $DASHBOARDS_DIR/${dash}.json | jq -r '.meta.slug')
-  mv $DASHBOARDS_DIR/${dash}.json $DASHBOARDS_DIR/${dash}-${slug}.json
+set -x
+for dash in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$FOLDER_ID&query=&" | jq -r '.[]'); do
+  dash_uid=$(echo $dash | select(.type == "dash-db") | .uid)
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $DASHBOARDS_DIR/${dash_uid}.json
+  slug=$(cat $DASHBOARDS_DIR/${dash_uid}.json | jq -r '.meta.slug')
+  mv $DASHBOARDS_DIR/${dash_uid}.json $DASHBOARDS_DIR/${slug}.json
 done
