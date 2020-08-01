@@ -1,0 +1,535 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "panels": [
+        {
+          "content": "\n# PAS MySQL Health\n\nThe PAS MySQL database is used for persistent data storage by several PAS components. \n\nNote that this is the SQL database used by system components, not the MySQL service used by applications running on the platform.\n\nPAS components that use system databases include the Cloud Controller, Diego Brain, Gorouter, and User Authorization and Authentication (UAA) server. \n\nFor more information, see [PAS Components](https://docs.pivotal.io/pivotalcf/2-6/concepts/architecture/).\n\n",
+          "datasource": null,
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 12,
+          "mode": "markdown",
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "",
+          "type": "text"
+        }
+      ],
+      "title": "About PAS MySQL",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 8,
+      "panels": [],
+      "title": "Service Level Indicators",
+      "type": "row"
+    },
+    {
+      "dashboardFilter": "",
+      "dashboardTags": [],
+      "datasource": null,
+      "folderId": null,
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 2
+      },
+      "id": 14,
+      "limit": 10,
+      "nameFilter": "",
+      "onlyAlertsOnDashboard": true,
+      "show": "current",
+      "sortOrder": 3,
+      "stateFilter": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "PAS MySQL Alerts",
+      "transparent": true,
+      "type": "alertlist"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.01
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "min"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "10m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "The PAS MySQL database is not responding.\n\nThe PAS MySQL database is used for persistent data storage by several PAS components. Note that this is the SQL database used by system components, not the MySQL service used by applications running on the platform.\n\nPAS components that use system databases include the Cloud Controller, Diego Brain, Gorouter, and the User Authorization and Authentication (UAA) server.\n\nTroubleshooting Steps:\n\nRun mysql-diag and check the MySQL Server logs for errors.",
+        "name": "PAS MySQL Status History alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
+      "aliasColors": {
+        "MySQL Availability": "super-light-blue"
+      },
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "## Description\n\nRepresents if the MySQL Server is currently responding to requests.\n\nIn single-node mode, if the server does not emit heartbeats, it is offline.\n\n## Troubleshooting Steps\n\nRun mysql-diag and check the MySQL Server logs for errors.",
+      "fill": 0,
+      "fillGradient": 5,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 6,
+        "y": 2
+      },
+      "hiddenSeries": false,
+      "id": 2,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.6.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "_mysql_available",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "index {{index}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "lt",
+          "value": 0.01
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "PAS MySQL Status History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "short",
+          "label": "0 = unavailable, 1 = available",
+          "logBase": 1,
+          "max": "1.2",
+          "min": "-0.2",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": null,
+      "description": "## Description\n\nRepresents if the MySQL Server is currently responding to requests.\n\nIn single-node mode, if the server does not emit heartbeats, it is offline.\n\n## Troubleshooting Steps\n\nRun mysql-diag and check the MySQL Server logs for errors.",
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 2
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "red",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 0.5
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": [],
+          "values": false
+        },
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto"
+      },
+      "pluginVersion": "6.7.1",
+      "targets": [
+        {
+          "expr": "avg(_mysql_available)",
+          "interval": "",
+          "legendFormat": "{{index}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "% of MySQL Jobs Reporting Healthy",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 16,
+      "panels": [
+        {
+          "datasource": null,
+          "description": "## Description\n\nThe `_mysql_galera_wsrep_ready` metric shows whether each cluster node can accept queries. Returns only 0 or 1. When this metric is 0, almost all queries to that node fail with the error:\n`ERROR 1047 (08501) Unknown Command`\n\nThis panel displays the average of all nodes. When less than 100%, at least one node is down.\n\n## Use\n\nDiscover when nodes of a cluster have been unable to communicate and accept transactions.\n\n## Troubleshooting Steps\n\n1. Run `mysql-diag` and check the MySQL Server logs for errors.\n2. Ensure no infrastructure event is affecting intra-cluster communication.\n3. Ensure that `wsrep_ready` is not set to off by using the query:\n`SHOW STATUS LIKE 'wsrep_ready';`.\n",
+          "gridPos": {
+            "h": 12,
+            "w": 8,
+            "x": 0,
+            "y": 12
+          },
+          "id": 18,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "green",
+                      "value": 0.9
+                    }
+                  ]
+                },
+                "title": "% of nodes that can accept queries",
+                "unit": "percentunit"
+              },
+              "overrides": [],
+              "values": false
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto"
+          },
+          "pluginVersion": "6.7.1",
+          "targets": [
+            {
+              "expr": "avg(_mysql_galera_wsrep_ready)",
+              "interval": "",
+              "legendFormat": "index {{index}}",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Galera Cluster Node Readiness",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": null,
+          "description": "## Description\n\nShows the primary status of the cluster component that the node is in. Possible values are: Primary = 1 (green), Non-primary = 0 (red), Disconnected = -1 (black)\n\n## Use\n\t\nAny value other than “Primary” indicates that the node is part of a nonoperational component. This occurs in cases of multiple membership changes that result in a loss of quorum.\n\n## Troubleshooting Steps\n\nCheck node status to ensure that they are all in working order and able to receive write-sets. Run mysql-diag and check the MySQL Server logs for errors.",
+          "gridPos": {
+            "h": 12,
+            "w": 8,
+            "x": 8,
+            "y": 12
+          },
+          "id": 19,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "defaults": {
+                "mappings": [
+                  {
+                    "from": "",
+                    "id": 1,
+                    "operator": "",
+                    "text": "Primary ✓",
+                    "to": "",
+                    "type": 1,
+                    "value": "1"
+                  },
+                  {
+                    "from": "",
+                    "id": 2,
+                    "operator": "",
+                    "text": "Non-Primary ✘",
+                    "to": "",
+                    "type": 1,
+                    "value": "0"
+                  },
+                  {
+                    "from": "",
+                    "id": 3,
+                    "operator": "",
+                    "text": "Disconnected ✘",
+                    "to": "",
+                    "type": 1,
+                    "value": "-1"
+                  }
+                ],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "rgb(166, 161, 161)",
+                      "value": null
+                    },
+                    {
+                      "color": "semi-dark-red",
+                      "value": -0.1
+                    },
+                    {
+                      "color": "green",
+                      "value": 0.9
+                    }
+                  ]
+                }
+              },
+              "overrides": [],
+              "values": false
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto"
+          },
+          "pluginVersion": "6.7.1",
+          "targets": [
+            {
+              "expr": "_mysql_galera_wsrep_cluster_status",
+              "interval": "",
+              "legendFormat": "index {{index}}",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Galera Cluster Status",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": null,
+          "description": "## Description\n\nThe number of cluster nodes with which each node is communicating normally.\n\n## Use\n\nWhen running in a multi-node configuration, this metric indicates if each member of the cluster is communicating normally with all other nodes. A calculated value of 3 is healthy. A value less than 3 can indicate that availability is being compromised. A value of less than 1 can indicate the cluster is unavailable.\n\n## Troubleshooting Steps\n\nRun mysql-diag and check the MySQL Server logs for errors.",
+          "gridPos": {
+            "h": 12,
+            "w": 8,
+            "x": 16,
+            "y": 12
+          },
+          "id": 21,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "defaults": {
+                "mappings": [],
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 1
+                    },
+                    {
+                      "color": "green",
+                      "value": 3
+                    }
+                  ]
+                }
+              },
+              "overrides": [],
+              "values": false
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto"
+          },
+          "pluginVersion": "6.7.1",
+          "targets": [
+            {
+              "expr": "avg(_mysql_galera_wsrep_cluster_size)",
+              "interval": "",
+              "legendFormat": "Number of communicating cluster nodes",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Galera Cluster Size",
+          "transparent": true,
+          "type": "stat"
+        }
+      ],
+      "title": "Troubleshooting Metrics",
+      "type": "row"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 22,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "PAS MySQL Health",
+  "uid": "hw2-tas-mysql",
+  "variables": {
+    "list": []
+  },
+  "version": 22
+}

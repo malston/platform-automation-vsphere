@@ -10,6 +10,8 @@ set -o pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+DB_PATH="${1}"
+
 if [[ -z "$GRAFANA_URL" ]]; then
   echo -n "Enter the grafana url: ";
   read -rs GRAFANA_URL
@@ -22,8 +24,8 @@ fi
 
 set -o nounset
 
-DASHBOARDS_DIR=$BASE_DIR/../dashboards
+DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
 
-for file in $(ls $DASHBOARDS_DIR | grep -iv '^hw2.*.json'); do
+for file in $(ls $DASHBOARDS_DIR); do
   curl -X POST -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$(cat $DASHBOARDS_DIR/$file)" $GRAFANA_URL/api/dashboards/import
 done
