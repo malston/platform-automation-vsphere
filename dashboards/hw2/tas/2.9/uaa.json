@@ -1,961 +1,985 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "type": "dashboard"
-      }
-    ]
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "uaa",
+    "url": "/d/hw2-uaa/uaa",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-07-31T19:51:44Z",
+    "updated": "2020-08-01T19:13:48Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 2,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 26,
+    "folderTitle": "Tanzu Application Service",
+    "folderUrl": "/dashboards/f/YxpQqLVGz/tanzu-application-service",
+    "provisioned": true,
+    "provisionedExternalId": "uaa.json"
   },
-  "editable": true,
-  "gnetId": null,
-  "graphTooltip": 1,
-  "id": null,
-  "links": [],
-  "panels": [
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 16,
-      "panels": [
+  "dashboard": {
+    "annotations": {
+      "list": [
         {
-          "content": "# UAA\n\nThe primary role of UAA is as an OAuth2 provider, issuing tokens for client apps to use when they act on behalf of PWS users. In collaboration with the login server, UAA can authenticate users with their PWS credentials, and can act as an SSO service using those, or other, credentials.\n\nUAA has endpoints for managing user accounts and for registering OAuth2 clients, as well as various other management functions.\n\nDifferent runtimes and services use separate UAA instances. PWS has two UAA instances by default: one for BOSH Director, used to bootstrap the rest of the PWS deployment; and one for the BOSH deployment, used as a shared resource by all apps that require user authentication. This is the minimum number of UAA instances PWS must have. Other runtimes and services also have UAA instances. These instances are separate from each other. If you log into one runtime or service, you are not also logged into other runtimes and services that authenticate using UAA. You must log into each runtime or service separately.\n\nFor more details on UAA metrics, visit https://docs.pivotal.io/pivotalcf/2-6/uaa/uaa-metrics.html",
-          "datasource": null,
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 1
-          },
-          "id": 28,
-          "mode": "markdown",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "",
-          "type": "text"
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
         }
-      ],
-      "title": "About UAA",
-      "type": "row"
+      ]
     },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
-      },
-      "id": 14,
-      "panels": [],
-      "title": "Service Level Indicators",
-      "type": "row"
-    },
-    {
-      "dashboardFilter": "",
-      "dashboardTags": [],
-      "datasource": null,
-      "folderId": -1,
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 0,
-        "y": 2
-      },
-      "id": 26,
-      "limit": 10,
-      "nameFilter": "",
-      "onlyAlertsOnDashboard": true,
-      "show": "current",
-      "sortOrder": 3,
-      "stateFilter": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "UAA Alerts",
-      "transparent": true,
-      "type": "alertlist"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 44,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 16,
+        "panels": [
           {
-            "evaluator": {
-              "params": [
-                0.01
-              ],
-              "type": "lt"
+            "content": "# UAA\n\nThe primary role of UAA is as an OAuth2 provider, issuing tokens for client apps to use when they act on behalf of PWS users. In collaboration with the login server, UAA can authenticate users with their PWS credentials, and can act as an SSO service using those, or other, credentials.\n\nUAA has endpoints for managing user accounts and for registering OAuth2 clients, as well as various other management functions.\n\nDifferent runtimes and services use separate UAA instances. PWS has two UAA instances by default: one for BOSH Director, used to bootstrap the rest of the PWS deployment; and one for the BOSH deployment, used as a shared resource by all apps that require user authentication. This is the minimum number of UAA instances PWS must have. Other runtimes and services also have UAA instances. These instances are separate from each other. If you log into one runtime or service, you are not also logged into other runtimes and services that authenticate using UAA. You must log into each runtime or service separately.\n\nFor more details on UAA metrics, visit https://docs.pivotal.io/pivotalcf/2-6/uaa/uaa-metrics.html",
+            "datasource": null,
+            "gridPos": {
+              "h": 7,
+              "w": 24,
+              "x": 0,
+              "y": 1
             },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "10m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "min"
-            },
-            "type": "query"
+            "id": 28,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
           }
         ],
-        "executionErrorState": "alerting",
-        "for": "10m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "A UAA VM has reported as unhealthy for 10 minutes.\n\nIf UAA is down, developers and operators cannot authenticate to access the platform.\n\nTroubleshooting:\n\n- Scale the UAA VMs in BOSH\n\nSee [UAA Documentation](https://docs.run.pivotal.io/concepts/architecture/uaa.html) for more details and troubleshooting ideas.\n\nContact support at https://pivotal.io/support/contact",
-        "name": "UAA Health alert",
-        "noDataState": "no_data",
-        "notifications": [
-          {
-            "uid": "XwK_4YQWz"
-          }
-        ]
+        "title": "About UAA",
+        "type": "row"
       },
-      "aliasColors": {
-        "UAA Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 6,
-        "y": 2
-      },
-      "hiddenSeries": false,
-      "id": 22,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "system_healthy{exported_job=\"uaa\", origin=\"system_metrics_agent\"}",
-          "legendFormat": "UAA Index: {{index}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 0.01
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "UAA Health",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "short",
-          "label": "0 = unhealthy, 1 = healthy",
-          "logBase": 1,
-          "max": "1.2",
-          "min": "-0.2",
-          "show": true
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
         },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 18,
-        "y": 2
+        "id": 14,
+        "panels": [],
+        "title": "Service Level Indicators",
+        "type": "row"
       },
-      "id": 30,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "last"
+      {
+        "dashboardFilter": "",
+        "dashboardTags": [],
+        "datasource": null,
+        "folderId": -1,
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 2
+        },
+        "id": 26,
+        "limit": 10,
+        "nameFilter": "",
+        "onlyAlertsOnDashboard": true,
+        "show": "current",
+        "sortOrder": 3,
+        "stateFilter": [],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "UAA Alerts",
+        "transparent": true,
+        "type": "alertlist"
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  0.01
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "A",
+                  "10m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "min"
+              },
+              "type": "query"
+            }
           ],
-          "defaults": {
-            "decimals": 0,
-            "mappings": [],
-            "max": 100,
-            "min": 0,
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "red",
-                  "value": null
-                },
-                {
-                  "color": "orange",
-                  "value": 25
-                },
-                {
-                  "color": "yellow",
-                  "value": 50
-                },
-                {
-                  "color": "green",
-                  "value": 75
-                }
-              ]
-            },
-            "title": "",
-            "unit": "percent"
-          },
-          "overrides": [],
+          "executionErrorState": "alerting",
+          "for": "10m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "A UAA VM has reported as unhealthy for 10 minutes.\n\nIf UAA is down, developers and operators cannot authenticate to access the platform.\n\nTroubleshooting:\n\n- Scale the UAA VMs in BOSH\n\nSee [UAA Documentation](https://docs.run.pivotal.io/concepts/architecture/uaa.html) for more details and troubleshooting ideas.\n\nContact support at https://pivotal.io/support/contact",
+          "name": "UAA Health alert",
+          "noDataState": "no_data",
+          "notifications": [
+            {
+              "uid": "XwK_4YQWz"
+            }
+          ]
+        },
+        "aliasColors": {
+          "UAA Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 6,
+          "y": 2
+        },
+        "hiddenSeries": false,
+        "id": 22,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
           "values": false
         },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto"
-      },
-      "pluginVersion": "6.7.1",
-      "targets": [
-        {
-          "expr": "100 * avg(system_healthy{exported_job=\"uaa\", origin=\"system_metrics_agent\"})",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "% of UAA Servers Reporting Healthy",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 10
-      },
-      "id": 12,
-      "panels": [],
-      "title": "Key Performance Indicators",
-      "type": "row"
-    },
-    {
-      "aliasColors": {
-        "Router index: 6a9f3e69-28f5-4b8d-bf64-a1c10d618715": "semi-dark-purple"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "## Description\n\n95th Percentile latency value of gorouter.latency.uaa. The time in milliseconds that the UAA took to process a request that GoRouter sent to UAA endpoints.\n\n## Use\n\nIndicates how responsive UAA has been to requests sent from the Gorouter. Some operations may take longer amounts of time to process, such as bulk creating users and groups. Unusual spikes in latency could indicate the need to scale the UAA VMs.\n\n## Troubleshooting Steps\n\nLatency is based upon the endpoint and operation being used. It is important to correlate the latency to the endpoint and evaluate latency in the context of the historical latency from that endpoint. First inspect which endpoints requests are hitting. Use historical value to understand if the latency is unusual for that endpoint. A list of UAA endpoints is available as part of the UAA API documentation. If it appears that the UAA needs to scale due to ongoing traffic congestion, do not scale on the latency metric alone. You should also watch that the system.cpu.user metric for the UAA stays in the suggested range of 80-90% maximum CPU Utilization. Resolve high utilization by scaling the UAA VMs horizontally by editing the UAA VM in the Resource Config pane of the PAS tile.",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 11
-      },
-      "hiddenSeries": false,
-      "id": 10,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [
-        {
-          "title": "UAA API Documentation",
-          "url": "http://docs.cloudfoundry.org/api/uaa/version/4.8.0/index.html"
-        }
-      ],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "latency_uaa{source_id=\"gorouter\"}",
-          "hide": false,
-          "legendFormat": "Router index: {{index}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "UAA Request Latency",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "ms",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
         },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "UAA requests exceeding expected latency": "super-light-blue",
-        "index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "## Description\n\nNumber of completed requests that exceeded the tolerable response time since last metric emission. Each URL group can have a different tolerable completion time, which is preconfigured in each UAA release. These values are currently not configurable.\n\n## Troubleshooting Steps\n\nIf the number of requests not meeting tolerable completion time is growing, then either the tolerable request time needs to be fine tuned for false negatives, or the server does not have enough capacity to handle the request load. The actual cause for this can be the need for an increase in server or database resources. Further metrics are needed to actually make a scaling decision.",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 11
-      },
-      "hiddenSeries": false,
-      "id": 34,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [
-        {
-          "targetBlank": true,
-          "title": "URL group latency limits",
-          "url": "https://github.com/cloudfoundry/uaa/blob/master/metrics-data/src/main/resources/performance-url-groups.yml"
-        }
-      ],
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "6.6.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "increase(requests_global_unhealthy_count[5m])",
-          "interval": "5m",
-          "legendFormat": "index: {{index}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "UAA Requests Exceeding Expected Latency",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "system_healthy{exported_job=\"uaa\", origin=\"system_metrics_agent\"}",
+            "legendFormat": "UAA Index: {{index}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 0.01
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "UAA Health",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
         },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "The percentage of CPU being used on the VM where UAA is deployed",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "system_cpu_user{exported_job=\"uaa\",origin=\"system_metrics_agent\"}",
-          "format": "time_series",
-          "instant": false,
-          "intervalFactor": 1,
-          "legendFormat": "Index: {{index}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "warning",
-          "fill": false,
-          "line": true,
-          "op": "gt",
-          "value": 70,
-          "yaxis": "left"
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
         },
-        {
-          "colorMode": "critical",
-          "fill": false,
-          "line": true,
-          "op": "gt",
-          "value": 90,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "UAA CPU Utilization",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {
-        "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "## Definition\nThe percentage of memory currently being used on the VM where UAA is deployed.",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 32,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "system_mem_percent{origin=\"system_metrics_agent\", exported_job=\"uaa\"} ",
-          "hide": false,
-          "legendFormat": "Index: {{index}}",
-          "refId": "D"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "warning",
-          "fill": false,
-          "line": true,
-          "op": "gt",
-          "value": 70,
-          "yaxis": "left"
-        },
-        {
-          "colorMode": "critical",
-          "fill": false,
-          "line": true,
-          "op": "gt",
-          "value": 90,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory Utilization on UAA VMs",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": "100",
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 27
-      },
-      "id": 20,
-      "panels": [
-        {
-          "aliasColors": {
-            "UAA index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+        "yaxes": [
+          {
+            "decimals": 0,
+            "format": "short",
+            "label": "0 = unhealthy, 1 = healthy",
+            "logBase": 1,
+            "max": "1.2",
+            "min": "-0.2",
+            "show": true
           },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": null,
-          "description": "## Description\n\nThe number of requests completed by the UAA VM, emitted per UAA instance. Includes all requests sent to the server, including health checks. This chart sums the number of requests each minute.\n\n## Use\n\nUnusually high spikes, if not known to be associated with an expected increase in demand, could indicate a DDoS risk, and should be investigated. For performance and capacity management, look at this metric as either a requests-completed-per-second or requests-completed-per-minute rate to understand the throughput per UAA instance. This helps you see trends in the throughput rate that may indicate a need to scale the UAA instances.\n\n## Troubleshooting Steps\n\nFor optimizing the UAA, consider this metric in the context of UAA Request Latency and UAA VM CPU Utilization. To increase throughput and maintain low latency, scale the UAA VMs horizontally by editing the UAA VM in the Resource Config pane of the PAS tile, and watch that the system.cpu.user metric for the UAA is not sustained in the suggested range of 80-90% maximum CPU Utilization.",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 12
-          },
-          "hiddenSeries": false,
-          "id": 2,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 2
+        },
+        "id": 30,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "decimals": 0,
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "title": "",
+              "unit": "percent"
+            },
+            "overrides": [],
             "values": false
           },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "increase(requests_global_completed_count{source_id=\"uaa\"}[1m])",
-              "interval": "1m",
-              "legendFormat": "UAA index: {{index}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Completed Requests per Minute",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "transparent": true,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto"
         },
-        {
-          "aliasColors": {
-            "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": null,
-          "description": "Number of HTTP requests that returned 500 codes (server errors) since last metrics emission. \n\nThis metric allows you to calculate error rates and determine if further investigation is needed.",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 12
-          },
-          "hiddenSeries": false,
-          "id": 36,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 2,
-          "nullPointMode": "null",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "increase(requests_global_status_5xx_count{exported_job=\"uaa\"}[5m])",
-              "instant": false,
-              "interval": "5m",
-              "legendFormat": "Index: {{index}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "UAA 500 Errors",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": true,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
+        "pluginVersion": "6.7.1",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"uaa\", origin=\"system_metrics_agent\"})",
+            "refId": "A"
           }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of UAA Servers Reporting Healthy",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 10
+        },
+        "id": 12,
+        "panels": [],
+        "title": "Key Performance Indicators",
+        "type": "row"
+      },
+      {
+        "aliasColors": {
+          "Router index: 6a9f3e69-28f5-4b8d-bf64-a1c10d618715": "semi-dark-purple"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\n95th Percentile latency value of gorouter.latency.uaa. The time in milliseconds that the UAA took to process a request that GoRouter sent to UAA endpoints.\n\n## Use\n\nIndicates how responsive UAA has been to requests sent from the Gorouter. Some operations may take longer amounts of time to process, such as bulk creating users and groups. Unusual spikes in latency could indicate the need to scale the UAA VMs.\n\n## Troubleshooting Steps\n\nLatency is based upon the endpoint and operation being used. It is important to correlate the latency to the endpoint and evaluate latency in the context of the historical latency from that endpoint. First inspect which endpoints requests are hitting. Use historical value to understand if the latency is unusual for that endpoint. A list of UAA endpoints is available as part of the UAA API documentation. If it appears that the UAA needs to scale due to ongoing traffic congestion, do not scale on the latency metric alone. You should also watch that the system.cpu.user metric for the UAA stays in the suggested range of 80-90% maximum CPU Utilization. Resolve high utilization by scaling the UAA VMs horizontally by editing the UAA VM in the Resource Config pane of the PAS tile.",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 11
+        },
+        "hiddenSeries": false,
+        "id": 10,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [
+          {
+            "title": "UAA API Documentation",
+            "url": "http://docs.cloudfoundry.org/api/uaa/version/4.8.0/index.html"
+          }
+        ],
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "latency_uaa{source_id=\"gorouter\"}",
+            "hide": false,
+            "legendFormat": "Router index: {{index}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "UAA Request Latency",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "ms",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
         }
-      ],
-      "title": "Troubleshooting Metrics",
-      "type": "row"
-    }
-  ],
-  "refresh": "1m",
-  "schemaVersion": 22,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ]
-  },
-  "timezone": "",
-  "title": "UAA",
-  "uid": "hw2-uaa",
-  "variables": {
-    "list": []
-  },
-  "version": 41
+      },
+      {
+        "aliasColors": {
+          "UAA requests exceeding expected latency": "super-light-blue",
+          "index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nNumber of completed requests that exceeded the tolerable response time since last metric emission. Each URL group can have a different tolerable completion time, which is preconfigured in each UAA release. These values are currently not configurable.\n\n## Troubleshooting Steps\n\nIf the number of requests not meeting tolerable completion time is growing, then either the tolerable request time needs to be fine tuned for false negatives, or the server does not have enough capacity to handle the request load. The actual cause for this can be the need for an increase in server or database resources. Further metrics are needed to actually make a scaling decision.",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 11
+        },
+        "hiddenSeries": false,
+        "id": 34,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [
+          {
+            "targetBlank": true,
+            "title": "URL group latency limits",
+            "url": "https://github.com/cloudfoundry/uaa/blob/master/metrics-data/src/main/resources/performance-url-groups.yml"
+          }
+        ],
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pluginVersion": "6.6.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "increase(requests_global_unhealthy_count[5m])",
+            "interval": "5m",
+            "legendFormat": "index: {{index}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "UAA Requests Exceeding Expected Latency",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": 0,
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "The percentage of CPU being used on the VM where UAA is deployed",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 19
+        },
+        "hiddenSeries": false,
+        "id": 4,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "system_cpu_user{exported_job=\"uaa\",origin=\"system_metrics_agent\"}",
+            "format": "time_series",
+            "instant": false,
+            "intervalFactor": 1,
+            "legendFormat": "Index: {{index}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "warning",
+            "fill": false,
+            "line": true,
+            "op": "gt",
+            "value": 70,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "critical",
+            "fill": false,
+            "line": true,
+            "op": "gt",
+            "value": 90,
+            "yaxis": "left"
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "UAA CPU Utilization",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percent",
+            "label": null,
+            "logBase": 1,
+            "max": "100",
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Definition\nThe percentage of memory currently being used on the VM where UAA is deployed.",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 19
+        },
+        "hiddenSeries": false,
+        "id": 32,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "system_mem_percent{origin=\"system_metrics_agent\", exported_job=\"uaa\"} ",
+            "hide": false,
+            "legendFormat": "Index: {{index}}",
+            "refId": "D"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "warning",
+            "fill": false,
+            "line": true,
+            "op": "gt",
+            "value": 70,
+            "yaxis": "left"
+          },
+          {
+            "colorMode": "critical",
+            "fill": false,
+            "line": true,
+            "op": "gt",
+            "value": 90,
+            "yaxis": "left"
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Memory Utilization on UAA VMs",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percent",
+            "label": null,
+            "logBase": 1,
+            "max": "100",
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 27
+        },
+        "id": 20,
+        "panels": [
+          {
+            "aliasColors": {
+              "UAA index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "## Description\n\nThe number of requests completed by the UAA VM, emitted per UAA instance. Includes all requests sent to the server, including health checks. This chart sums the number of requests each minute.\n\n## Use\n\nUnusually high spikes, if not known to be associated with an expected increase in demand, could indicate a DDoS risk, and should be investigated. For performance and capacity management, look at this metric as either a requests-completed-per-second or requests-completed-per-minute rate to understand the throughput per UAA instance. This helps you see trends in the throughput rate that may indicate a need to scale the UAA instances.\n\n## Troubleshooting Steps\n\nFor optimizing the UAA, consider this metric in the context of UAA Request Latency and UAA VM CPU Utilization. To increase throughput and maintain low latency, scale the UAA VMs horizontally by editing the UAA VM in the Resource Config pane of the PAS tile, and watch that the system.cpu.user metric for the UAA is not sustained in the suggested range of 80-90% maximum CPU Utilization.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 9,
+              "w": 12,
+              "x": 0,
+              "y": 12
+            },
+            "hiddenSeries": false,
+            "id": 2,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "increase(requests_global_completed_count{source_id=\"uaa\"}[1m])",
+                "interval": "1m",
+                "legendFormat": "UAA index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Completed Requests per Minute",
+            "tooltip": {
+              "shared": true,
+              "sort": 2,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {
+              "Index: 81960387-a1fb-4503-9bf0-e7174f592434": "super-light-blue"
+            },
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "description": "Number of HTTP requests that returned 500 codes (server errors) since last metrics emission. \n\nThis metric allows you to calculate error rates and determine if further investigation is needed.",
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 12
+            },
+            "hiddenSeries": false,
+            "id": 36,
+            "legend": {
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 2,
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "increase(requests_global_status_5xx_count{exported_job=\"uaa\"}[5m])",
+                "instant": false,
+                "interval": "5m",
+                "legendFormat": "Index: {{index}}",
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "UAA 500 Errors",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "transparent": true,
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": "0",
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          }
+        ],
+        "title": "Troubleshooting Metrics",
+        "type": "row"
+      }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "UAA",
+    "uid": "hw2-uaa",
+    "variables": {
+      "list": []
+    },
+    "version": 2
+  }
 }

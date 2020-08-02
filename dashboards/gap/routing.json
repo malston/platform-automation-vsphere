@@ -1,9 +1,27 @@
 {
-  "folderId": 61,
-  "overwrite": true,
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "routing",
+    "url": "/d/a127kQVMk/routing",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-02T00:24:52Z",
+    "updated": "2020-08-02T00:24:52Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 61,
+    "folderTitle": "GAP Dashboards",
+    "folderUrl": "/dashboards/f/F_3veUVMk/gap-dashboards",
+    "provisioned": false,
+    "provisionedExternalId": ""
+  },
   "dashboard": {
-    "id": null,
-    "uid": null,
     "annotations": {
       "list": [
         {
@@ -20,6 +38,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 0,
+    "id": 80,
     "links": [],
     "panels": [
       {
@@ -28,14 +47,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [200],
+                "params": [
+                  200
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -180,14 +205,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [25],
+                "params": [
+                  25
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -313,14 +344,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [20],
+                "params": [
+                  20
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -455,14 +492,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [50],
+                "params": [
+                  50
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -603,14 +646,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [50],
+                "params": [
+                  50
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -736,14 +785,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [400],
+                "params": [
+                  400
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -869,14 +924,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [15],
+                "params": [
+                  15
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -1184,14 +1245,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [600],
+                "params": [
+                  600
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -1337,13 +1404,24 @@
         "2h",
         "1d"
       ],
-      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
     },
     "timezone": "",
     "title": "Routing",
+    "uid": "a127kQVMk",
     "variables": {
       "list": []
     },
-    "version": 16
+    "version": 1
   }
 }
