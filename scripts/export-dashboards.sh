@@ -10,9 +10,6 @@ set -o pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-DB_PATH="${1}"
-FOLDER_ID=61
-
 if [[ -z "$GRAFANA_URL" ]]; then
   echo -n "Enter the grafana url: ";
   read -rs GRAFANA_URL
@@ -23,15 +20,106 @@ if [[ -z "$KEY" ]]; then
   read -rs KEY
 fi
 
-set -o nounset
+function usage() {
+  echo "Usage:"
+  echo "  $0 [flags]"
+  echo ""
+  echo "Examples:"
+  printf "  %s --path=hw2/foundation/2.9 --folder=Foundation\n" "$0"
+  printf "  %s --path=hw2/healthwatch/2.0 --folder=Healthwatch\n" "$0"
+  printf "  %s --path=hw2/tas/2.9 --folder='Tanzu Application Service'" "$0"
+  printf "\n\n"
+  echo "Flags:"
+  echo "Flags:"
+  printf "%s, --help\n" "-h"
+  printf "%s, --path string\tThe path to the folder under dashboards\n" "-p"
+  printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
+}
+
+function urlencode() {
+  local l=${#1}
+  for (( i = 0 ; i < l ; i++ )); do
+    local c=${1:i:1}
+    case "$c" in
+      [a-zA-Z0-9.~_-]) printf "%s" "$c" ;;
+      ' ') printf + ;;
+      *) printf '%%%.2X' "'$c"
+    esac
+  done
+}
+
+function get_dashboards() {
+  local folder_id="${1}"
+  echo "Exporting Grafana dashboards from $GRAFANA_URL"
+  for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$folder_id&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
+    curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $DASHBOARDS_DIR/${dash_uid}.json
+    slug=$(cat $DASHBOARDS_DIR/${dash_uid}.json | jq -r '.meta.slug')
+    mv $DASHBOARDS_DIR/${dash_uid}.json $DASHBOARDS_DIR/${slug}.json
+  done
+}
+
+function create_folder() {
+  local folder_name="${1}"
+  folder_uid=$(find_folder "${folder_name}")
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/$folder_uid" | jq -r > "$FOLDER_FILE"
+}
+
+function find_folder() {
+  local folder_name=$(urlencode "${1}")
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?query=$folder_name" | jq -r '.[].uid'
+}
+
+while [ "$1" != "" ]; do
+    param=$(echo "$1" | awk -F= '{print $1}')
+    value=$(echo "$1" | awk -F= '{print $2}')
+    case $param in
+        -h | --help)
+            usage
+            exit
+            ;;
+        -p | --path)
+            DB_PATH=$value
+            ;;
+        -f | --folder)
+            FOLDER_NAME=$value
+            ;;
+        *)
+            echo ""
+            echo "Invalid option: [$param]"
+            echo ""
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
 
 DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
+FOLDER_FILE=$BASE_DIR/../dashboards/$DB_PATH/folder.json
+
+if [[ -f "$FOLDER_FILE" ]]; then
+  FOLDER_ID=$(cat "${FOLDER_FILE}" | jq -r '.id')
+  if [[ "$FOLDER_ID" = 'null' ]]; then
+    FOLDER_ID=""
+  fi
+  if [[ -z "$FOLDER_NAME" ]]; then
+    FOLDER_NAME=$(cat "${FOLDER_FILE}" | jq -r '.title')
+  fi
+fi
 
 mkdir -p $DASHBOARDS_DIR
 
-echo "Exporting Grafana dashboards from $GRAFANA_URL"
-for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$FOLDER_ID&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
-  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $DASHBOARDS_DIR/${dash_uid}.json
-  slug=$(cat $DASHBOARDS_DIR/${dash_uid}.json | jq -r '.meta.slug')
-  mv $DASHBOARDS_DIR/${dash_uid}.json $DASHBOARDS_DIR/${slug}.json
-done
+if [[ -n "$FOLDER_ID" ]]; then
+  get_dashboards "$FOLDER_ID"
+  exit
+fi
+
+if [[ -n "$FOLDER_NAME" ]]; then
+  create_folder "$FOLDER_NAME"
+  FOLDER_ID=$(cat "${FOLDER_FILE}" | jq -r '.id')
+  get_dashboards "$FOLDER_ID"
+  exit
+fi
+
+usage
+exit
