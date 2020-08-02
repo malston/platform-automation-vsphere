@@ -50,7 +50,7 @@ function urlencode() {
 
 function get_dashboard_dir() {
   local folder_file="${1}"
-  echo $folder_file | rev | cut -d"/" -f2- | rev 
+  echo $folder_file | rev | cut -d"/" -f2- | rev
 }
 
 function get_dashboards() {
@@ -103,6 +103,7 @@ function export_dashboards() {
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
     return 0
   fi
+  
   return 1
 }
 
@@ -140,7 +141,7 @@ FOLDER_FILE="$BASE_DIR/../dashboards/$DB_PATH/folder.json"
 mkdir -p $DASHBOARDS_DIR
 
 if [[ -n $ALL ]]; then
-  for f in $(find ./dashboards -name 'folder.json'); do 
+  for f in $(find "$BASE_DIR/../dashboards" -name 'folder.json'); do
     echo $f
     export_dashboards "${f}" "${FOLDER_NAME}"
   done
