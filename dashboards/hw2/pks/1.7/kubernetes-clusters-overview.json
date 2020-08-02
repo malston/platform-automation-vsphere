@@ -1,0 +1,380 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "kubernetes-clusters-overview",
+    "url": "/d/hw2-kubernetes-clusters-overview/kubernetes-clusters-overview",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-01T19:15:29Z",
+    "updated": "2020-08-01T19:15:29Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 45,
+    "folderTitle": "Enterprise PKS",
+    "folderUrl": "/dashboards/f/ll32T8VGk/enterprise-pks",
+    "provisioned": true,
+    "provisionedExternalId": "kubernetes-clusters-overview.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 2,
+    "id": 50,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "panels": [
+          {
+            "content": "# Kubernetes Clusters Overview\n\nThis is an aggregation view of all Kubernetes clusters deployed using PKS, which allows\nyou to quickly identify clusters that might have problems,\nand drill down to the more detailed view by clicking on the `Clusters That Might Need Attention` panel.",
+            "datasource": null,
+            "gridPos": {
+              "h": 3,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 4,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Kubernetes Clusters Overview",
+        "type": "row"
+      },
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 6,
+        "panels": [
+          {
+            "dashboardFilter": "",
+            "dashboardTags": [],
+            "datasource": null,
+            "gridPos": {
+              "h": 2,
+              "w": 24,
+              "x": 0,
+              "y": 2
+            },
+            "id": 16,
+            "limit": 10,
+            "nameFilter": "",
+            "onlyAlertsOnDashboard": true,
+            "show": "current",
+            "sortOrder": 3,
+            "stateFilter": [],
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "alertlist"
+          }
+        ],
+        "title": "Alerts",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 2
+        },
+        "id": 8,
+        "panels": [],
+        "title": "Clusters Master Overview",
+        "type": "row"
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  0.35
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "10m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "One or more PKS Kubernetes clusters is running with unhealthy master nodes for at least 10 minutes. It might affect the operator's ability to administer changes to the clusters they oversee.\n\nTroubleshooting Steps:\n\nIdentify which clusters are impacted using Kubernetes Cluster Overview dashboard, then view the Cluster Detail dashboard by clicking on the cluster's name in the `Clusters That Might Need Attention` panel to see if API server, scheduler, controller manager and etcd are up. Identify the corresponding BOSH deployment and investigate the logs for the failing jobs on the master VMs.",
+          "name": "Overall Cluster Health alert",
+          "noDataState": "no_data",
+          "notifications": []
+        },
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nPercentage of healthy master nodes reported per cluster.\n\nThe healthiness of a single master node is affected by the health of API server, scheduler, controller manager and etcd running on that node. The master node is assumed unhealthy If any of the components is down.\n\n## Troubleshooting\nDrill down to the Cluster Detail dashboard and identify the unhealthy master node, then use BOSH to see any logs associated with the particular node.",
+        "fill": 0,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 23,
+          "x": 0,
+          "y": 3
+        },
+        "hiddenSeries": false,
+        "id": 12,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "avg by (cluster) (\n  min by (cluster, instance) (\n    label_replace(etcd_server_has_leader{}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kube-scheduler\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kube-controller-manager\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kubernetes-apiservers\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n  )\n)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{cluster}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 0.35
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Overall K8s Cluster Master Health",
+        "tooltip": {
+          "shared": true,
+          "sort": 1,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "percentunit",
+            "label": null,
+            "logBase": 1,
+            "max": "1.05",
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "description": "This panel only shows clusters with < 100% healthy master nodes.  \n\nClick on the name of the cluster inside this panel to drill down to the Kubernetes Cluster Detail dashboard.",
+        "gridPos": {
+          "h": 6,
+          "w": 23,
+          "x": 0,
+          "y": 11
+        },
+        "id": 14,
+        "maxPerRow": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "decimals": 1,
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Cluster Detail",
+                  "url": "/d/hw2-kubernetes-cluster-detail/kubernetes-cluster-detail?orgId=1&var-cluster=${__field.labels.cluster}"
+                }
+              ],
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "All Master Nodes ✓",
+                  "to": "",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 0.6
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "title": "${__series.name}",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "vertical"
+        },
+        "pluginVersion": "6.7.3",
+        "repeat": null,
+        "repeatDirection": "h",
+        "targets": [
+          {
+            "expr": "avg by (cluster) (\n  min by (cluster, instance) (\n    label_replace(etcd_server_has_leader{}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kube-scheduler\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kube-controller-manager\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n    or\n    label_replace(up{job=~\".*-kubernetes-apiservers\"}, \"instance\", \"$1\", \"instance\", \"(.*):.*\")\n  )\n) < 1",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{cluster}} % Masters Healthy",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Clusters That Might Need Attention",
+        "type": "stat"
+      }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Kubernetes Clusters Overview",
+    "uid": "hw2-kubernetes-clusters-overview",
+    "variables": {
+      "list": []
+    },
+    "version": 1
+  }
+}

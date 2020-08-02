@@ -1,0 +1,945 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "kubernetes-cluster-detail",
+    "url": "/d/hw2-kubernetes-cluster-detail/kubernetes-cluster-detail",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-01T19:15:29Z",
+    "updated": "2020-08-01T19:15:29Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 45,
+    "folderTitle": "Enterprise PKS",
+    "folderUrl": "/dashboards/f/ll32T8VGk/enterprise-pks",
+    "provisioned": true,
+    "provisionedExternalId": "kubernetes-cluster-detail.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 49,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "panels": [
+          {
+            "content": "\n# Kubernetes Cluster Detail\n\n\nA Kubernetes cluster consists of one or more Master nodes and one or more Worker nodes.  The Master nodes are responsible for coordinating\nand configuring the Worker nodes.  The Worker nodes are reponsible for running the individual containers that make up a deployment.\n\nFor more information on Kubernetes, see the [documentation](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/).\n\n",
+            "datasource": null,
+            "gridPos": {
+              "h": 5,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 4,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About Kubernetes Cluster Detail",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 10,
+        "panels": [],
+        "title": "Master VMs",
+        "type": "row"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel provides the status of the API servers running on each Master node in a cluster.  The API server is a component of the Kubernetes control plane that exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.\n\nThe main implementation of a Kubernetes API server is kube-apiserver. kube-apiserver is designed to scale horizontally—that is, it scales by deploying more instances. You can run several instances of kube-apiserver and balance traffic between those instances.\n\nThe documentation for the API server can be found [here](https://kubernetes.io/docs/concepts/overview/kubernetes-api/).\n\n## Troubleshooting Steps\nFind the API server that is failing using the `up` metric.  Check the logs for the API server on that VM.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 2
+        },
+        "id": 14,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View API Server Detail",
+                  "url": "/d/hw2-kube-api-server/kubernetes-api-server?orgId=1&var-cluster=${cluster}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.95
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "avg(up{job=~\"([[cluster]])-kubernetes-apiservers\"})",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% Kube API Servers Up",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel provides the status of the Kubernetes Scheduler servers running on each Master node in a cluster.  The Scheduler is a control plane component that watches for newly created Pods with no assigned node, and selects a node for them to run on.\n\nFactors taken into account for scheduling decisions include: individual and collective resource requirements, hardware/software/policy constraints, affinity and anti-affinity specifications, data locality, inter-workload interference, and deadlines.\n\nThe documentation for the Scheduler can be found [here](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/).\n\n## Troubleshooting Steps\nFind the Scheduler that is failing using the `up` metric.  Check the logs for the Scheduler on that VM.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 2
+        },
+        "id": 15,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Scheduler Detail",
+                  "url": "/d/hw2-kube-scheduler/kubernetes-scheduler?orgId=1&var-cluster=${cluster}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.95
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "avg(up{job=~\"([[cluster]])-kube-scheduler\"})",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% Kube Schedulers Up",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel provides the status of the Kubernetes Controller Managers running on each Master node in a cluster.  The Controller Manager is a control plane component that runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.\n\nThese controllers include:\n- Node controller: Responsible for noticing and \n  responding when nodes go down.\n- Replication controller: Responsible for maintaining \n  the correct number of pods for every replication \n  controller object in the system.\n- Endpoints controller: Populates the Endpoints \n  object (that is, joins Services & Pods).\n- Service Account & Token controllers: Create default \n  accounts and API access tokens for new \n  namespaces.\n\nThe documentation for the Kube Controller Manager can be found [here](https://kubernetes.io/docs/concepts/overview/components/#kube-controller-manager).\n\n## Troubleshooting Steps\nFind the Kube Controller Manager that is failing using the `up` metric.  Check the logs for the Kube Controller Manager on that VM.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 2
+        },
+        "id": 16,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Controller Manager Detail",
+                  "url": "/d/hw2-kube-controller-manager/kubernetes-controller-manager?orgId=1&var-cluster=${cluster}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.95
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "avg(up{job=~\"([[cluster]])-kube-controller-manager\"})",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% Kube Controller Managers Up",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel provides the status of the etcd running on each Master node in a cluster.  etcd is a consistent and highly-available key value store used as Kubernetes’ backing store for all cluster data.\n\nYou can find in-depth information about etcd in the official [documentation](https://etcd.io/docs/).\n\n## Troubleshooting Steps\nFind the etcd that is failing using the `up` metric.  Check the logs for the etcd process on that VM.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 2
+        },
+        "id": 17,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "links": [
+                {
+                  "targetBlank": true,
+                  "title": "View Etcd Detail",
+                  "url": "/d/hw2-kube-etcd/kubernetes-etcd?orgId=1&var-cluster=${cluster}"
+                }
+              ],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.95
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "avg by (cluster) (etcd_server_has_leader{cluster_name=~\"$cluster\"})",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% ETCDs With Leader",
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 10
+        },
+        "id": 30,
+        "panels": [],
+        "title": "Cluster Overview",
+        "type": "row"
+      },
+      {
+        "datasource": null,
+        "description": "The number of Master nodes for a selected cluster. The number is defined by the PKS plan chosen during cluster creation.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 11
+        },
+        "id": 21,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "count(up{job=~\"($cluster)-kubernetes-apiservers\", cluster=\"$cluster\"})",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Master Node Count",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "The number of Worker nodes for a selected cluster. The number is defined by the PKS plan chosen during cluster creation.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 11
+        },
+        "id": 20,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "count(up{job=~\"($cluster)-kubernetes-nodes\", cluster=\"$cluster\"})",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Worker Node Count",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "The number of Pods running on a selected cluster.  The number of pods is determined by the amount of deployments to the cluster.  This is the combined amount across all of the worker nodes.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 11
+        },
+        "id": 31,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "sum(kubelet_running_pod_count{cluster=~\"$cluster\"})",
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Pods",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "The number of containers running on a selected cluster. The number is defined by the amount of deployments to the cluster.  This is the combined amount across all of the worker nodes.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 11
+        },
+        "id": 32,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "sum(max(kubelet_running_container_count{cluster=~\"$cluster\"}) by (spec_ip))",
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Containers",
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 19
+        },
+        "id": 12,
+        "panels": [],
+        "title": "Worker VMs",
+        "type": "row"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel shows the number of pods running on each Worker node.  Check this chart for any obvious distribution problems among the nodes. \n\nFor more information on pods, see the [documentation](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/).",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 20
+        },
+        "id": 19,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "kubelet_running_pod_count{cluster=~\"$cluster\"}",
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Pods",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel shows the number of containers running on each Worker node.  Check this chart for any obvious distribution problems among the nodes. \n\nFor more information on containers, see the [documentation](https://kubernetes.io/docs/concepts/containers/overview/).",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 20
+        },
+        "id": 22,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "max(kubelet_running_container_count{cluster=~\"$cluster\"}) by (spec_ip)",
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Containers",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel shows the number of desired volumes by each Worker node.  Check this chart in comparison with the Actual Volumes  for any obvious differences. \n\nFor more information on volumes, see the [documentation](https://kubernetes.io/docs/concepts/storage/volumes/).",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 20
+        },
+        "id": 23,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "max(volume_manager_total_volumes{cluster=~\"$cluster\", state=\"desired_state_of_world\"}) by (spec_ip)",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Desired Volumes",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nThis panel shows the number of volumes in use by each Worker node.  Check this chart in comparison with the Desired Volumes for any obvious differences. \n\nFor more information on volumes, see the [documentation](https://kubernetes.io/docs/concepts/storage/volumes/).",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 20
+        },
+        "id": 25,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "max(volume_manager_total_volumes{cluster=~\"$cluster\", state=\"actual_state_of_world\"}) by (spec_ip)",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Actual Volumes",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nWhen a Worker node has a configuration error, then panel will report an error.\n\n## Troubleshooting Steps\nUsing the bosh cli, find the Worker node that  has failing processes and correct the configuration.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 28
+        },
+        "id": 26,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "Ok",
+                  "to": "",
+                  "type": 1,
+                  "value": "0"
+                },
+                {
+                  "from": "",
+                  "id": 2,
+                  "operator": "",
+                  "text": "Error!",
+                  "to": "",
+                  "type": 1,
+                  "value": "1"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.99
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": true
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "max(kubelet_node_config_error{cluster=~\"$cluster\"}) by (spec_ip)",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Kubelet Configuration Error?",
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\nProvide a per second rate of the number of operations peformed by the Kubelet daemon that have errored.\n\nDocumentation of the kubelet process can be found [here]( https://kubernetes.io/docs/concepts/overview/components/#kubelet) .\n\n## Troubleshooting Steps\nWhen this rate rises, check the log for the kubelet process on the VM that is showing errors.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 6,
+          "y": 28
+        },
+        "id": 27,
+        "options": {
+          "colorMode": "background",
+          "fieldOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "max(rate(kubelet_runtime_operations_errors_total{cluster=~\"$cluster\"}[5m])) by (spec_ip)",
+            "interval": "",
+            "legendFormat": "Errors {{spec_ip}}",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Kubelet Runtime Error Rate Per Second",
+        "type": "stat"
+      }
+    ],
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "text": "hw-1",
+            "value": "hw-1"
+          },
+          "datasource": "",
+          "definition": "label_values(apiserver_request_total, cluster)",
+          "hide": 0,
+          "includeAll": false,
+          "index": -1,
+          "label": "Cluster",
+          "multi": false,
+          "name": "cluster",
+          "options": [],
+          "query": "label_values(apiserver_request_total, cluster)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Kubernetes Cluster Detail",
+    "uid": "hw2-kubernetes-cluster-detail",
+    "variables": {
+      "list": []
+    },
+    "version": 1
+  }
+}

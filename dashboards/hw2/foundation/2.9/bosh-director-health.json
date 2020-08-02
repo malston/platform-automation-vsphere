@@ -1,0 +1,361 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "bosh-director-health",
+    "url": "/d/hw2-bosh-director/bosh-director-health",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-07-28T23:22:25Z",
+    "updated": "2020-07-28T23:22:25Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 5,
+    "folderTitle": "Foundation",
+    "folderUrl": "/dashboards/f/hzIgB2VGk/foundation",
+    "provisioned": true,
+    "provisionedExternalId": "bosh-director.json"
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 7,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "panels": [
+          {
+            "content": "\n# BOSH Director Health\n\nThis dashboard lets you know if the BOSH Director is healthy, meaning that it is responsive and functional. \n\nLosing the BOSH Director does not significantly impact the experience of the foundation's end users. However, this issue means a loss of resiliency for BOSH-managed VMs.\n\nIn the event that the BOSH Director has failed, investigate by SSHing onto the Director VM and checking the logs for errors.",
+            "datasource": null,
+            "gridPos": {
+              "h": 5,
+              "w": 24,
+              "x": 0,
+              "y": 1
+            },
+            "id": 12,
+            "mode": "markdown",
+            "timeFrom": null,
+            "timeShift": null,
+            "title": "",
+            "type": "text"
+          }
+        ],
+        "title": "About BOSH Director Health",
+        "type": "row"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "id": 8,
+        "panels": [],
+        "title": "Service Level Indicator",
+        "type": "row"
+      },
+      {
+        "dashboardFilter": "",
+        "dashboardTags": [],
+        "datasource": null,
+        "folderId": null,
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 0,
+          "y": 2
+        },
+        "id": 14,
+        "limit": 10,
+        "nameFilter": "",
+        "onlyAlertsOnDashboard": true,
+        "show": "current",
+        "sortOrder": 3,
+        "stateFilter": [],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "BOSH Director Alerts",
+        "transparent": true,
+        "type": "alertlist"
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  0.01
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "keep_state",
+          "for": "20m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "A BOSH Director is down.\n\nLosing the BOSH Director does not significantly impact the experience of PCF end users. However, this issue means a loss of resiliency for BOSH-managed VMs.\n\nTroubleshooting Steps:\n\nSSH into the `bosh-health-exporter` VM in the \"Healthwatch Exporter\" deployment, and view logs to find out why the BOSH Director is failing.",
+          "name": "BOSH Director Status",
+          "noDataState": "keep_state",
+          "notifications": []
+        },
+        "aliasColors": {
+          "Bosh Director Health Check Success (1 = success)": "super-light-blue"
+        },
+        "bars": false,
+        "cacheTimeout": null,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "Health Check Test Results \n\nBOSH Director health check runs once every 10 minutes. The results are based on an automated process that exercises the BOSH Director by ensuring a VM can be deployed, started, stopped and deleted. Because this bosh-health-check deployment is highly specific and repetitive for its given purpose, the product does not record the event as a BOSH deployment occurring, and the representative deployment occurred visualization does not appear in the UI. Visualization of results in this graph are based on the health.check.bosh.director.success metric.\n\nIn the event that the BOSH Director has failed, investigate by SSHing onto the Director VM and checking the logs for errors.",
+        "fill": 0,
+        "fillGradient": 5,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 6,
+          "y": 2
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pluginVersion": "6.6.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "clamp_min(1 - increase(bosh_sli_failures_total{scrape_instance_group=\"bosh-health-exporter\"}[10m]),0)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "BOSH Director Status",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": 0.01
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "BOSH Director Status History",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": 0,
+            "format": "short",
+            "label": "0 = failure, 1 = success",
+            "logBase": 1,
+            "max": "1.2",
+            "min": "-0.2",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": null,
+        "description": "Health Check Test Results \n\nBOSH Director health check runs once every 10 minutes. The results are based on an automated process that exercises the BOSH Director by ensuring a VM can be deployed, started, stopped and deleted. Because this bosh-health-check deployment is highly specific and repetitive for its given purpose, the product does not record the event as a BOSH deployment occurring, and the representative deployment occurred visualization does not appear in the UI. Visualization of results in this graph are based on the health.check.bosh.director.success metric.",
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 2
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "from": "",
+                  "id": 1,
+                  "operator": "",
+                  "text": "Running ✓",
+                  "to": "",
+                  "type": 1,
+                  "value": "1"
+                },
+                {
+                  "from": "",
+                  "id": 2,
+                  "operator": "",
+                  "text": "Not Running ✘",
+                  "to": "",
+                  "type": 1,
+                  "value": "0"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.5
+                  }
+                ]
+              }
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.1",
+        "targets": [
+          {
+            "expr": "1 - increase(bosh_sli_failures_total{scrape_instance_group=\"bosh-health-exporter\"}[5m])",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "BOSH Director Status",
+        "transparent": true,
+        "type": "stat"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "BOSH Director Health",
+    "uid": "hw2-bosh-director",
+    "variables": {
+      "list": []
+    },
+    "version": 1
+  }
+}
