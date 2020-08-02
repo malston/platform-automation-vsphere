@@ -36,6 +36,40 @@ function usage() {
   printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
 }
 
+function set_folder_info() {
+  local folder_file="${1}"
+  if [[ -f "$folder_file" ]]; then
+    export FOLDER_ID=$(cat "${folder_file}" | jq -r '.id')
+    if [[ "$FOLDER_ID" = 'null' ]]; then
+      export FOLDER_ID=""
+    fi
+    if [[ -z "$FOLDER_NAME" ]]; then
+      export FOLDER_NAME=$(cat "${folder_file}" | jq -r '.title')
+    fi
+  fi
+}
+
+function get_dashboard_dir() {
+  local folder_file="${1}"
+  echo $FOLDER_FILE | rev | cut -d"/" -f2- | rev 
+}
+
+function process_dashboards() {
+  local folder_file="${1}"
+  if [[ -n "$FOLDER_ID" ]]; then
+    get_dashboards "$FOLDER_ID" $(get_dashboard_dir "$folder_file")
+    return 0
+  fi
+
+  if [[ -n "$FOLDER_NAME" ]]; then
+    create_folder "$FOLDER_NAME"
+    FOLDER_ID=$(cat "${folder_file}" | jq -r '.id')
+    get_dashboards "$FOLDER_ID" $(get_dashboard_dir "$folder_file")
+    return 0
+  fi
+  return 1
+}
+
 function urlencode() {
   local l=${#1}
   for (( i = 0 ; i < l ; i++ )); do
@@ -50,11 +84,12 @@ function urlencode() {
 
 function get_dashboards() {
   local folder_id="${1}"
+  local dashboards_dir="${2}"
   echo "Exporting Grafana dashboards from $GRAFANA_URL"
   for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$folder_id&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
-    curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $DASHBOARDS_DIR/${dash_uid}.json
-    slug=$(cat $DASHBOARDS_DIR/${dash_uid}.json | jq -r '.meta.slug')
-    mv $DASHBOARDS_DIR/${dash_uid}.json $DASHBOARDS_DIR/${slug}.json
+    curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $dashboards_dir/${dash_uid}.json
+    slug=$(cat $dashboards_dir/${dash_uid}.json | jq -r '.meta.slug')
+    mv $dashboards_dir/${dash_uid}.json $dashboards_dir/${slug}.json
   done
 }
 
@@ -83,6 +118,9 @@ while [ "$1" != "" ]; do
         -f | --folder)
             FOLDER_NAME=$value
             ;;
+        --all)
+            ALL=true
+            ;;
         *)
             echo ""
             echo "Invalid option: [$param]"
@@ -97,29 +135,23 @@ done
 DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
 FOLDER_FILE=$BASE_DIR/../dashboards/$DB_PATH/folder.json
 
-if [[ -f "$FOLDER_FILE" ]]; then
-  FOLDER_ID=$(cat "${FOLDER_FILE}" | jq -r '.id')
-  if [[ "$FOLDER_ID" = 'null' ]]; then
-    FOLDER_ID=""
-  fi
-  if [[ -z "$FOLDER_NAME" ]]; then
-    FOLDER_NAME=$(cat "${FOLDER_FILE}" | jq -r '.title')
-  fi
-fi
-
 mkdir -p $DASHBOARDS_DIR
 
-if [[ -n "$FOLDER_ID" ]]; then
-  get_dashboards "$FOLDER_ID"
+if [[ -n $ALL ]]; then
+  for f in $(find ./dashboards -name 'folder.json'); do 
+    echo $f
+    export FOLDER_FILE="$f"
+    set_folder_info "${FOLDER_FILE}"
+    process_dashboards "${FOLDER_FILE}"
+  done
   exit
 fi
 
-if [[ -n "$FOLDER_NAME" ]]; then
-  create_folder "$FOLDER_NAME"
-  FOLDER_ID=$(cat "${FOLDER_FILE}" | jq -r '.id')
-  get_dashboards "$FOLDER_ID"
+set_folder_info "${FOLDER_FILE}"
+
+process_dashboards "${FOLDER_FILE}"
+
+if [[ $? > 0 ]]; then
+  usage
   exit
 fi
-
-usage
-exit
