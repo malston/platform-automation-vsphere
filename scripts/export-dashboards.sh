@@ -65,7 +65,7 @@ function get_dashboards() {
   done
 }
 
-function create_folder() {
+function create_folder_file() {
   local folder_name="${1}"
   local folder_file="${2}"
 
@@ -98,7 +98,7 @@ function export_dashboards() {
   fi
 
   if [[ -n "$folder_name" ]]; then
-    create_folder "$folder_name" "$folder_file"
+    create_folder_file "$folder_name" "$folder_file"
     folder_id=$(cat "${folder_file}" | jq -r '.id')
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
     return 0
