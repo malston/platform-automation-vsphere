@@ -36,8 +36,14 @@ function usage() {
   printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
 }
 
-function set_folder_info() {
+function get_dashboard_dir() {
   local folder_file="${1}"
+  echo $FOLDER_FILE | rev | cut -d"/" -f2- | rev 
+}
+
+function process_dashboards() {
+  local folder_file="${1}"
+
   if [[ -f "$folder_file" ]]; then
     export FOLDER_ID=$(cat "${folder_file}" | jq -r '.id')
     if [[ "$FOLDER_ID" = 'null' ]]; then
@@ -47,15 +53,7 @@ function set_folder_info() {
       export FOLDER_NAME=$(cat "${folder_file}" | jq -r '.title')
     fi
   fi
-}
 
-function get_dashboard_dir() {
-  local folder_file="${1}"
-  echo $FOLDER_FILE | rev | cut -d"/" -f2- | rev 
-}
-
-function process_dashboards() {
-  local folder_file="${1}"
   if [[ -n "$FOLDER_ID" ]]; then
     get_dashboards "$FOLDER_ID" $(get_dashboard_dir "$folder_file")
     return 0
@@ -140,14 +138,11 @@ mkdir -p $DASHBOARDS_DIR
 if [[ -n $ALL ]]; then
   for f in $(find ./dashboards -name 'folder.json'); do 
     echo $f
-    export FOLDER_FILE="$f"
-    set_folder_info "${FOLDER_FILE}"
+    FOLDER_FILE="$f"
     process_dashboards "${FOLDER_FILE}"
   done
   exit
 fi
-
-set_folder_info "${FOLDER_FILE}"
 
 process_dashboards "${FOLDER_FILE}"
 
