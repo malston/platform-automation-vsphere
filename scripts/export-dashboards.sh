@@ -36,38 +36,6 @@ function usage() {
   printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
 }
 
-function get_dashboard_dir() {
-  local folder_file="${1}"
-  echo $FOLDER_FILE | rev | cut -d"/" -f2- | rev 
-}
-
-function process_dashboards() {
-  local folder_file="${1}"
-
-  if [[ -f "$folder_file" ]]; then
-    export FOLDER_ID=$(cat "${folder_file}" | jq -r '.id')
-    if [[ "$FOLDER_ID" = 'null' ]]; then
-      export FOLDER_ID=""
-    fi
-    if [[ -z "$FOLDER_NAME" ]]; then
-      export FOLDER_NAME=$(cat "${folder_file}" | jq -r '.title')
-    fi
-  fi
-
-  if [[ -n "$FOLDER_ID" ]]; then
-    get_dashboards "$FOLDER_ID" $(get_dashboard_dir "$folder_file")
-    return 0
-  fi
-
-  if [[ -n "$FOLDER_NAME" ]]; then
-    create_folder "$FOLDER_NAME"
-    FOLDER_ID=$(cat "${folder_file}" | jq -r '.id')
-    get_dashboards "$FOLDER_ID" $(get_dashboard_dir "$folder_file")
-    return 0
-  fi
-  return 1
-}
-
 function urlencode() {
   local l=${#1}
   for (( i = 0 ; i < l ; i++ )); do
@@ -80,9 +48,15 @@ function urlencode() {
   done
 }
 
+function get_dashboard_dir() {
+  local folder_file="${1}"
+  echo $folder_file | rev | cut -d"/" -f2- | rev 
+}
+
 function get_dashboards() {
   local folder_id="${1}"
   local dashboards_dir="${2}"
+
   echo "Exporting Grafana dashboards from $GRAFANA_URL"
   for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$folder_id&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
     curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $dashboards_dir/${dash_uid}.json
@@ -93,13 +67,43 @@ function get_dashboards() {
 
 function create_folder() {
   local folder_name="${1}"
+  local folder_file="${2}"
+
   folder_uid=$(find_folder "${folder_name}")
-  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/$folder_uid" | jq -r > "$FOLDER_FILE"
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/$folder_uid" | jq -r > "$folder_file"
 }
 
 function find_folder() {
   local folder_name=$(urlencode "${1}")
   curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?query=$folder_name" | jq -r '.[].uid'
+}
+
+function export_dashboards() {
+  local folder_file="${1}"
+  local folder_name="${2}"
+
+  if [[ -f "$folder_file" ]]; then
+    folder_id=$(cat "${folder_file}" | jq -r '.id')
+    if [[ "$folder_id" = 'null' ]]; then
+      folder_id=""
+    fi
+    if [[ -z "$folder_name" ]]; then
+      folder_name=$(cat "${folder_file}" | jq -r '.title')
+    fi
+  fi
+
+  if [[ -n "$folder_id" ]]; then
+    get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
+    return 0
+  fi
+
+  if [[ -n "$folder_name" ]]; then
+    create_folder "$folder_name" "$folder_file"
+    folder_id=$(cat "${folder_file}" | jq -r '.id')
+    get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
+    return 0
+  fi
+  return 1
 }
 
 while [ "$1" != "" ]; do
@@ -130,21 +134,20 @@ while [ "$1" != "" ]; do
     shift
 done
 
-DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
-FOLDER_FILE=$BASE_DIR/../dashboards/$DB_PATH/folder.json
+DASHBOARDS_DIR="$BASE_DIR/../dashboards/$DB_PATH"
+FOLDER_FILE="$BASE_DIR/../dashboards/$DB_PATH/folder.json"
 
 mkdir -p $DASHBOARDS_DIR
 
 if [[ -n $ALL ]]; then
   for f in $(find ./dashboards -name 'folder.json'); do 
     echo $f
-    FOLDER_FILE="$f"
-    process_dashboards "${FOLDER_FILE}"
+    export_dashboards "${f}" "${FOLDER_NAME}"
   done
   exit
 fi
 
-process_dashboards "${FOLDER_FILE}"
+export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}"
 
 if [[ $? > 0 ]]; then
   usage
