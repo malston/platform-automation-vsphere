@@ -27,5 +27,5 @@ set -o nounset
 DASHBOARDS_DIR=$BASE_DIR/../dashboards/$DB_PATH
 
 for file in $(ls $DASHBOARDS_DIR); do
-  curl -X POST -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$(cat $DASHBOARDS_DIR/$file)" $GRAFANA_URL/api/dashboards/import
+  curl -X POST -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$(cat $DASHBOARDS_DIR/$file)" $GRAFANA_URL/api/dashboards/db
 done

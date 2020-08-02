@@ -1,21 +1,12 @@
 {
-  "meta": {
-    "type": "db",
-    "canSave": true,
-    "canEdit": true,
-    "canAdmin": true,
-    "canStar": true,
-    "hasAcl": false,
-    "slug": "routing",
-    "isFolder": false
-  },
   "folderId": 61,
   "overwrite": true,
   "dashboard": {
+    "id": null,
+    "uid": null,
     "annotations": {
       "list": [
         {
-          "$$hashKey": "object:1025",
           "builtIn": 1,
           "datasource": "-- Grafana --",
           "enable": true,
@@ -29,7 +20,6 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 0,
-    "id": null,
     "links": [],
     "panels": [
       {
@@ -1351,7 +1341,6 @@
     },
     "timezone": "",
     "title": "Routing Gap",
-    "uid": "QnXXGKTWz",
     "variables": {
       "list": []
     },

@@ -1,16 +1,9 @@
 {
-  "meta": {
-    "type": "db",
-    "canSave": true,
-    "canEdit": true,
-    "canAdmin": true,
-    "canStar": true,
-    "slug": "test",
-    "hasAcl": false
-  },
   "folderId": 61,
   "overwrite": true,
   "dashboard": {
+    "id": null,
+    "uid": null,
     "annotations": {
       "list": [
         {
@@ -27,7 +20,6 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 1,
-    "id": null,
     "links": [],
     "panels": [
       {

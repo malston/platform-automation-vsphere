@@ -1,21 +1,12 @@
 {
-  "meta": {
-    "type": "db",
-    "canSave": true,
-    "canEdit": true,
-    "canAdmin": true,
-    "canStar": true,
-    "hasAcl": false,
-    "slug": "logging",
-    "isFolder": false
-  },
   "folderId": 61,
   "overwrite": true,
   "dashboard": {
+    "id": null,
+    "uid": null,
     "annotations": {
       "list": [
         {
-          "$$hashKey": "object:3133",
           "builtIn": 1,
           "datasource": "-- Grafana --",
           "enable": true,
@@ -29,7 +20,6 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 2,
-    "id": null,
     "links": [],
     "panels": [
       {
@@ -510,7 +500,6 @@
     },
     "timezone": "",
     "title": "Logging Gap",
-    "uid": "VaOEGhoZk",
     "variables": {
       "list": []
     },
