@@ -147,4 +147,10 @@ if [[ -z $DB_PATH ]]; then
   exit
 fi
 
+if [[ ! -f "$FOLDER_FILE" ]]; then
+  usage
+  echo -e "\nFolder $FOLDER_FILE does not exist"
+  exit
+fi
+
 import_dashboards "${FOLDER_FILE}" $(get_dashboard_dir "$FOLDER_FILE")
