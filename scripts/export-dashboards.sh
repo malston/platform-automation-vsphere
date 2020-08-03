@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# https://kvz.io/bash-best-practices.html
-# Use set -o errexit (a.k.a. set -e) to make your script exit when a command fails.
-# Use set -o pipefail so that the exit status of the last command that threw a non-zero exit code is returned.
-# Use set -o nounset (a.k.a. set -u) to exit when your script tries to use undeclared variables.
-
-set -o errexit
 set -o pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -95,7 +89,7 @@ function export_dashboards() {
 
   if [[ -n "$folder_id" ]]; then
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
-    echo 0
+    return 0
   fi
 
   if [[ -n "$folder_name" ]]; then
@@ -103,10 +97,10 @@ function export_dashboards() {
     echo $folder | jq -r > "$folder_file"
     folder_id=$(cat "${folder_file}" | jq -r '.id')
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
-    echo 0
+    return 0
   fi
   
-  echo 1
+  return 1
 }
 
 while [ "$1" != "" ]; do
@@ -150,9 +144,9 @@ if [[ -n $ALL ]]; then
   exit
 fi
 
-res=$(export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}")
+export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}"
 
-if [[ $res = 1 ]]; then
+if [[ $? != 0 ]]; then
   usage
   echo -e "\nDid not export any dashboards. Make sure folder '$FOLDER_FILE' exists"
   exit
