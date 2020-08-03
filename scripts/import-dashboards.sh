@@ -46,6 +46,21 @@ function get_dashboard_dir() {
   echo $folder_file | rev | cut -d"/" -f2- | rev
 }
 
+function folder_exists_by_id() {
+  local folder_id="${1}"
+
+  if [[ ! "$folder_id" = 'null' ]]; then
+    folder=$(find_folder_by_id "${folder_id}")
+    folder_id=$(echo $folder  | jq -r '.id | select(.type=="dash-folder")')
+  fi
+
+  if [[ ! "$folder_id" = 'null' ]] && [[ -n "$folder_id" ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
 function find_folder_by_id() {
   local folder_id="${1}"
   curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/id/${folder_id}"
@@ -65,11 +80,13 @@ function create_folder() {
 function create_dashboard() {
   local dashboard="${1}"
   local folder_id="${2}"
+  local dashboards_dir="${3}"
 
-  # export FOLDER_ID=$folder_id
+  payload=$(cat $dashboards_dir/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' \
+    | jq --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
+  dashboard_value=$(echo $payload | jq -r '.dashboard' | jq --argjson id null '. + {id: $id}')
+  dashboard=$(echo $payload | jq --argjson dashboard "${dashboard_value}" '. + {dashboard: $dashboard}')
 
-  # envsubst < "$DASHBOARDS_DIR/$dashboard" > "/tmp/$dashboard"
-  dashboard=$(cat $DASHBOARDS_DIR/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' | jq --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
   curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "${dashboard}" $GRAFANA_URL/api/dashboards/db
 }
 
@@ -79,21 +96,23 @@ function import_dashboards() {
 
   folder_name=$(cat "${folder_file}" | jq -r '.title')
   folder_id=$(cat "${folder_file}" | jq -r '.id')
-  if [[ "$folder_id" = 'null' ]]; then
+  if [[ ! $(folder_exists_by_id) ]]; then
     folder=$(create_folder "${folder_name}")
     folder_id=$(echo "${folder}" | jq -r '.id')
     if [[ "$folder_id" = 'null' ]]; then
-      folder_id=$(find_folder_by_name "${folder_name}" | jq -r '.[].id')
+      folder=$(find_folder_by_name "${folder_name}")
+      folder_id=$(echo $folder  | jq -r '.[] | select(.type=="dash-folder") | .id')
     fi
   else
-    folder_id=$(find_folder_by_id "${folder_id}" | jq -r '.id')
+    folder=$(find_folder_by_id "${folder_id}")
+    folder_id=$(echo $folder  | jq -r '.id | select(.type=="dash-folder")')
     if [[ "$folder_id" = 'null' ]]; then
       folder=$(create_folder "${folder_name}")
       folder_id=$(echo "${folder}" | jq -r '.id')
     fi
   fi
-  for file in $(ls $dashboards_dir); do
-    create_dashboard "$file" "$folder_id"
+  for file in $(ls $dashboards_dir | grep -iv 'folder.json'); do
+    create_dashboard "$file" "$folder_id" "$dashboards_dir"
   done
 }
 
@@ -130,7 +149,8 @@ FOLDER_FILE="$BASE_DIR/../dashboards/$DB_PATH/folder.json"
 
 if [[ -n $ALL ]]; then
   for f in $(find "$DASHBOARDS_DIR" -name 'folder.json'); do
-    import_dashboards "$f" $(get_dashboard_dir "$f")
+    dashboard_dir=$(get_dashboard_dir "$f")
+    import_dashboards "$f" "$dashboard_dir"
   done
   exit
 fi
