@@ -49,12 +49,14 @@ function get_dashboard_dir() {
 
 function get_dashboards() {
   local folder_id="${1}"
-  local dashboards_dir="${2}"
+  local folder_name="${2}"
+  local dashboards_dir="${3}"
 
-  echo "Exporting Grafana dashboards from $GRAFANA_URL"
+  printf "\n> Exporting '%s' dashboards\n" "$folder_name"
   for dash_uid in $(curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?folderIds=$folder_id&query=&" | jq -r '.[] | select(.type == "dash-db") | .uid'); do
     curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/dashboards/uid/$dash_uid" | jq -r > $dashboards_dir/${dash_uid}.json
     slug=$(cat $dashboards_dir/${dash_uid}.json | jq -r '.meta.slug')
+    printf "\tto ${dashboards_dir/$BASE_DIR\//}/${slug}.json\n"
     mv $dashboards_dir/${dash_uid}.json $dashboards_dir/${slug}.json
   done
 }
@@ -76,7 +78,7 @@ function find_folder() {
 function export_dashboards() {
   local folder_file="${1}"
   local folder_name="${2}"
-
+  
   if [[ -f "$folder_file" ]]; then
     folder_id=$(cat "${folder_file}" | jq -r '.id')
     if [[ "$folder_id" = 'null' ]]; then
@@ -88,7 +90,7 @@ function export_dashboards() {
   fi
 
   if [[ -n "$folder_id" ]]; then
-    get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
+    get_dashboards "$folder_id" "$folder_name" $(get_dashboard_dir "$folder_file")
     return 0
   fi
 
@@ -96,7 +98,7 @@ function export_dashboards() {
     folder=$(create_folder_file "$folder_name" "$folder_file")
     echo $folder | jq -r > "$folder_file"
     folder_id=$(cat "${folder_file}" | jq -r '.id')
-    get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
+    get_dashboards "$folder_id" "$folder_name" $(get_dashboard_dir "$folder_file")
     return 0
   fi
   
@@ -136,9 +138,10 @@ FOLDER_FILE="$BASE_DIR/../dashboards/$DB_PATH/folder.json"
 
 mkdir -p $DASHBOARDS_DIR
 
+printf "\nExporting Grafana dashboards from %s\n" "$GRAFANA_URL"
+
 if [[ -n $ALL ]]; then
   for f in $(find "$BASE_DIR/../dashboards" -name 'folder.json'); do
-    echo $f
     export_dashboards "${f}" "${FOLDER_NAME}"
   done
   exit
