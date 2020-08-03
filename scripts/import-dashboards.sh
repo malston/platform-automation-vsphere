@@ -80,14 +80,16 @@ function create_folder() {
 function create_dashboard() {
   local dashboard="${1}"
   local folder_id="${2}"
-  local dashboards_dir="${3}"
+  local folder_name="${3}"
+  local dashboards_dir="${4}"
 
-  payload=$(cat $dashboards_dir/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' \
+  raw_payload=$(cat $dashboards_dir/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' \
     | jq --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
-  dashboard_value=$(echo $payload | jq -r '.dashboard' | jq --argjson id null '. + {id: $id}')
-  dashboard=$(echo $payload | jq --argjson dashboard "${dashboard_value}" '. + {dashboard: $dashboard}')
+  dashboard_value=$(echo $raw_payload | jq -r '.dashboard' | jq --argjson id null '. + {id: $id}')
+  dashboard_payload=$(echo $raw_payload | jq --argjson dashboard "${dashboard_value}" '. + {dashboard: $dashboard}')
 
-  curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "${dashboard}" $GRAFANA_URL/api/dashboards/db
+  printf "\n> Creating dashboard '%s' into '%s' folder\n" "$dashboard" "$folder_name"
+  curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "${dashboard_payload}" $GRAFANA_URL/api/dashboards/db | jq .
 }
 
 function import_dashboards() {
@@ -112,7 +114,7 @@ function import_dashboards() {
     fi
   fi
   for file in $(ls $dashboards_dir | grep -iv 'folder.json'); do
-    create_dashboard "$file" "$folder_id" "$dashboards_dir"
+    create_dashboard "$file" "$folder_id" "$folder_name" "$dashboards_dir"
   done
 }
 
@@ -146,6 +148,8 @@ done
 
 DASHBOARDS_DIR="$BASE_DIR/../dashboards/$DB_PATH"
 FOLDER_FILE="$BASE_DIR/../dashboards/$DB_PATH/folder.json"
+
+printf "\nImporting local Grafana dashboards to %s\n" "$GRAFANA_URL"
 
 if [[ -n $ALL ]]; then
   for f in $(find "$DASHBOARDS_DIR" -name 'folder.json'); do
