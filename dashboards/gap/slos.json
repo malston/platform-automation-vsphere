@@ -764,8 +764,7 @@
       ]
     },
     "timezone": "",
-    "title": "Tanzu Application Service SLOs",
-    "uid": "hw2-tas-slos",
+    "title": "GAP TAS SLOs",
     "variables": {
       "list": []
     },
