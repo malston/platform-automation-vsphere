@@ -150,7 +150,7 @@ fi
 
 res=$(export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}")
 
-if [[ $res > 0 ]]; then
+if [[ $res = 1 ]]; then
   usage
   exit
 fi
