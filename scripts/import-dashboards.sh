@@ -77,7 +77,6 @@ function create_dashboard() {
 
   # envsubst < "$DASHBOARDS_DIR/$dashboard" > "/tmp/$dashboard"
   dashboard=$(cat $DASHBOARDS_DIR/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' | jq --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
-  set -x
   curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "${dashboard}" $GRAFANA_URL/api/dashboards/db
 }
 
