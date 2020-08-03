@@ -27,9 +27,9 @@ function usage() {
   echo "Examples:"
   printf "  %s --path=hw2/foundation/2.9 --folder=Foundation\n" "$0"
   printf "  %s --path=hw2/healthwatch/2.0 --folder=Healthwatch\n" "$0"
-  printf "  %s --path=hw2/tas/2.9 --folder='Tanzu Application Service'" "$0"
+  printf "  %s --path=hw2/tas/2.9 --folder='Tanzu Application Service'\n" "$0"
+  printf "  %s --all" "$0"
   printf "\n\n"
-  echo "Flags:"
   echo "Flags:"
   printf "%s, --help\n" "-h"
   printf "%s, --path string\tThe path to the folder under dashboards\n" "-p"
@@ -94,17 +94,17 @@ function export_dashboards() {
 
   if [[ -n "$folder_id" ]]; then
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
-    return 0
+    echo 0
   fi
 
   if [[ -n "$folder_name" ]]; then
     create_folder_file "$folder_name" "$folder_file"
     folder_id=$(cat "${folder_file}" | jq -r '.id')
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
-    return 0
+    echo 0
   fi
   
-  return 1
+  echo 1
 }
 
 while [ "$1" != "" ]; do
@@ -148,9 +148,9 @@ if [[ -n $ALL ]]; then
   exit
 fi
 
-export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}"
+res=$(export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}")
 
-if [[ $? > 0 ]]; then
+if [[ $res > 0 ]]; then
   usage
   exit
 fi
