@@ -1,6 +1,4 @@
 {
-  "folderId": $FOLDER_ID,
-  "overwrite": true,
   "dashboard": {
     "annotations": {
       "list": [
