@@ -83,13 +83,13 @@ function create_dashboard() {
   local folder_name="${3}"
   local dashboards_dir="${4}"
 
-  raw_payload=$(cat $dashboards_dir/$dashboard | jq --argjson overwrite true '. + {overwrite: $overwrite}' \
-    | jq --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
-  dashboard_value=$(echo $raw_payload | jq -r '.dashboard' | jq --argjson id null '. + {id: $id}')
-  dashboard_payload=$(echo $raw_payload | jq --argjson dashboard "${dashboard_value}" '. + {dashboard: $dashboard}')
+  raw_payload=$(cat $dashboards_dir/$dashboard | jq --compact-output --argjson overwrite true '. + {overwrite: $overwrite}' \
+                                                      | jq --compact-output --argjson folderId "${folder_id}" '. + {folderId: $folderId}')
+  dashboard_value=$(echo "$raw_payload" | tr '\r\n' ' ' | jq -r '.dashboard' | jq --argjson id null '. + {id: $id}')
+  dashboard_payload=$(echo "$raw_payload" | tr '\r\n' ' ' | jq --argjson dashboard "${dashboard_value}" '. + {dashboard: $dashboard}')
 
   printf "\n> Creating dashboard '%s' into '%s' folder\n" "$dashboard" "$folder_name"
-  curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "${dashboard_payload}" $GRAFANA_URL/api/dashboards/db | jq .
+  curl -X POST -s -k -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" -d "$(echo "${dashboard_payload}")" $GRAFANA_URL/api/dashboards/db | jq .
 }
 
 function import_dashboards() {
