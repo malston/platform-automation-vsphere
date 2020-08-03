@@ -1,26 +1,6 @@
 {
-  "meta": {
-    "type": "db",
-    "canSave": true,
-    "canEdit": true,
-    "canAdmin": true,
-    "canStar": true,
-    "slug": "logging",
-    "url": "/d/VlpnkQVMz/logging",
-    "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-08-02T00:24:51Z",
-    "updated": "2020-08-02T00:24:51Z",
-    "updatedBy": "Anonymous",
-    "createdBy": "Anonymous",
-    "version": 1,
-    "hasAcl": false,
-    "isFolder": false,
-    "folderId": 61,
-    "folderTitle": "GAP Dashboards",
-    "folderUrl": "/dashboards/f/F_3veUVMk/gap-dashboards",
-    "provisioned": false,
-    "provisionedExternalId": ""
-  },
+  "folderId": $FOLDER_ID,
+  "overwrite": true,
   "dashboard": {
     "annotations": {
       "list": [
@@ -38,7 +18,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 2,
-    "id": 79,
+    "id": null,
     "links": [],
     "panels": [
       {
@@ -47,20 +27,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  200000
-                ],
+                "params": [200000],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -278,20 +252,14 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [
-                  0.25
-                ],
+                "params": [0.25],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": [
-                  "A",
-                  "5m",
-                  "now"
-                ]
+                "params": ["A", "5m", "now"]
               },
               "reducer": {
                 "params": [],
@@ -527,21 +495,11 @@
         "2h",
         "1d"
       ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
+      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
     },
     "timezone": "",
     "title": "Logging",
-    "uid": "VlpnkQVMz",
+    "uid": null,
     "variables": {
       "list": []
     },
