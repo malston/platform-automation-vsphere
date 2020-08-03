@@ -25,15 +25,15 @@ function usage() {
   echo "  $0 [flags]"
   echo ""
   echo "Examples:"
-  printf "  %s --path=hw2/foundation/2.9 --folder=Foundation\n" "$0"
-  printf "  %s --path=hw2/healthwatch/2.0 --folder=Healthwatch\n" "$0"
-  printf "  %s --path=hw2/tas/2.9 --folder='Tanzu Application Service'\n" "$0"
+  printf "  %s --output=hw2/foundation/2.9 --folder=Foundation\n" "$0"
+  printf "  %s --output=hw2/healthwatch/2.0 --folder=Healthwatch\n" "$0"
+  printf "  %s --output=hw2/tas/2.9 --folder='Tanzu Application Service'\n" "$0"
   printf "  %s --all" "$0"
   printf "\n\n"
   echo "Flags:"
   printf "%s, --help\n" "-h"
-  printf "%s, --path string\tThe path to the folder under dashboards\n" "-p"
-  printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
+  printf "%s, --output string\tThe directory where dashboards are saved (Relative to ./dashboards)\n" "-o"
+  printf "%s, --folder string\tThe name of the Grafana folder where dashboards are stored\n" "-f"
 }
 
 function urlencode() {
@@ -117,7 +117,7 @@ while [ "$1" != "" ]; do
             usage
             exit
             ;;
-        -p | --path)
+        -o | --output)
             DB_PATH=$value
             ;;
         -f | --folder)

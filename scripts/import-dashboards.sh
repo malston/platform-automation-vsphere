@@ -25,14 +25,13 @@ function usage() {
   echo "  $0 [flags]"
   echo ""
   echo "Examples:"
-  printf "  %s --path=gap --folder='GAP Dashboards'\n" "$0"
-  printf "  %s --path=gap\n" "$0"
+  printf "  %s --input=gap --folder='GAP Dashboards'\n" "$0"
+  printf "  %s --input=gap\n" "$0"
   printf "  %s --all" "$0"
   printf "\n\n"
   echo "Flags:"
-  echo "Flags:"
   printf "%s, --help\n" "-h"
-  printf "%s, --path string\tThe path to the folder under dashboards\n" "-p"
+  printf "%s, --input string\tThe directory where dashboards are located (Relative to ./dashboards)\n" "-i"
   printf "%s, --folder string\tThe name of the Grafana folder\n" "-f"
 }
 
@@ -112,7 +111,7 @@ while [ "$1" != "" ]; do
             usage
             exit
             ;;
-        -p | --path)
+        -i | --input)
             DB_PATH=$value
             ;;
         -f | --folder)
