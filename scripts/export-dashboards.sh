@@ -69,13 +69,14 @@ function create_folder_file() {
   local folder_name="${1}"
   local folder_file="${2}"
 
-  folder_uid=$(find_folder "${folder_name}")
-  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/$folder_uid" | jq -r > "$folder_file"
+  folder=$(find_folder "${folder_name}")
+  folder_uid=$(echo $folder  | jq -r '.[] | select(.type=="dash-folder") | .uid')
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/folders/$folder_uid"
 }
 
 function find_folder() {
   local folder_name=$(urlencode "${1}")
-  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?query=$folder_name" | jq -r '.[].uid'
+  curl -s -k -H "Authorization: Bearer $KEY" "$GRAFANA_URL/api/search?query=$folder_name"
 }
 
 function export_dashboards() {
@@ -98,7 +99,8 @@ function export_dashboards() {
   fi
 
   if [[ -n "$folder_name" ]]; then
-    create_folder_file "$folder_name" "$folder_file"
+    folder=$(create_folder_file "$folder_name" "$folder_file")
+    echo $folder | jq -r > "$folder_file"
     folder_id=$(cat "${folder_file}" | jq -r '.id')
     get_dashboards "$folder_id" $(get_dashboard_dir "$folder_file")
     echo 0
@@ -152,5 +154,6 @@ res=$(export_dashboards "${FOLDER_FILE}" "${FOLDER_NAME}")
 
 if [[ $res = 1 ]]; then
   usage
+  echo -e "\nDid not export any dashboards. Make sure folder '$FOLDER_FILE' exists"
   exit
 fi
