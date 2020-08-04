@@ -1,8 +1,31 @@
 {
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "gap-platform-slos",
+    "url": "/d/SYNB3j4Gk/gap-platform-slos",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-03T22:16:44Z",
+    "updated": "2020-08-04T17:10:02Z",
+    "updatedBy": "admin",
+    "createdBy": "Anonymous",
+    "version": 13,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 360,
+    "folderTitle": "GAP Dashboards",
+    "folderUrl": "/dashboards/f/GwIBqj4Mk/gap-dashboards",
+    "provisioned": false,
+    "provisionedExternalId": ""
+  },
   "dashboard": {
     "annotations": {
       "list": [
         {
+          "$$hashKey": "object:91",
           "builtIn": 1,
           "datasource": "-- Grafana --",
           "enable": true,
@@ -17,7 +40,8 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 1,
-    "id": 43,
+    "id": 361,
+    "iteration": 1596560578005,
     "links": [],
     "panels": [
       {
@@ -29,32 +53,511 @@
           "x": 0,
           "y": 0
         },
-        "id": 8,
+        "id": 28,
         "panels": [
           {
-            "content": "\n# Service Level Objectives (SLOs)\n\nService Level Objectives are goals for the quality of service you provide to your customers. \n\nThey are based on Service Level _Indicators_ (SLIs), which are carefully-defined quantitative measures of the service you provide.\n\nHealthwatch has included two sample Service Level Indicators:\n\n\n1. `cf push` Availability, measured by conducting a `cf push` once every 5 minutes.\n2. The uptime of an app running on the platform, measured by periodically pinging the app's URL. This URL is configured in the Healthwatch tile.\n\nThis dashboard alerts based on error budget loss. An alert will fire if the given SLI is losing error budget for a specified period of time. The alert will also fire if error budget reaches zero.\n\nEvery foundation and team is different, and these SLOs and SLIs may not represent the level of service you would like to offer your customers.\n\nIdeas for other SLIs:\n- Canary App response time, measured by the `probe_duration_seconds` metric\n- The availability of a service running on your platform, like MySQL (`_p_mysql_available`) or RabbitMQ (`_p_rabbitmq_haproxy_heartbeat`)\n\nFor more information on SLIs and SLOs, see the [SRE Workbook](https://landing.google.com/sre/workbook/chapters/implementing-slos/) from Google.",
-            "datasource": null,
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#2f575e",
+              "#2f575e",
+              "#2f575e"
+            ],
+            "datasource": "prometheus",
+            "decimals": null,
+            "format": "percentunit",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
             "gridPos": {
-              "h": 12,
-              "w": 24,
+              "h": 4,
+              "w": 6,
               "x": 0,
               "y": 1
             },
-            "id": 18,
-            "mode": "markdown",
+            "hideTimeOverride": true,
+            "id": 49,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
             "targets": [
               {
-                "expr": "probe_success",
+                "expr": "avg_over_time(health_check_cliCommand_success{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s])",
+                "format": "time_series",
+                "hide": false,
+                "instant": true,
+                "interval": "",
+                "intervalFactor": 1,
+                "legendFormat": "",
                 "refId": "A"
               }
             ],
+            "thresholds": "98,",
+            "timeFrom": "5m",
+            "title": "CF Push Availability",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#d44a3a",
+              "rgba(237, 129, 40, 0.89)",
+              "#299c46"
+            ],
+            "datasource": null,
+            "format": "m",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 5,
+              "x": 6,
+              "y": 1
+            },
+            "hideTimeOverride": true,
+            "id": 38,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "(avg_over_time(health_check_cliCommand_success{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s]) - $cf_slo) * ($__range_s / 60)",
+                "format": "time_series",
+                "instant": true,
+                "intervalFactor": 1,
+                "refId": "B"
+              }
+            ],
+            "thresholds": "0, 5",
+            "timeFrom": "5m",
+            "title": "CF Push Error Budget Remaining",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#2f575e",
+              "#2f575e",
+              "#2f575e"
+            ],
+            "datasource": null,
+            "decimals": null,
+            "format": "percentunit",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 6,
+              "x": 11,
+              "y": 1
+            },
+            "hideTimeOverride": true,
+            "id": 48,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "avg_over_time(health_check_CanaryApp_available{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s])",
+                "format": "time_series",
+                "instant": true,
+                "intervalFactor": 1,
+                "refId": "B"
+              }
+            ],
+            "thresholds": "99,",
+            "timeFrom": "5m",
+            "title": "Test App Availability",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [],
+            "valueName": "current"
+          },
+          {
+            "cacheTimeout": null,
+            "colorBackground": true,
+            "colorValue": false,
+            "colors": [
+              "#d44a3a",
+              "rgba(237, 129, 40, 0.89)",
+              "#299c46"
+            ],
+            "datasource": null,
+            "format": "m",
+            "gauge": {
+              "maxValue": 100,
+              "minValue": 0,
+              "show": false,
+              "thresholdLabels": false,
+              "thresholdMarkers": true
+            },
+            "gridPos": {
+              "h": 4,
+              "w": 6,
+              "x": 17,
+              "y": 1
+            },
+            "hideTimeOverride": true,
+            "id": 47,
+            "interval": null,
+            "links": [],
+            "mappingType": 1,
+            "mappingTypes": [
+              {
+                "name": "value to text",
+                "value": 1
+              },
+              {
+                "name": "range to text",
+                "value": 2
+              }
+            ],
+            "maxDataPoints": 100,
+            "nullPointMode": "connected",
+            "nullText": null,
+            "postfix": "",
+            "postfixFontSize": "50%",
+            "prefix": "",
+            "prefixFontSize": "50%",
+            "rangeMaps": [
+              {
+                "from": "null",
+                "text": "N/A",
+                "to": "null"
+              }
+            ],
+            "sparkline": {
+              "fillColor": "rgba(31, 118, 189, 0.18)",
+              "full": false,
+              "lineColor": "rgb(31, 120, 193)",
+              "show": false
+            },
+            "tableColumn": "",
+            "targets": [
+              {
+                "expr": "(avg_over_time(health_check_CanaryApp_available{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s]) - $app_slo) * ($__range_s / 60)",
+                "format": "time_series",
+                "instant": true,
+                "intervalFactor": 1,
+                "refId": "B"
+              }
+            ],
+            "thresholds": "0, 5",
+            "timeFrom": "5m",
+            "title": "Test App Error Budget Remaining",
+            "type": "singlestat",
+            "valueFontSize": "80%",
+            "valueMaps": [],
+            "valueName": "current"
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 11,
+              "x": 0,
+              "y": 5
+            },
+            "hiddenSeries": false,
+            "id": 41,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": false,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "(avg_over_time(health_check_cliCommand_success{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s]) - $cf_slo) * ($__range_s / 60)",
+                "format": "time_series",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 1,
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
             "timeFrom": null,
+            "timeRegions": [],
             "timeShift": null,
-            "title": "",
-            "type": "text"
+            "title": "CF Push Success Error Budget",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": null,
+                "format": "m",
+                "label": "",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": null,
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 7,
+              "w": 12,
+              "x": 11,
+              "y": 5
+            },
+            "hiddenSeries": false,
+            "id": 46,
+            "legend": {
+              "alignAsTable": false,
+              "avg": false,
+              "current": false,
+              "max": false,
+              "min": false,
+              "rightSide": false,
+              "show": false,
+              "total": false,
+              "values": false
+            },
+            "lines": true,
+            "linewidth": 1,
+            "links": [],
+            "nullPointMode": "null",
+            "options": {
+              "dataLinks": []
+            },
+            "percentage": false,
+            "pointradius": 5,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "expr": "(avg_over_time(health_check_CanaryApp_available{job=\"$environment\",origin=\"healthwatch\"}[${__range_s}s]) - $app_slo) * ($__range_s / 60)",
+                "format": "time_series",
+                "hide": false,
+                "interval": "",
+                "intervalFactor": 1,
+                "refId": "A"
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Test App Success Error Budget",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "decimals": null,
+                "format": "m",
+                "label": "",
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": false
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
           }
         ],
-        "title": "About Service Level Objectives",
+        "title": "Service Level Objectives",
         "type": "row"
       },
       {
@@ -66,50 +569,11 @@
           "x": 0,
           "y": 1
         },
-        "id": 28,
+        "id": 43,
         "panels": [],
-        "title": "Service Level Objectives",
+        "repeat": null,
+        "title": "SLOs 28 Day",
         "type": "row"
-      },
-      {
-        "dashboardFilter": "",
-        "dashboardTags": [],
-        "datasource": null,
-        "description": "This panel displays all alerts configured on this instance of Grafana.",
-        "folderId": null,
-        "gridPos": {
-          "h": 21,
-          "w": 4,
-          "x": 0,
-          "y": 2
-        },
-        "id": 4,
-        "limit": 10,
-        "nameFilter": "",
-        "onlyAlertsOnDashboard": false,
-        "show": "current",
-        "sortOrder": 3,
-        "stateFilter": [],
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "All Alerts",
-        "type": "alertlist"
-      },
-      {
-        "content": "# CF Push Availability\n\n> An app developer should be able to push an app to the platform using the `cf push` command, with availability of 99%.\n\n\n\n",
-        "datasource": null,
-        "gridPos": {
-          "h": 10,
-          "w": 3,
-          "x": 4,
-          "y": 2
-        },
-        "id": 14,
-        "mode": "markdown",
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "Contract",
-        "type": "text"
       },
       {
         "alert": {
@@ -186,7 +650,7 @@
         "gridPos": {
           "h": 10,
           "w": 11,
-          "x": 7,
+          "x": 0,
           "y": 2
         },
         "hiddenSeries": false,
@@ -280,7 +744,7 @@
         "gridPos": {
           "h": 10,
           "w": 3,
-          "x": 18,
+          "x": 11,
           "y": 2
         },
         "id": 23,
@@ -339,7 +803,7 @@
         "gridPos": {
           "h": 10,
           "w": 3,
-          "x": 21,
+          "x": 14,
           "y": 2
         },
         "id": 20,
@@ -402,39 +866,6 @@
         "title": "28-Day Availability",
         "transparent": true,
         "type": "stat"
-      },
-      {
-        "content": "",
-        "datasource": null,
-        "gridPos": {
-          "h": 1,
-          "w": 19,
-          "x": 5,
-          "y": 12
-        },
-        "id": 26,
-        "mode": "markdown",
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "",
-        "transparent": true,
-        "type": "text"
-      },
-      {
-        "content": "# Canary App Availability\n\n> A representative application running on the platform should return a `200` response when pinged, with 99.9% availability.\n\n\n\n",
-        "datasource": null,
-        "gridPos": {
-          "h": 10,
-          "w": 3,
-          "x": 4,
-          "y": 13
-        },
-        "id": 22,
-        "mode": "markdown",
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "Contract",
-        "type": "text"
       },
       {
         "alert": {
@@ -512,8 +943,8 @@
         "gridPos": {
           "h": 10,
           "w": 11,
-          "x": 7,
-          "y": 13
+          "x": 0,
+          "y": 12
         },
         "hiddenSeries": false,
         "id": 19,
@@ -612,8 +1043,8 @@
         "gridPos": {
           "h": 10,
           "w": 3,
-          "x": 18,
-          "y": 13
+          "x": 11,
+          "y": 12
         },
         "id": 24,
         "options": {
@@ -673,8 +1104,8 @@
         "gridPos": {
           "h": 10,
           "w": 3,
-          "x": 21,
-          "y": 13
+          "x": 14,
+          "y": 12
         },
         "id": 12,
         "links": [],
@@ -736,6 +1167,23 @@
         "title": "28-day Availability",
         "transparent": true,
         "type": "stat"
+      },
+      {
+        "content": "",
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 19,
+          "x": 5,
+          "y": 22
+        },
+        "id": 26,
+        "mode": "markdown",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "text"
       }
     ],
     "refresh": "5m",
@@ -743,7 +1191,140 @@
     "style": "dark",
     "tags": [],
     "templating": {
-      "list": []
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "text": "healthwatch-pas-exporter",
+            "value": "healthwatch-pas-exporter"
+          },
+          "datasource": "prometheus",
+          "definition": "label_values(health_check_cliCommand_success, job)",
+          "hide": 0,
+          "includeAll": false,
+          "index": -1,
+          "label": "Environment",
+          "multi": false,
+          "name": "environment",
+          "options": [],
+          "query": "label_values(health_check_cliCommand_success, job)",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "tags": [],
+            "text": "0.99",
+            "value": "0.99"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "CF Push SLO (%)",
+          "multi": false,
+          "name": "cf_slo",
+          "options": [
+            {
+              "selected": false,
+              "text": "0.9",
+              "value": "0.9"
+            },
+            {
+              "selected": false,
+              "text": "0.95",
+              "value": "0.95"
+            },
+            {
+              "selected": true,
+              "text": "0.99",
+              "value": "0.99"
+            },
+            {
+              "selected": false,
+              "text": "0.995",
+              "value": "0.995"
+            },
+            {
+              "selected": false,
+              "text": "0.999",
+              "value": "0.999"
+            },
+            {
+              "selected": false,
+              "text": "0.9995",
+              "value": "0.9995"
+            },
+            {
+              "selected": false,
+              "text": "0.9999",
+              "value": "0.9999"
+            }
+          ],
+          "query": "0.9, 0.95, 0.99, 0.995, 0.999, 0.9995,0.9999",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "tags": [],
+            "text": "0.99",
+            "value": "0.99"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Canary App SLO (%)",
+          "multi": false,
+          "name": "app_slo",
+          "options": [
+            {
+              "selected": false,
+              "text": "0.9",
+              "value": "0.9"
+            },
+            {
+              "selected": false,
+              "text": "0.95",
+              "value": "0.95"
+            },
+            {
+              "selected": true,
+              "text": "0.99",
+              "value": "0.99"
+            },
+            {
+              "selected": false,
+              "text": "0.995",
+              "value": "0.995"
+            },
+            {
+              "selected": false,
+              "text": "0.999",
+              "value": "0.999"
+            },
+            {
+              "selected": false,
+              "text": "0.9995",
+              "value": "0.9995"
+            },
+            {
+              "selected": false,
+              "text": "0.9999",
+              "value": "0.9999"
+            }
+          ],
+          "query": "0.9, 0.95, 0.99, 0.995, 0.999, 0.9995,0.9999",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
     },
     "time": {
       "from": "now-28d",
@@ -761,13 +1342,25 @@
         "1h",
         "2h",
         "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
       ]
     },
     "timezone": "",
-    "title": "GAP TAS SLOs",
+    "title": "GAP Platform SLOs",
+    "uid": "SYNB3j4Gk",
     "variables": {
       "list": []
     },
-    "version": 2
+    "version": 13
   }
 }
