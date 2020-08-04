@@ -9,10 +9,10 @@
     "url": "/d/SYNB3j4Gk/gap-platform-slos",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-03T22:16:44Z",
-    "updated": "2020-08-04T17:14:07Z",
+    "updated": "2020-08-04T17:22:55Z",
     "updatedBy": "admin",
     "createdBy": "Anonymous",
-    "version": 14,
+    "version": 16,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 360,
@@ -25,6 +25,7 @@
     "annotations": {
       "list": [
         {
+          "$$hashKey": "object:58",
           "builtIn": 1,
           "datasource": "-- Grafana --",
           "enable": true,
@@ -40,7 +41,7 @@
     "gnetId": null,
     "graphTooltip": 0,
     "id": 361,
-    "iteration": 1596561213114,
+    "iteration": 1596561266018,
     "links": [],
     "panels": [
       {
@@ -559,7 +560,7 @@
         }
       },
       {
-        "collapsed": true,
+        "collapsed": false,
         "datasource": null,
         "gridPos": {
           "h": 1,
@@ -568,621 +569,620 @@
           "y": 12
         },
         "id": 43,
-        "panels": [
-          {
-            "alert": {
-              "alertRuleTags": {},
-              "conditions": [
-                {
-                  "evaluator": {
-                    "params": [
-                      -15
-                    ],
-                    "type": "lt"
-                  },
-                  "operator": {
-                    "type": "and"
-                  },
-                  "query": {
-                    "params": [
-                      "B",
-                      "10m",
-                      "now"
-                    ]
-                  },
-                  "reducer": {
-                    "params": [],
-                    "type": "diff"
-                  },
-                  "type": "query"
-                },
-                {
-                  "evaluator": {
-                    "params": [
-                      0
-                    ],
-                    "type": "lt"
-                  },
-                  "operator": {
-                    "type": "or"
-                  },
-                  "query": {
-                    "params": [
-                      "B",
-                      "5m",
-                      "now"
-                    ]
-                  },
-                  "reducer": {
-                    "params": [],
-                    "type": "last"
-                  },
-                  "type": "query"
-                }
-              ],
-              "executionErrorState": "alerting",
-              "for": "15m",
-              "frequency": "1m",
-              "handler": 1,
-              "message": "The `cf_push` command is unresponsive. \n\nThis alert fires when the command has been unresponsive for 10 minutes, or when error budget reaches zero.\n\nThis commonly occurs when:\n- Diego is under-scaled\n- UAA is unresponsive\n- Cloud Controller is unresponsive\n\nCheck the status of these components in order to diagnose the issue.",
-              "name": "CF Push Remaining Error Budget (last 28 days) alert",
-              "noDataState": "no_data",
-              "notifications": []
-            },
-            "aliasColors": {
-              "Error budget remaining": "super-light-blue",
-              "push Error budget remaining": "super-light-blue",
-              "push error budget remaining": "super-light-blue"
-            },
-            "bars": false,
-            "dashLength": 10,
-            "dashes": false,
-            "datasource": null,
-            "description": "## Description\n\nThe amount of time that the `cf push` service can be down, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect users of the platform, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
-            "fill": 1,
-            "fillGradient": 0,
-            "gridPos": {
-              "h": 10,
-              "w": 11,
-              "x": 0,
-              "y": 2
-            },
-            "hiddenSeries": false,
-            "id": 15,
-            "legend": {
-              "avg": false,
-              "current": false,
-              "max": false,
-              "min": false,
-              "show": true,
-              "total": false,
-              "values": false
-            },
-            "lines": true,
-            "linewidth": 2,
-            "nullPointMode": "null",
-            "options": {
-              "dataLinks": []
-            },
-            "percentage": false,
-            "pointradius": 2,
-            "points": false,
-            "renderer": "flot",
-            "seriesOverrides": [],
-            "spaceLength": 10,
-            "stack": false,
-            "steppedLine": false,
-            "targets": [
-              {
-                "expr": "# Note: to update your SLO target, change \"0.99\" to your desired uptime percentage and consider updating your alert threshold.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
-                "hide": false,
-                "interval": "",
-                "legendFormat": "{{task}} error budget remaining",
-                "refId": "B"
-              }
-            ],
-            "thresholds": [
-              {
-                "colorMode": "critical",
-                "fill": true,
-                "line": true,
-                "op": "lt",
-                "value": -15
-              }
-            ],
-            "timeFrom": null,
-            "timeRegions": [],
-            "timeShift": null,
-            "title": "CF Push Remaining Error Budget (28 days)",
-            "tooltip": {
-              "shared": true,
-              "sort": 0,
-              "value_type": "individual"
-            },
-            "transparent": true,
-            "type": "graph",
-            "xaxis": {
-              "buckets": null,
-              "mode": "time",
-              "name": null,
-              "show": true,
-              "values": []
-            },
-            "yaxes": [
-              {
-                "decimals": null,
-                "format": "m",
-                "label": null,
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": true
-              },
-              {
-                "format": "m",
-                "label": "",
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": false
-              }
-            ],
-            "yaxis": {
-              "align": false,
-              "alignLevel": null
-            }
-          },
-          {
-            "datasource": null,
-            "description": "## Description\n\nThe amount of time that the `cf push` service can be down, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect users of the platform, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
-            "gridPos": {
-              "h": 10,
-              "w": 3,
-              "x": 11,
-              "y": 2
-            },
-            "id": 23,
-            "options": {
-              "colorMode": "value",
-              "fieldOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "defaults": {
-                  "mappings": [],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "red",
-                        "value": null
-                      },
-                      {
-                        "color": "orange",
-                        "value": 30
-                      },
-                      {
-                        "color": "green",
-                        "value": 90
-                      }
-                    ]
-                  },
-                  "unit": "m"
-                },
-                "overrides": [],
-                "values": false
-              },
-              "graphMode": "none",
-              "justifyMode": "auto",
-              "orientation": "auto"
-            },
-            "pluginVersion": "6.7.3",
-            "targets": [
-              {
-                "expr": "# Note: to update your SLO target, change \"0.99\" to your desired percentage.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
-                "hide": false,
-                "legendFormat": "Error budget remaining",
-                "refId": "B"
-              }
-            ],
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "CF Push Remaining Error Budget",
-            "transparent": true,
-            "type": "stat"
-          },
-          {
-            "cacheTimeout": null,
-            "datasource": null,
-            "gridPos": {
-              "h": 10,
-              "w": 3,
-              "x": 14,
-              "y": 2
-            },
-            "id": 20,
-            "links": [],
-            "options": {
-              "colorMode": "value",
-              "fieldOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "defaults": {
-                  "mappings": [
-                    {
-                      "id": 0,
-                      "op": "=",
-                      "text": "N/A",
-                      "type": 1,
-                      "value": "null"
-                    }
-                  ],
-                  "nullValueMode": "connected",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "semi-dark-red",
-                        "value": null
-                      },
-                      {
-                        "color": "semi-dark-yellow",
-                        "value": 0.9
-                      },
-                      {
-                        "color": "green",
-                        "value": 0.99
-                      }
-                    ]
-                  },
-                  "title": "",
-                  "unit": "percentunit"
-                },
-                "overrides": [],
-                "values": false
-              },
-              "graphMode": "none",
-              "justifyMode": "auto",
-              "orientation": "horizontal"
-            },
-            "pluginVersion": "6.7.3",
-            "targets": [
-              {
-                "expr": "1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))",
-                "interval": "",
-                "legendFormat": "",
-                "refId": "A"
-              }
-            ],
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "28-Day Availability",
-            "transparent": true,
-            "type": "stat"
-          },
-          {
-            "alert": {
-              "alertRuleTags": {},
-              "conditions": [
-                {
-                  "evaluator": {
-                    "params": [
-                      -10
-                    ],
-                    "type": "lt"
-                  },
-                  "operator": {
-                    "type": "and"
-                  },
-                  "query": {
-                    "params": [
-                      "A",
-                      "5m",
-                      "now"
-                    ]
-                  },
-                  "reducer": {
-                    "params": [],
-                    "type": "diff"
-                  },
-                  "type": "query"
-                },
-                {
-                  "evaluator": {
-                    "params": [
-                      0
-                    ],
-                    "type": "lt"
-                  },
-                  "operator": {
-                    "type": "or"
-                  },
-                  "query": {
-                    "params": [
-                      "A",
-                      "5m",
-                      "now"
-                    ]
-                  },
-                  "reducer": {
-                    "params": [],
-                    "type": "last"
-                  },
-                  "type": "query"
-                }
-              ],
-              "executionErrorState": "alerting",
-              "for": "10m",
-              "frequency": "1m",
-              "handler": 1,
-              "message": "Your Target URLs, also known as Canary URLs, are unresponsive.\n\nThis alert fires when one or more of your Target URLs have been inaccessible for at least 5 minutes, or when your error budget is below zero.\n\nIf your target URLs are representative of other running applications, this could indicate that your end users are affected. \n\nRecommended troubleshooting steps:\n\nCheck to see if your canary app(s) are running. Then check your foundation's networking, capacity, and VM health.",
-              "name": "App Availability Remaining Error Budget (28 days) alert",
-              "noDataState": "no_data",
-              "notifications": []
-            },
-            "aliasColors": {
-              "Error budget remaining": "super-light-blue",
-              "http://chonk.io": "super-light-blue",
-              "https://pivotal.io": "light-blue",
-              "https://www.example.com": "dark-orange"
-            },
-            "bars": false,
-            "dashLength": 10,
-            "dashes": false,
-            "datasource": null,
-            "description": "## Description\n\nThe amount of time that a canary app (a representative application  running on the platform) can be unresponsive or return errors, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\nNote: While Healthwatch gathers data over its first 28 days, error budget will slowly increase to reflect availability over the gathered time period.\n\n## Use\n\nIn addition to identifying issues that affect end users, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
-            "fill": 1,
-            "fillGradient": 0,
-            "gridPos": {
-              "h": 10,
-              "w": 11,
-              "x": 0,
-              "y": 12
-            },
-            "hiddenSeries": false,
-            "id": 19,
-            "legend": {
-              "avg": false,
-              "current": false,
-              "max": false,
-              "min": false,
-              "show": true,
-              "total": false,
-              "values": false
-            },
-            "lines": true,
-            "linewidth": 2,
-            "nullPointMode": "null",
-            "options": {
-              "dataLinks": []
-            },
-            "percentage": false,
-            "pointradius": 2,
-            "points": false,
-            "renderer": "flot",
-            "seriesOverrides": [
-              {
-                "alias": "Error budget remaining",
-                "yaxis": 1
-              }
-            ],
-            "spaceLength": 10,
-            "stack": false,
-            "steppedLine": false,
-            "targets": [
-              {
-                "expr": "# To change your SLO, update the 0.999 below to your desired availability. \n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
-                "hide": false,
-                "interval": "",
-                "legendFormat": "{{instance}}",
-                "refId": "A"
-              }
-            ],
-            "thresholds": [
-              {
-                "colorMode": "critical",
-                "fill": true,
-                "line": true,
-                "op": "lt",
-                "value": -10,
-                "yaxis": "left"
-              }
-            ],
-            "timeFrom": null,
-            "timeRegions": [],
-            "timeShift": null,
-            "title": "Canary App Remaining Error Budget (28 days)",
-            "tooltip": {
-              "shared": true,
-              "sort": 0,
-              "value_type": "individual"
-            },
-            "transparent": true,
-            "type": "graph",
-            "xaxis": {
-              "buckets": null,
-              "mode": "time",
-              "name": null,
-              "show": true,
-              "values": []
-            },
-            "yaxes": [
-              {
-                "decimals": null,
-                "format": "m",
-                "label": null,
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": true
-              },
-              {
-                "format": "m",
-                "label": null,
-                "logBase": 1,
-                "max": null,
-                "min": null,
-                "show": true
-              }
-            ],
-            "yaxis": {
-              "align": false,
-              "alignLevel": null
-            }
-          },
-          {
-            "datasource": null,
-            "description": "## Description\n\nThe amount of time that a representative application  running on the platform can be unresponsive or return errors, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect end users, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
-            "gridPos": {
-              "h": 10,
-              "w": 3,
-              "x": 11,
-              "y": 12
-            },
-            "id": 24,
-            "options": {
-              "colorMode": "value",
-              "fieldOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "defaults": {
-                  "mappings": [],
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "red",
-                        "value": null
-                      },
-                      {
-                        "color": "orange",
-                        "value": 5
-                      },
-                      {
-                        "color": "green",
-                        "value": 15
-                      }
-                    ]
-                  },
-                  "title": "",
-                  "unit": "m"
-                },
-                "overrides": [],
-                "values": false
-              },
-              "graphMode": "none",
-              "justifyMode": "auto",
-              "orientation": "auto"
-            },
-            "pluginVersion": "6.7.3",
-            "targets": [
-              {
-                "expr": "# Note: to update your SLO target, change \"0.999\" to your desired percentage and consider updating your alert threshold.\n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
-                "hide": false,
-                "interval": "",
-                "legendFormat": "{{instance}}",
-                "refId": "B"
-              }
-            ],
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "Error Budget Remaining",
-            "transparent": true,
-            "type": "stat"
-          },
-          {
-            "cacheTimeout": null,
-            "datasource": null,
-            "gridPos": {
-              "h": 10,
-              "w": 3,
-              "x": 14,
-              "y": 12
-            },
-            "id": 12,
-            "links": [],
-            "options": {
-              "colorMode": "value",
-              "fieldOptions": {
-                "calcs": [
-                  "lastNotNull"
-                ],
-                "defaults": {
-                  "mappings": [
-                    {
-                      "id": 0,
-                      "op": "=",
-                      "text": "N/A",
-                      "type": 1,
-                      "value": "null"
-                    }
-                  ],
-                  "nullValueMode": "connected",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "semi-dark-red",
-                        "value": null
-                      },
-                      {
-                        "color": "semi-dark-yellow",
-                        "value": 0.95
-                      },
-                      {
-                        "color": "green",
-                        "value": 0.99
-                      }
-                    ]
-                  },
-                  "title": "",
-                  "unit": "percentunit"
-                },
-                "overrides": [],
-                "values": false
-              },
-              "graphMode": "none",
-              "justifyMode": "auto",
-              "orientation": "horizontal"
-            },
-            "pluginVersion": "6.7.3",
-            "targets": [
-              {
-                "expr": "avg_over_time(probe_success[28d])",
-                "interval": "",
-                "legendFormat": "{{instance}}",
-                "refId": "B"
-              }
-            ],
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "28-day Availability",
-            "transparent": true,
-            "type": "stat"
-          },
-          {
-            "content": "",
-            "datasource": null,
-            "gridPos": {
-              "h": 1,
-              "w": 19,
-              "x": 5,
-              "y": 22
-            },
-            "id": 26,
-            "mode": "markdown",
-            "timeFrom": null,
-            "timeShift": null,
-            "title": "",
-            "transparent": true,
-            "type": "text"
-          }
-        ],
+        "panels": [],
         "repeat": null,
         "title": "SLOs 28 Day",
         "type": "row"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nThe amount of time that the `cf push` service can be down, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect users of the platform, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
+        "gridPos": {
+          "h": 10,
+          "w": 3,
+          "x": 0,
+          "y": 13
+        },
+        "id": 23,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 30
+                  },
+                  {
+                    "color": "green",
+                    "value": 90
+                  }
+                ]
+              },
+              "unit": "m"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "# Note: to update your SLO target, change \"0.99\" to your desired percentage.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
+            "hide": false,
+            "legendFormat": "Error budget remaining",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "CF Push Remaining Error Budget",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "cacheTimeout": null,
+        "datasource": null,
+        "gridPos": {
+          "h": 10,
+          "w": 3,
+          "x": 3,
+          "y": 13
+        },
+        "id": 20,
+        "links": [],
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "nullValueMode": "connected",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-yellow",
+                    "value": 0.9
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.99
+                  }
+                ]
+              },
+              "title": "",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))",
+            "interval": "",
+            "legendFormat": "",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "28-Day Availability",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "cacheTimeout": null,
+        "datasource": null,
+        "gridPos": {
+          "h": 10,
+          "w": 7,
+          "x": 6,
+          "y": 13
+        },
+        "id": 12,
+        "links": [],
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "nullValueMode": "connected",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "semi-dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "semi-dark-yellow",
+                    "value": 0.95
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.99
+                  }
+                ]
+              },
+              "title": "",
+              "unit": "percentunit"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "horizontal"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "avg_over_time(probe_success[28d])",
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "28-day Availability",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "## Description\n\nThe amount of time that a representative application  running on the platform can be unresponsive or return errors, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect end users, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
+        "gridPos": {
+          "h": 10,
+          "w": 10,
+          "x": 13,
+          "y": 13
+        },
+        "id": 24,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 5
+                  },
+                  {
+                    "color": "green",
+                    "value": 15
+                  }
+                ]
+              },
+              "title": "",
+              "unit": "m"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "# Note: to update your SLO target, change \"0.999\" to your desired percentage and consider updating your alert threshold.\n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Error Budget Remaining",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  -15
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "B",
+                  "10m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "diff"
+              },
+              "type": "query"
+            },
+            {
+              "evaluator": {
+                "params": [
+                  0
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "or"
+              },
+              "query": {
+                "params": [
+                  "B",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "15m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "The `cf_push` command is unresponsive. \n\nThis alert fires when the command has been unresponsive for 10 minutes, or when error budget reaches zero.\n\nThis commonly occurs when:\n- Diego is under-scaled\n- UAA is unresponsive\n- Cloud Controller is unresponsive\n\nCheck the status of these components in order to diagnose the issue.",
+          "name": "CF Push Remaining Error Budget (last 28 days) alert",
+          "noDataState": "no_data",
+          "notifications": []
+        },
+        "aliasColors": {
+          "Error budget remaining": "super-light-blue",
+          "push Error budget remaining": "super-light-blue",
+          "push error budget remaining": "super-light-blue"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe amount of time that the `cf push` service can be down, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\n## Use\n\nIn addition to identifying issues that affect users of the platform, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 13,
+          "x": 0,
+          "y": 23
+        },
+        "hiddenSeries": false,
+        "id": 15,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "# Note: to update your SLO target, change \"0.99\" to your desired uptime percentage and consider updating your alert threshold.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{task}} error budget remaining",
+            "refId": "B"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": -15
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "CF Push Remaining Error Budget (28 days)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "m",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "m",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "alert": {
+          "alertRuleTags": {},
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [
+                  -10
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "diff"
+              },
+              "type": "query"
+            },
+            {
+              "evaluator": {
+                "params": [
+                  0
+                ],
+                "type": "lt"
+              },
+              "operator": {
+                "type": "or"
+              },
+              "query": {
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "for": "10m",
+          "frequency": "1m",
+          "handler": 1,
+          "message": "Your Target URLs, also known as Canary URLs, are unresponsive.\n\nThis alert fires when one or more of your Target URLs have been inaccessible for at least 5 minutes, or when your error budget is below zero.\n\nIf your target URLs are representative of other running applications, this could indicate that your end users are affected. \n\nRecommended troubleshooting steps:\n\nCheck to see if your canary app(s) are running. Then check your foundation's networking, capacity, and VM health.",
+          "name": "App Availability Remaining Error Budget (28 days) alert",
+          "noDataState": "no_data",
+          "notifications": []
+        },
+        "aliasColors": {
+          "Error budget remaining": "super-light-blue",
+          "http://chonk.io": "super-light-blue",
+          "https://pivotal.io": "light-blue",
+          "https://www.example.com": "dark-orange"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "## Description\n\nThe amount of time that a canary app (a representative application  running on the platform) can be unresponsive or return errors, while still meeting the SLO target. Error budget is calculated over a rolling 28-day window (28 days ago until now).\n\nNote: While Healthwatch gathers data over its first 28 days, error budget will slowly increase to reflect availability over the gathered time period.\n\n## Use\n\nIn addition to identifying issues that affect end users, this error budget helps operators to plan maintenance, upgrades, and other activities that cause downtime.",
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 10,
+          "x": 13,
+          "y": 23
+        },
+        "hiddenSeries": false,
+        "id": 19,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Error budget remaining",
+            "yaxis": 1
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "expr": "# To change your SLO, update the 0.999 below to your desired availability. \n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [
+          {
+            "colorMode": "critical",
+            "fill": true,
+            "line": true,
+            "op": "lt",
+            "value": -10,
+            "yaxis": "left"
+          }
+        ],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Canary App Remaining Error Budget (28 days)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transparent": true,
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "m",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "m",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "content": "",
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 19,
+          "x": 5,
+          "y": 33
+        },
+        "id": 26,
+        "mode": "markdown",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "transparent": true,
+        "type": "text"
       }
     ],
     "refresh": "5m",
@@ -1360,6 +1360,6 @@
     "variables": {
       "list": []
     },
-    "version": 14
+    "version": 16
   }
 }
