@@ -95,8 +95,12 @@ function create_dashboard() {
 function import_dashboards() {
   local folder_file="${1}"
   local dashboards_dir="${2}"
+  local folder_name="${3}" # Optional
 
-  folder_name=$(cat "${folder_file}" | jq -r '.title')
+  if [[ -z ${folder_name} ]]; then
+    folder_name=$(cat "${folder_file}" | jq -r '.title')
+  fi
+  
   folder_id=$(cat "${folder_file}" | jq -r '.id')
   if [[ ! $(folder_exists_by_id) ]]; then
     folder=$(create_folder "${folder_name}")
@@ -170,4 +174,4 @@ if [[ ! -f "$FOLDER_FILE" ]]; then
   exit
 fi
 
-import_dashboards "${FOLDER_FILE}" $(get_dashboard_dir "$FOLDER_FILE")
+import_dashboards "${FOLDER_FILE}" $(get_dashboard_dir "$FOLDER_FILE") "${FOLDER_NAME}"
