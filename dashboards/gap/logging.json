@@ -1,4 +1,26 @@
 {
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "logging",
+    "url": "/d/WlRk6e4Mk/logging",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-04T17:02:11Z",
+    "updated": "2020-08-04T17:02:11Z",
+    "updatedBy": "Anonymous",
+    "createdBy": "Anonymous",
+    "version": 1,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 360,
+    "folderTitle": "GAP Dashboards",
+    "folderUrl": "/dashboards/f/GwIBqj4Mk/gap-dashboards",
+    "provisioned": false,
+    "provisionedExternalId": ""
+  },
   "dashboard": {
     "annotations": {
       "list": [
@@ -16,7 +38,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 2,
-    "id": null,
+    "id": 365,
     "links": [],
     "panels": [
       {
@@ -25,14 +47,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [200000],
+                "params": [
+                  200000
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -250,14 +278,20 @@
           "conditions": [
             {
               "evaluator": {
-                "params": [0.25],
+                "params": [
+                  0.25
+                ],
                 "type": "gt"
               },
               "operator": {
                 "type": "and"
               },
               "query": {
-                "params": ["A", "5m", "now"]
+                "params": [
+                  "A",
+                  "5m",
+                  "now"
+                ]
               },
               "reducer": {
                 "params": [],
@@ -493,11 +527,21 @@
         "2h",
         "1d"
       ],
-      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
     },
     "timezone": "",
     "title": "Logging",
-    "uid": null,
+    "uid": "WlRk6e4Mk",
     "variables": {
       "list": []
     },
