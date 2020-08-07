@@ -9,10 +9,10 @@
     "url": "/d/SYNB3j4Gk/gap-platform-slos",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-03T22:16:44Z",
-    "updated": "2020-08-04T17:22:55Z",
-    "updatedBy": "admin",
+    "updated": "2020-08-04T17:39:20Z",
+    "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
-    "version": 16,
+    "version": 19,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 360,
@@ -63,9 +63,9 @@
         "colorBackground": true,
         "colorValue": false,
         "colors": [
-          "#2f575e",
-          "#2f575e",
-          "#2f575e"
+          "#F2495C",
+          "#FADE2A",
+          "#37872D"
         ],
         "datasource": "prometheus",
         "decimals": null,
@@ -90,10 +90,12 @@
         "mappingType": 1,
         "mappingTypes": [
           {
+            "$$hashKey": "object:142",
             "name": "value to text",
             "value": 1
           },
           {
+            "$$hashKey": "object:143",
             "name": "range to text",
             "value": 2
           }
@@ -221,9 +223,9 @@
         "colorBackground": true,
         "colorValue": false,
         "colors": [
-          "#2f575e",
-          "#2f575e",
-          "#2f575e"
+          "#C4162A",
+          "#E0B400",
+          "#37872D"
         ],
         "datasource": null,
         "decimals": null,
@@ -248,10 +250,12 @@
         "mappingType": 1,
         "mappingTypes": [
           {
+            "$$hashKey": "object:248",
             "name": "value to text",
             "value": 1
           },
           {
+            "$$hashKey": "object:249",
             "name": "range to text",
             "value": 2
           }
@@ -621,7 +625,7 @@
         "pluginVersion": "6.7.3",
         "targets": [
           {
-            "expr": "# Note: to update your SLO target, change \"0.99\" to your desired percentage.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
+            "expr": "# Note: to update your SLO target, change \"$cf_slo\" to your desired percentage.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - $cf_slo) * (28 * 24 * 60) ",
             "hide": false,
             "legendFormat": "Error budget remaining",
             "refId": "B"
@@ -821,7 +825,7 @@
         "pluginVersion": "6.7.3",
         "targets": [
           {
-            "expr": "# Note: to update your SLO target, change \"0.999\" to your desired percentage and consider updating your alert threshold.\n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
+            "expr": "# Note: to update your SLO target, change \"$app_slo\" to your desired percentage and consider updating your alert threshold.\n(avg_over_time(probe_success[28d]) - $app_slo) * on(instance) (count_over_time(probe_success[28d]) / 4)",
             "hide": false,
             "interval": "",
             "legendFormat": "{{instance}}",
@@ -939,7 +943,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "# Note: to update your SLO target, change \"0.99\" to your desired uptime percentage and consider updating your alert threshold.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - 0.99) * (28 * 24 * 60) ",
+            "expr": "# Note: to update your SLO target, change \"cf_slo\" to your desired uptime percentage and consider updating your alert threshold.\n((1 - (increase(pas_sli_task_failures_total{task=\"push\"}[28d]) / increase(pas_sli_task_runs_total{task=\"push\"}[28d]))) - $cf_slo) * (28 * 24 * 60) ",
             "hide": false,
             "interval": "",
             "legendFormat": "{{task}} error budget remaining",
@@ -1108,7 +1112,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "# To change your SLO, update the 0.999 below to your desired availability. \n(avg_over_time(probe_success[28d]) - 0.999) * on(instance) (count_over_time(probe_success[28d]) / 4)",
+            "expr": "# To change your SLO, update the $app_slo below to your desired availability. \n(avg_over_time(probe_success[28d]) - $app_slo) * on(instance) (count_over_time(probe_success[28d]) / 4)",
             "hide": false,
             "interval": "",
             "legendFormat": "{{instance}}",
@@ -1360,6 +1364,6 @@
     "variables": {
       "list": []
     },
-    "version": 16
+    "version": 19
   }
 }
