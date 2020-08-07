@@ -9,10 +9,10 @@
     "url": "/d/s2mk6e4Gz/routing",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-04T17:02:12Z",
-    "updated": "2020-08-05T16:39:16Z",
-    "updatedBy": "admin",
+    "updated": "2020-08-07T15:37:46Z",
+    "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
-    "version": 4,
+    "version": 7,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 360,
@@ -1425,6 +1425,6 @@
     "variables": {
       "list": []
     },
-    "version": 4
+    "version": 7
   }
 }
