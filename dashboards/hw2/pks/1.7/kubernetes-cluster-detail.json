@@ -9,10 +9,10 @@
     "url": "/d/hw2-kubernetes-cluster-detail/kubernetes-cluster-detail",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-04T18:26:54Z",
-    "updated": "2020-08-04T18:26:54Z",
+    "updated": "2020-08-07T16:47:09Z",
     "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
-    "version": 1,
+    "version": 2,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 370,
@@ -940,6 +940,6 @@
     "variables": {
       "list": []
     },
-    "version": 1
+    "version": 2
   }
 }

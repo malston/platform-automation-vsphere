@@ -9,10 +9,10 @@
     "url": "/d/hw2-bosh-director/bosh-director-health",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-04T18:27:00Z",
-    "updated": "2020-08-04T18:27:00Z",
+    "updated": "2020-08-07T16:47:02Z",
     "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
-    "version": 1,
+    "version": 2,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 369,
@@ -356,6 +356,6 @@
     "variables": {
       "list": []
     },
-    "version": 1
+    "version": 2
   }
 }
