@@ -1,0 +1,1132 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "slug": "pcf-component-health",
+    "url": "/d/xfhi97IGk/pcf-component-health",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2020-08-07T00:05:59Z",
+    "updated": "2020-08-07T15:27:17Z",
+    "updatedBy": "admin",
+    "createdBy": "admin",
+    "version": 8,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 360,
+    "folderTitle": "GAP Dashboards",
+    "folderUrl": "/dashboards/f/GwIBqj4Mk/gap-dashboards",
+    "provisioned": false,
+    "provisionedExternalId": ""
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "$$hashKey": "object:153",
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "% of Running Instances that are Healthy for each PCF Component",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 2,
+    "id": 405,
+    "iteration": 1596813245103,
+    "links": [],
+    "panels": [
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 0,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=~\"$job\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of $job instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 3
+        },
+        "id": 5,
+        "panels": [],
+        "title": "Key Components",
+        "type": "row"
+      },
+      {
+        "content": "<h1><center><a style=\"font-size:100%;color:powderblue;text-decoration:none\" href=\"https://docs.pivotal.io/platform/application-service/concepts/diego/diego-architecture.html\" target=\"_blank\">Diego</a></center></h1>",
+        "datasource": null,
+        "description": "Diego is a self-healing container management system that attempts to keep the correct number of instances running in Diego cells to avoid network failures and crashes. Diego schedules and runs Tasks and Long-Running Processes (LRP). ",
+        "gridPos": {
+          "h": 2,
+          "w": 8,
+          "x": 0,
+          "y": 4
+        },
+        "id": 17,
+        "links": [
+          {
+            "targetBlank": true,
+            "title": "Diego",
+            "url": "https://docs.pivotal.io/platform/application-service/concepts/diego/diego-architecture.html"
+          }
+        ],
+        "mode": "html",
+        "repeat": null,
+        "repeatDirection": "h",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "type": "text"
+      },
+      {
+        "content": "\n<h1><center><a style=\"font-size:100%;color:powderblue;text-decoration:none\" href=\"https://docs.pivotal.io/platform/application-service/concepts/architecture/cloud-controller.html\" target=\"_blank\">Cloud Controller</a></center></h1>\n\n\n\n",
+        "datasource": null,
+        "description": "The Cloud Controller in VMware Tanzu Application Service for VMs (TAS for VMs) provides REST API endpoints for clients to access the system. The Cloud Controller maintains a database with tables for orgs, spaces, services, user roles, and more.\n\n\nhttps://docs.pivotal.io/platform/application-service/concepts/architecture/cloud-controller.html",
+        "gridPos": {
+          "h": 2,
+          "w": 8,
+          "x": 8,
+          "y": 4
+        },
+        "id": 18,
+        "mode": "html",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "type": "text"
+      },
+      {
+        "content": "\n<h1><center><a style=\"font-size:100%;color:powderblue;text-decoration:none\" href=\"https://docs.pivotal.io/platform/application-service/2-10/routing/index.html\" target=\"_blank\">Routing</a></center></h1>\n\n\n\n",
+        "datasource": null,
+        "description": "Gorouter routes traffic coming into VMware Tanzu Application Service for VMs (TAS for VMs) to the appropriate component, whether the request comes from an operator addressing the Cloud Controller or from an application user accessing an app running on a Diego Cell. Handling both platform and app requests with the same process centralizes routing logic and simplifies support for WebSocket and other types of traffic (for example, through HTTP CONNECT).\n\nhttps://docs.pivotal.io/platform/application-service/concepts/architecture/router.html",
+        "gridPos": {
+          "h": 2,
+          "w": 7,
+          "x": 16,
+          "y": 4
+        },
+        "id": 21,
+        "mode": "html",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "type": "text"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 4,
+          "w": 4,
+          "x": 0,
+          "y": 6
+        },
+        "id": 9,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"diego_cell\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Diego Cell instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 2,
+          "w": 4,
+          "x": 4,
+          "y": 6
+        },
+        "id": 10,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"diego_database\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Diego Database instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 3,
+          "w": 8,
+          "x": 8,
+          "y": 6
+        },
+        "id": 7,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "min"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "title": "",
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"cloud_controller\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "cloud_controller",
+            "refId": "A"
+          },
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"cloud_controller_worker\", origin=\"system_metrics_agent\"})",
+            "format": "time_series",
+            "hide": false,
+            "instant": false,
+            "interval": "",
+            "legendFormat": "cloud_controller_worker",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of CAPI instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 16,
+          "y": 6
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"router\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Router instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "NATS is the internal messaging system used by Diego to send messages to the Router in order to register and de-register routes to the cell’s app instances\n\nhttps://docs.pivotal.io/platform/application-service/2-10/concepts/architecture/messaging-nats.html",
+        "gridPos": {
+          "h": 3,
+          "w": 3,
+          "x": 20,
+          "y": 6
+        },
+        "id": 13,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"nats\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of NATS instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 2,
+          "w": 4,
+          "x": 4,
+          "y": 8
+        },
+        "id": 8,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"diego_brain\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Diego Brain instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 4,
+          "w": 5,
+          "x": 8,
+          "y": 9
+        },
+        "id": 15,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"mysql\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "mysql",
+            "refId": "B"
+          },
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"mysql_proxy\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "mysql_proxy",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of MySQL instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 4,
+          "w": 3,
+          "x": 13,
+          "y": 9
+        },
+        "id": 14,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"uaa\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of UAA instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "content": "<h1><center><a style=\"font-size:100%;color:powderblue;text-decoration:none\" href=\"https://docs.pivotal.io/platform/application-service/loggregator/architecture.html\" target=\"_blank\">Loggregator</a></center></h1>\n",
+        "datasource": null,
+        "description": "Loggregator gathers and streams logs and metrics from user apps in an Ops Manager deployment. It also gathers and streams metrics from Ops Manager components and health metrics from BOSH-deployed VMs. Loggregator allows you to view these logs and metrics through the Loggregator CLI plugins or through a third-party service.\n\nhttps://docs.pivotal.io/platform/application-service/loggregator/architecture.html",
+        "gridPos": {
+          "h": 2,
+          "w": 8,
+          "x": 0,
+          "y": 10
+        },
+        "id": 19,
+        "mode": "html",
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "",
+        "type": "text"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 0,
+          "y": 12
+        },
+        "id": 12,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"loggregator_trafficcontroller\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Loggregator TC instances running",
+        "transparent": true,
+        "type": "stat"
+      },
+      {
+        "datasource": null,
+        "description": "",
+        "gridPos": {
+          "h": 3,
+          "w": 4,
+          "x": 4,
+          "y": 12
+        },
+        "id": 11,
+        "options": {
+          "colorMode": "value",
+          "fieldOptions": {
+            "calcs": [
+              "last"
+            ],
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 25
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 50
+                  },
+                  {
+                    "color": "green",
+                    "value": 75
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [],
+            "values": false
+          },
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto"
+        },
+        "pluginVersion": "6.7.3",
+        "targets": [
+          {
+            "expr": "100 * avg(system_healthy{exported_job=\"doppler\", origin=\"system_metrics_agent\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% of Doppler instances running",
+        "transparent": true,
+        "type": "stat"
+      }
+    ],
+    "schemaVersion": 22,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": false,
+            "tags": [],
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "prometheus",
+          "definition": "label_values(system_healthy, exported_job)",
+          "hide": 0,
+          "includeAll": true,
+          "index": -1,
+          "label": "Component",
+          "multi": false,
+          "name": "job",
+          "options": [
+            {
+              "$$hashKey": "object:975",
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            },
+            {
+              "$$hashKey": "object:976",
+              "selected": false,
+              "text": "bosh-deployments-exporter",
+              "value": "bosh-deployments-exporter"
+            },
+            {
+              "$$hashKey": "object:977",
+              "selected": false,
+              "text": "bosh-health-check",
+              "value": "bosh-health-check"
+            },
+            {
+              "$$hashKey": "object:978",
+              "selected": false,
+              "text": "bosh-health-exporter",
+              "value": "bosh-health-exporter"
+            },
+            {
+              "$$hashKey": "object:979",
+              "selected": false,
+              "text": "clock_global",
+              "value": "clock_global"
+            },
+            {
+              "$$hashKey": "object:980",
+              "selected": false,
+              "text": "cloud_controller",
+              "value": "cloud_controller"
+            },
+            {
+              "$$hashKey": "object:981",
+              "selected": false,
+              "text": "cloud_controller_worker",
+              "value": "cloud_controller_worker"
+            },
+            {
+              "$$hashKey": "object:982",
+              "selected": false,
+              "text": "credhub",
+              "value": "credhub"
+            },
+            {
+              "$$hashKey": "object:983",
+              "selected": false,
+              "text": "dedicated-mysql-broker",
+              "value": "dedicated-mysql-broker"
+            },
+            {
+              "$$hashKey": "object:984",
+              "selected": false,
+              "text": "diego_brain",
+              "value": "diego_brain"
+            },
+            {
+              "$$hashKey": "object:985",
+              "selected": false,
+              "text": "diego_cell",
+              "value": "diego_cell"
+            },
+            {
+              "$$hashKey": "object:986",
+              "selected": false,
+              "text": "diego_database",
+              "value": "diego_database"
+            },
+            {
+              "$$hashKey": "object:987",
+              "selected": false,
+              "text": "doppler",
+              "value": "doppler"
+            },
+            {
+              "$$hashKey": "object:988",
+              "selected": false,
+              "text": "grafana",
+              "value": "grafana"
+            },
+            {
+              "$$hashKey": "object:989",
+              "selected": false,
+              "text": "harbor-app",
+              "value": "harbor-app"
+            },
+            {
+              "$$hashKey": "object:990",
+              "selected": false,
+              "text": "healthwatch-forwarder",
+              "value": "healthwatch-forwarder"
+            },
+            {
+              "$$hashKey": "object:991",
+              "selected": false,
+              "text": "loggregator_trafficcontroller",
+              "value": "loggregator_trafficcontroller"
+            },
+            {
+              "$$hashKey": "object:992",
+              "selected": false,
+              "text": "master",
+              "value": "master"
+            },
+            {
+              "$$hashKey": "object:993",
+              "selected": false,
+              "text": "mysql",
+              "value": "mysql"
+            },
+            {
+              "$$hashKey": "object:994",
+              "selected": false,
+              "text": "mysql_proxy",
+              "value": "mysql_proxy"
+            },
+            {
+              "$$hashKey": "object:1019",
+              "selected": false,
+              "text": "nats",
+              "value": "nats"
+            },
+            {
+              "$$hashKey": "object:1020",
+              "selected": false,
+              "text": "nfs_server",
+              "value": "nfs_server"
+            },
+            {
+              "$$hashKey": "object:1021",
+              "selected": false,
+              "text": "pas-exporter-counter",
+              "value": "pas-exporter-counter"
+            },
+            {
+              "$$hashKey": "object:1022",
+              "selected": false,
+              "text": "pas-exporter-gauge",
+              "value": "pas-exporter-gauge"
+            },
+            {
+              "$$hashKey": "object:1023",
+              "selected": false,
+              "text": "pas-exporter-timer",
+              "value": "pas-exporter-timer"
+            },
+            {
+              "$$hashKey": "object:1024",
+              "selected": false,
+              "text": "pas-sli-exporter",
+              "value": "pas-sli-exporter"
+            },
+            {
+              "$$hashKey": "object:1025",
+              "selected": false,
+              "text": "pivotal-container-service",
+              "value": "pivotal-container-service"
+            },
+            {
+              "$$hashKey": "object:1026",
+              "selected": false,
+              "text": "pks-db",
+              "value": "pks-db"
+            },
+            {
+              "$$hashKey": "object:1027",
+              "selected": false,
+              "text": "pxc",
+              "value": "pxc"
+            },
+            {
+              "$$hashKey": "object:1028",
+              "selected": false,
+              "text": "pxc-proxy",
+              "value": "pxc-proxy"
+            },
+            {
+              "$$hashKey": "object:1029",
+              "selected": false,
+              "text": "redis",
+              "value": "redis"
+            },
+            {
+              "$$hashKey": "object:1030",
+              "selected": false,
+              "text": "router",
+              "value": "router"
+            },
+            {
+              "$$hashKey": "object:1031",
+              "selected": false,
+              "text": "tsdb",
+              "value": "tsdb"
+            },
+            {
+              "$$hashKey": "object:1032",
+              "selected": false,
+              "text": "uaa",
+              "value": "uaa"
+            },
+            {
+              "$$hashKey": "object:1033",
+              "selected": false,
+              "text": "worker",
+              "value": "worker"
+            }
+          ],
+          "query": "label_values(system_healthy, exported_job)",
+          "refresh": 0,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "PCF Component Health",
+    "uid": "xfhi97IGk",
+    "variables": {
+      "list": []
+    },
+    "version": 8
+  }
+}
