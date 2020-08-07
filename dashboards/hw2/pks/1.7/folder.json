@@ -1,3 +1,15 @@
 {
-  "title": "Enterprise PKS"
+  "id": 370,
+  "uid": "QEmrWRIMk",
+  "title": "Enterprise PKS",
+  "url": "/dashboards/f/QEmrWRIMk/enterprise-pks",
+  "hasAcl": false,
+  "canSave": true,
+  "canEdit": true,
+  "canAdmin": true,
+  "createdBy": "Anonymous",
+  "created": "2020-08-04T18:26:52Z",
+  "updatedBy": "Anonymous",
+  "updated": "2020-08-04T18:26:52Z",
+  "version": 1
 }

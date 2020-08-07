@@ -8,16 +8,16 @@
     "slug": "logging-and-metrics-pipeline",
     "url": "/d/hw2-logging-metrics/logging-and-metrics-pipeline",
     "expires": "0001-01-01T00:00:00Z",
-    "created": "2020-07-31T19:51:42Z",
-    "updated": "2020-08-01T19:13:48Z",
+    "created": "2020-08-04T18:27:20Z",
+    "updated": "2020-08-04T18:27:20Z",
     "updatedBy": "Anonymous",
     "createdBy": "Anonymous",
-    "version": 2,
+    "version": 1,
     "hasAcl": false,
     "isFolder": false,
-    "folderId": 26,
+    "folderId": 391,
     "folderTitle": "Tanzu Application Service",
-    "folderUrl": "/dashboards/f/YxpQqLVGz/tanzu-application-service",
+    "folderUrl": "/dashboards/f/PXwrWgSMz/tanzu-application-service",
     "provisioned": true,
     "provisionedExternalId": "logging-and-metrics.json"
   },
@@ -39,7 +39,7 @@
     "editable": true,
     "gnetId": null,
     "graphTooltip": 1,
-    "id": 40,
+    "id": 393,
     "links": [],
     "panels": [
       {
@@ -749,6 +749,6 @@
     "variables": {
       "list": []
     },
-    "version": 2
+    "version": 1
   }
 }

@@ -1,3 +1,15 @@
 {
-  "title": "Tanzu Application Service"
+  "id": 391,
+  "uid": "PXwrWgSMz",
+  "title": "Tanzu Application Service",
+  "url": "/dashboards/f/PXwrWgSMz/tanzu-application-service",
+  "hasAcl": false,
+  "canSave": true,
+  "canEdit": true,
+  "canAdmin": true,
+  "createdBy": "Anonymous",
+  "created": "2020-08-04T18:27:16Z",
+  "updatedBy": "Anonymous",
+  "updated": "2020-08-04T18:27:16Z",
+  "version": 1
 }

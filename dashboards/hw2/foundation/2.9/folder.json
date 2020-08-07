@@ -1,3 +1,15 @@
 {
-  "title": "Foundation"
+  "id": 369,
+  "uid": "jBm9WgIMk",
+  "title": "Foundation",
+  "url": "/dashboards/f/jBm9WgIMk/foundation",
+  "hasAcl": false,
+  "canSave": true,
+  "canEdit": true,
+  "canAdmin": true,
+  "createdBy": "Anonymous",
+  "created": "2020-08-04T18:26:52Z",
+  "updatedBy": "Anonymous",
+  "updated": "2020-08-04T18:26:52Z",
+  "version": 1
 }
