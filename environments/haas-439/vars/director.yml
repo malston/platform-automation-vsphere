@@ -11,9 +11,6 @@ bosh_vm_folder: pks_vms
 bosh_template_folder: pks_templates
 bosh_disk_path: pks_disks
 ntp: time.svc.pivotal.io
-nsx_host: nsxmgr-01.haas-439.pez.vmware.com
-nsx_admin_user: admin
-nsx_admin_password: "((nsx_admin_password))"
 az1_cluster: Cluster
 az1_resource_pool: pks-az1
 az2_cluster: Cluster
@@ -31,5 +28,7 @@ services_reserved_ip_ranges: 172.16.2.1-172.16.2.10
 services_dns: 10.192.2.10,10.192.2.11
 services_gateway: 172.16.2.1
 nsx_host: nsxmgr-01.haas-439.pez.vmware.com
+nsx_admin_user: admin
+nsx_admin_password: "((nsx_admin_password))"
 nsx_ca_cert: ((nsx_ca.certificate))
 
