@@ -7,18 +7,18 @@ All Grafana dashboards are maintained in version control in the [./dashboards](.
 - To import a set of dashboards located under a folder
 
     ```sh
-    ./scripts/import-dashboards.sh --path=gap
+    ./scripts/import-dashboards.sh --path=acme
     ```
 
-    This command requires a `folder.json` in the `gap` folder to indicate where the dashboard goes in Grafana
+    This command requires a `folder.json` in the `acme` folder to indicate where the dashboard goes in Grafana
 
 - To import a set of dashboards located under a folder named 'Enterprise PKS'
 
     ```sh
-    ./scripts/import-dashboards.sh --path=gap --folder='Enterprise PKS'
+    ./scripts/import-dashboards.sh --path=acme --folder='Enterprise PKS'
     ```
 
-    This command does not require there to be a `folder.json` file under the `gap` path.
+    This command does not require there to be a `folder.json` file under the `acme` path.
 
 - To import all the dashboards, you need to make sure you have a `folder.json` in every folder.
 

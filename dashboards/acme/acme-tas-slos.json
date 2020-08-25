@@ -5,8 +5,8 @@
     "canEdit": true,
     "canAdmin": true,
     "canStar": true,
-    "slug": "gap-tas-slos",
-    "url": "/d/PDMzee4Gk/gap-tas-slos",
+    "slug": "acme-tas-slos",
+    "url": "/d/PDMzee4Gk/acme-tas-slos",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2020-08-07T15:33:10Z",
     "updated": "2020-08-07T16:47:28Z",
@@ -16,8 +16,8 @@
     "hasAcl": false,
     "isFolder": false,
     "folderId": 360,
-    "folderTitle": "GAP Dashboards",
-    "folderUrl": "/dashboards/f/GwIBqj4Mk/gap-dashboards",
+    "folderTitle": "Acme Dashboards",
+    "folderUrl": "/dashboards/f/GwIBqj4Mk/acme-dashboards",
     "provisioned": false,
     "provisionedExternalId": ""
   },
@@ -786,7 +786,7 @@
       ]
     },
     "timezone": "",
-    "title": "GAP TAS SLOs",
+    "title": "Acme TAS SLOs",
     "uid": "PDMzee4Gk",
     "variables": {
       "list": []
