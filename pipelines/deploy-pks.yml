@@ -228,6 +228,9 @@ jobs:
           - get: config
           - get: state
           - get: opsman-product
+            params:
+              globs:
+                - '*.ova'
           - get: installation
       - task: credhub-interpolate
         <<: *credhub-interpolate
