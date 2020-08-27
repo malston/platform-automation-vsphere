@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -eux
+set -eu
 
 __PWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
