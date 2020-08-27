@@ -34,8 +34,8 @@ az-configuration:
     resource_pool: ((az2_resource_pool))
 - name: pks-az3
   clusters:
-  - cluster: ((az2_cluster))
-    resource_pool: ((az2_resource_pool))
+  - cluster: ((az3_cluster))
+    resource_pool: ((az3_resource_pool))
 network-assignment:
   singleton_availability_zone:
     name: pks-az1
