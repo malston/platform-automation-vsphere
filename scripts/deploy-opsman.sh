@@ -4,6 +4,17 @@ set -eux
 
 __PWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# version=2.9.6
+
+# mkdir -p ./downloads
+
+# pushd ./downloads > /dev/null
+#   pivnet login --api-token $PIVNET_TOKEN
+#   pivnet download-product-files -p ops-manager -r ${version} -g "ops-manager-vsphere-*.ova"
+#   pivnet logout
+# popd > /dev/null
+
+
 ENV_DIRECTORY="${__PWD}/../environments/${ENVIRONMENT_NAME}"
 
 SSH_PUBLIC_KEY=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/opsman_ssh_key" -k public_key)
@@ -50,4 +61,4 @@ govc import.spec ./downloads/ops-manager-vsphere-*.ova \
    > /tmp/opsman_ova.json
 
 govc import.ova --options=/tmp/opsman_ova.json \
-   ./downloads/ops-manager-vsphere-*.ova \
+   "${__PWD}/../downloads/ops-manager-vsphere-*.ova" \
