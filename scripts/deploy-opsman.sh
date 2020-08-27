@@ -19,6 +19,12 @@ ENV_DIRECTORY="${__PWD}/../environments/${ENVIRONMENT_NAME}"
 
 SSH_PUBLIC_KEY=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/opsman_ssh_key" -k public_key)
 export SSH_PUBLIC_KEY
+
+if [[ -z $SSH_PUBLIC_KEY ]]; then
+  echo "Could not set the opsman public key"
+  exit 1
+fi
+
 rp=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_resource_pool)
 dc=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /vsphere_datacenter)
 cluster=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /vsphere_cluster)
