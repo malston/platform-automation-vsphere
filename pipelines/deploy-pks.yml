@@ -135,7 +135,7 @@ jobs:
         params:
           VARS_FILES: vars/environments/((environment))/vars/opsman.yml
           STATE_FILE: state.yml
-          OPSMAN_CONFIG_FILE: /environments/((environment))/config/opsman.yml
+          OPSMAN_CONFIG_FILE: environments/((environment))/config/opsman.yml
         ensure: &put-state
           do:
             - put: state
@@ -244,7 +244,7 @@ jobs:
           VARS_FILES: vars/environments/((environment))/vars/opsman.yml
           ENV_FILE: environments/((environment))/env/env.yml
           STATE_FILE: state.yml
-          OPSMAN_CONFIG_FILE: /environments/((environment))/config/opsman.yml
+          OPSMAN_CONFIG_FILE: environments/((environment))/config/opsman.yml
           INSTALLATION_FILE: installation-*.zip
         ensure: *put-state
       - task: configure-director
