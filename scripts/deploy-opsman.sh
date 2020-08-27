@@ -18,8 +18,8 @@ __PWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ENV_DIRECTORY="${__PWD}/../environments/${ENVIRONMENT_NAME}"
 
 SSH_PUBLIC_KEY=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/opsman_ssh_key" -k public_key)
-VSPHERE_USER=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/vcenter_username" -k public_key)
-VSPHERE_PASSWORD=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/vcenter_password" -k public_key)
+VSPHERE_USER=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/vcenter_username" -q)
+VSPHERE_PASSWORD=$(credhub get -n "/platform-automation/${ENVIRONMENT_NAME}/vcenter_password" -q)
 export SSH_PUBLIC_KEY
 
 if [[ -z $SSH_PUBLIC_KEY ]]; then
