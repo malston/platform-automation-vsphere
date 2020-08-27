@@ -31,7 +31,7 @@ cluster=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /vsphere_cluster)
 
 export DATASTORE=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_datastore)
 export NETWORK=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_network)
-export VSPHERE_HOST=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_host)
+export VSPHERE_HOST=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /vcenter_host)
 export OPSMAN_PRIVATE_IP=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_private_ip)
 export OPSMAN_NETMASK=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_netmask)
 export OPSMAN_GATEWAY=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_network_gateway)
