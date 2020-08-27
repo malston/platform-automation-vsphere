@@ -9,7 +9,7 @@ persistent_datastores: LUN01
 bosh_post_deploy_enabled: true
 bosh_vm_folder: pks_vms
 bosh_template_folder: pks_templates
-bosh_disk_path: pks_disks
+bosh_disk_path: bosh_disks
 ntp: time.svc.pivotal.io
 az1_cluster: Cluster
 az1_resource_pool: pks-az1
