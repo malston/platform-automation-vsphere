@@ -44,7 +44,7 @@ network-assignment:
 networks-configuration:
   icmp_checks_enabled: false
   networks:
-  - name: infrastructure
+  - name: PKS-Infrastructure
     service_network: false
     subnets:
     - iaas_identifier: ((infrastructure_network))
@@ -56,7 +56,7 @@ networks-configuration:
       - pks-az1
       - pks-az2
       - pks-az3
-  - name: services
+  - name: PKS-Services
     service_network: false
     subnets:
     - iaas_identifier: ((services_network))
@@ -68,4 +68,14 @@ networks-configuration:
       - pks-az1
       - pks-az2
       - pks-az3
-
+  - name: TAS-Deployment
+    subnets:
+    - iaas_identifier: TAS-Deployment
+      cidr: 172.16.3.0/24
+      dns: 10.192.2.10,10.192.2.11
+      gateway: 172.16.3.1
+      reserved_ip_ranges: 172.16.3.1-172.16.3.10
+      availability_zone_names:
+      - pks-az1
+      - pks-az2
+      - pks-az3
