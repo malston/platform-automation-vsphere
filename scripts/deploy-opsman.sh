@@ -42,9 +42,9 @@ export DNS=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /opsman_dns)
 export OPSMAN_VM_NAME=$(bosh int ${ENV_DIRECTORY}/vars/opsman.yml --path /vm_name)
 if [ -z "$rp" ]
   then
-    export OM_opsman_resource_pool="/${dc}/host/${cluster}"
+    export OPSMAN_RESOURCE_POOL="/${dc}/host/${cluster}"
 else
-    export OM_opsman_resource_pool="/${dc}/host/${cluster}/Resources/${rp}"
+    export OPSMAN_RESOURCE_POOL="/${dc}/host/${cluster}/Resources/${rp}"
 fi
 
 export GOVC_INSECURE=1
@@ -53,7 +53,7 @@ export GOVC_USERNAME=$VSPHERE_USER
 export GOVC_PASSWORD=$VSPHERE_PASSWORD
 export GOVC_DATASTORE=$DATASTORE
 export GOVC_NETWORK=$NETWORK
-export GOVC_RESOURCE_POOL=$OM_opsman_resource_pool
+export GOVC_RESOURCE_POOL=$OPSMAN_RESOURCE_POOL
 
 govc import.spec ./downloads/ops-manager-vsphere-*.ova \
    | jq --arg network "${NETWORK}" -r '.NetworkMapping[0].Network=$network' \
