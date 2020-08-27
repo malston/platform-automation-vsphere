@@ -14,4 +14,4 @@ opsman_dns: 10.192.2.10,10.192.2.11
 opsman_ntp: time.svc.pivotal.io
 opsman_netmask: 255.255.255.0
 opsman_ssh_public_key: ((opsman_ssh_key.public_key))
-vm_name: pks-opsman
+vm_name: opsmgr-02
