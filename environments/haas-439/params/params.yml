@@ -8,7 +8,7 @@ s3:
   endpoint: https://minio.haas-439.pez.vmware.com
 git_repository_url: git@github.com:malston/platform-automation-vsphere.git
 
-opsman_version: ^2\.[10]\.\d+.*$
+opsman_version: ^2.9.[0-9]+$
 opsman_product_slug: ops-manager
 
 platform_automation_slug: platform-automation
