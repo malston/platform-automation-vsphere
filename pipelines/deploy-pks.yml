@@ -188,7 +188,7 @@ jobs:
             params:
               unpack: true
               globs: ["*image*"]
-            # passed: [install-opsman]
+            passed: [install-opsman]
           - get: platform-automation-tasks
             resource: platform-automation
             params:
@@ -224,7 +224,7 @@ jobs:
             params:
               unpack: true
               globs: ["*tasks*"]
-            # passed: [install-opsman]
+            passed: [install-opsman]
           - get: config
           - get: state
           - get: opsman-product
