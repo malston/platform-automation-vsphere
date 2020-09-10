@@ -122,6 +122,7 @@ jobs:
           - get: config
           - get: state
           - get: opsman-product
+            trigger: true
             params:
               globs:
                 - '*.ova'
@@ -228,6 +229,7 @@ jobs:
           - get: config
           - get: state
           - get: opsman-product
+            trigger: true
             params:
               globs:
                 - '*.ova'
@@ -291,7 +293,9 @@ jobs:
             passed: [upgrade-opsman]
           - get: config
           - get: pks-stemcell
+            trigger: true
           - get: pks-product
+            trigger: true
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: upload-and-stage-product
@@ -310,6 +314,7 @@ jobs:
           stemcell: pks-stemcell
         params:
           ENV_FILE: environments/((environment))/env/env.yml
+
   - name: upload-and-stage-harbor
     plan:
       - in_parallel:
@@ -326,7 +331,9 @@ jobs:
             passed: [upgrade-opsman]
           - get: config
           - get: harbor-stemcell
+            trigger: true
           - get: harbor-product
+            trigger: true
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: upload-and-stage-product
@@ -356,11 +363,16 @@ jobs:
               globs: ["*image*"]
           - get: platform-automation-tasks
             resource: platform-automation
-            passed: [upload-and-stage-pks]
             params:
               unpack: true
               globs: ["*tasks*"]
           - get: config
+          - get: pks-stemcell
+            trigger: true
+            passed: [upload-and-stage-pks]
+          - get: pks-product
+            trigger: true
+            passed: [upload-and-stage-pks]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: configure-product
@@ -386,8 +398,13 @@ jobs:
             params:
               unpack: true
               globs: ["*tasks*"]
-            passed: [upload-and-stage-harbor]
           - get: config
+          - get: harbor-stemcell
+            trigger: true
+            passed: [upload-and-stage-harbor]
+          - get: harbor-product
+            trigger: true
+            passed: [upload-and-stage-harbor]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: configure-product
@@ -413,8 +430,19 @@ jobs:
             params:
               unpack: true
               globs: ["*tasks*"]
-            passed: [configure-harbor,configure-pks]
           - get: config
+          - get: harbor-stemcell
+            trigger: true
+            passed: [configure-harbor]
+          - get: harbor-product
+            trigger: true
+            passed: [configure-harbor]
+          - get: pks-stemcell
+            trigger: true
+            passed: [configure-pks]
+          - get: pks-product
+            trigger: true
+            passed: [configure-pks]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: apply-changes

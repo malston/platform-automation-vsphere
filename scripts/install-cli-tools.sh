@@ -88,7 +88,7 @@ function install_govc {
 }
 
 function install_k8s_clis {
-  version="${PKS_VERSION:-1.7.0}"
+  version="${PKS_VERSION:-1.8.1}"
   os="${OS:-linux}"
   arch="${ARCH:-amd64}"
 
