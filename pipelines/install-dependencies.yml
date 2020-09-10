@@ -1,0 +1,235 @@
+resource_types:
+- name: pivnet
+  type: docker-image
+  source:
+    repository: pivotalcf/pivnet-resource
+    tag: latest-final
+
+resources:
+- name: daily
+  type: time
+  source:
+    interval: 24h
+
+- name: config
+  type: git
+  source:
+    private_key: ((config.private_key))
+    uri: ((config.uri))
+    branch: master
+
+- name: opsman-product
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: ops-manager-vsphere-(.*)-*\.ova
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: pks-product
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: pivotal-container-service-(.*).pivotal
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: pks-stemcell
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: pks-stemcell/bosh-stemcell-(.*)-vsphere.*\.tgz
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: harbor-product
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: harbor-container-registry-(.*).pivotal
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: harbor-stemcell
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: harbor-stemcell/bosh-stemcell-(.*)-vsphere.*\.tgz
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: platform-automation-pivnet
+  type: pivnet
+  source:
+    api_token: ((pivnet_token))
+    product_slug: platform-automation
+    product_version: 4\.(.*)
+    sort_by: semver
+
+- name: platform-automation-tasks
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: platform-automation-tasks-(.*).zip
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+- name: platform-automation-image
+  type: s3
+  source:
+    access_key_id: ((s3.access_key_id))
+    bucket: ((s3.buckets.pivnet_products))
+    secret_access_key: ((s3.secret_access_key))
+    regexp: platform-automation-image-(.*).tgz
+    skip_ssl_verification: ((s3.skip_ssl_verification))
+    disable_ssl: ((s3.disable_ssl))
+    endpoint: ((s3.endpoint))
+
+jobs:
+- name: fetch-platform-automation
+  # We use the pivnet resource to bootstrap the pipeline,
+  # and because this product is part of the pipeline, not the foundation
+  plan:
+  - get: platform-automation-pivnet
+    trigger: true
+  - aggregate:
+    - put: platform-automation-tasks
+      params:
+        file: platform-automation-pivnet/*tasks*.zip
+    - put: platform-automation-image
+      params:
+        file: platform-automation-pivnet/*image*.tgz
+
+- name: fetch-harbor
+  plan:
+  - aggregate:
+    - get: daily
+      trigger: true
+    - get: platform-automation-image
+      params:
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        unpack: true
+    - get: config
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CA_CERT: ((credhub_ca.certificate))
+      CREDHUB_CLIENT: ((credhub_client))
+      CREDHUB_SECRET: ((credhub_secret))
+      CREDHUB_SERVER: ((credhub_server))
+      PREFIX: ((credhub_prefix))
+      INTERPOLATION_PATHS: ((foundation))/versions
+    input_mapping:
+      files: config
+    output_mapping:
+      interpolated-files: config
+  - task: download-harbor-product-and-stemcell
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/download-product.yml
+    params:
+      CONFIG_FILE: ((foundation))/versions/harbor.yml
+    output_mapping: {downloaded-stemcell: harbor-stemcell}
+  - aggregate:
+    - put: harbor-product
+      params:
+        file: downloaded-product/*.pivotal
+    - put: harbor-stemcell
+      params:
+        file: harbor-stemcell/*.tgz
+
+- name: fetch-opsman
+  plan:
+  - aggregate:
+    - get: daily
+      trigger: true
+    - get: platform-automation-image
+      params:
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        unpack: true
+    - get: config
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CA_CERT: ((credhub_ca.certificate))
+      CREDHUB_CLIENT: ((credhub_client))
+      CREDHUB_SECRET: ((credhub_secret))
+      CREDHUB_SERVER: ((credhub_server))
+      PREFIX: ((credhub_prefix))
+      INTERPOLATION_PATHS: ((foundation))/versions
+    input_mapping:
+      files: config
+    output_mapping:
+      interpolated-files: config
+  - task: download-opsman-image
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/download-product.yml
+    params:
+      CONFIG_FILE: ((foundation))/versions/opsman.yml
+  - aggregate:
+    - put: opsman-product
+      params:
+        file: downloaded-product/*
+
+- name: fetch-pks
+  plan:
+  - aggregate:
+    - get: daily
+      trigger: true
+    - get: platform-automation-image
+      params:
+        unpack: true
+    - get: platform-automation-tasks
+      params:
+        unpack: true
+    - get: config
+  - task: credhub-interpolate
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/credhub-interpolate.yml
+    params:
+      CREDHUB_CA_CERT: ((credhub_ca.certificate))
+      CREDHUB_CLIENT: ((credhub_client))
+      CREDHUB_SECRET: ((credhub_secret))
+      CREDHUB_SERVER: ((credhub_server))
+      PREFIX: ((credhub_prefix))
+      INTERPOLATION_PATHS: ((foundation))/versions
+    input_mapping:
+      files: config
+    output_mapping:
+      interpolated-files: config
+  - task: download-pks-product-and-stemcell
+    image: platform-automation-image
+    file: platform-automation-tasks/tasks/download-product.yml
+    params:
+      CONFIG_FILE: ((foundation))/versions/pks.yml
+    output_mapping: {downloaded-stemcell: pks-stemcell}
+  - aggregate:
+    - put: pks-product
+      params:
+        file: downloaded-product/*.pivotal
+    - put: pks-stemcell
+      params:
+        file: pks-stemcell/*.tgz
