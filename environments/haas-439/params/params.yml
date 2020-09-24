@@ -1,15 +1,19 @@
 ---
 environment: haas-439
+
 s3:
   buckets:
     pivnet_products: pivnet-products
     installation: installation
     state: state
   endpoint: https://minio.haas-439.pez.vmware.com
+  skip_ssl_verification: true
+  disable_ssl: true
+
 git_repository_url: git@github.com:malston/platform-automation-vsphere.git
 
 opsman_version: ^2.9.[0-9]+$
 opsman_product_slug: ops-manager
 
 platform_automation_slug: platform-automation
-platform_automation_version: 4\.(.*)
+platform_automation_version: 5\.(.*)

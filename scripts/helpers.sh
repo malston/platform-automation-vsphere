@@ -7,11 +7,11 @@ function setPipeline() {
   local product="${2:?}"
   local env="${3:?}"
 
-  pipeline="deploy-${product}-${env}"
+  pipeline="${product}-${env}"
 
   fly -t "${target}" set-pipeline \
     -p "${pipeline}" \
-    -c "${__PWD}/../pipelines/deploy-${product}.yml" \
+    -c "${__PWD}/../pipelines/${product}.yml" \
     -l "${__PWD}/../environments/${env}/params/params.yml" \
     -l "${__PWD}/../environments/${env}/creds.yml"
 }

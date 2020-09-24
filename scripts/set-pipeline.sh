@@ -2,9 +2,9 @@
 
 set -eo pipefail
 
-CONCOURSE_TARGET="${CONCOURSE_TARGET:-main}"
-PRODUCT="${PRODUCT:-pks}"
-ENVIRONMENT="${ENVIRONMENT_NAME:-haas-439}"
+CONCOURSE_TARGET="${1:-main}"
+PRODUCT="${2:-deploy-pks}"
+ENVIRONMENT="${3:-haas-439}"
 
 __DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

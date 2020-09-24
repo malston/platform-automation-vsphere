@@ -21,9 +21,9 @@ resources:
 - name: opsman-product
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: ops-manager-vsphere-(.*)-*\.ova
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -32,9 +32,9 @@ resources:
 - name: pks-product
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: pivotal-container-service-(.*).pivotal
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -43,9 +43,9 @@ resources:
 - name: pks-stemcell
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: pks-stemcell/bosh-stemcell-(.*)-vsphere.*\.tgz
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -54,9 +54,9 @@ resources:
 - name: harbor-product
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: harbor-container-registry-(.*).pivotal
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -65,9 +65,9 @@ resources:
 - name: harbor-stemcell
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: harbor-stemcell/bosh-stemcell-(.*)-vsphere.*\.tgz
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -78,15 +78,15 @@ resources:
   source:
     api_token: ((pivnet_token))
     product_slug: platform-automation
-    product_version: 4\.(.*)
+    product_version: ((platform_automation_version))
     sort_by: semver
 
 - name: platform-automation-tasks
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: platform-automation-tasks-(.*).zip
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -95,9 +95,9 @@ resources:
 - name: platform-automation-image
   type: s3
   source:
-    access_key_id: ((s3.access_key_id))
+    access_key_id: ((s3_access_key_id))
     bucket: ((s3.buckets.pivnet_products))
-    secret_access_key: ((s3.secret_access_key))
+    secret_access_key: ((s3_secret_access_key))
     regexp: platform-automation-image-(.*).tgz
     skip_ssl_verification: ((s3.skip_ssl_verification))
     disable_ssl: ((s3.disable_ssl))
@@ -110,7 +110,7 @@ jobs:
   plan:
   - get: platform-automation-pivnet
     trigger: true
-  - aggregate:
+  - in_parallel:
     - put: platform-automation-tasks
       params:
         file: platform-automation-pivnet/*tasks*.zip
@@ -120,7 +120,7 @@ jobs:
 
 - name: fetch-harbor
   plan:
-  - aggregate:
+  - in_parallel:
     - get: daily
       trigger: true
     - get: platform-automation-image
@@ -150,7 +150,7 @@ jobs:
     params:
       CONFIG_FILE: ((foundation))/versions/harbor.yml
     output_mapping: {downloaded-stemcell: harbor-stemcell}
-  - aggregate:
+  - in_parallel:
     - put: harbor-product
       params:
         file: downloaded-product/*.pivotal
@@ -160,7 +160,7 @@ jobs:
 
 - name: fetch-opsman
   plan:
-  - aggregate:
+  - in_parallel:
     - get: daily
       trigger: true
     - get: platform-automation-image
@@ -189,14 +189,14 @@ jobs:
     file: platform-automation-tasks/tasks/download-product.yml
     params:
       CONFIG_FILE: ((foundation))/versions/opsman.yml
-  - aggregate:
+  - in_parallel:
     - put: opsman-product
       params:
         file: downloaded-product/*
 
 - name: fetch-pks
   plan:
-  - aggregate:
+  - in_parallel:
     - get: daily
       trigger: true
     - get: platform-automation-image
@@ -226,7 +226,7 @@ jobs:
     params:
       CONFIG_FILE: ((foundation))/versions/pks.yml
     output_mapping: {downloaded-stemcell: pks-stemcell}
-  - aggregate:
+  - in_parallel:
     - put: pks-product
       params:
         file: downloaded-product/*.pivotal
