@@ -138,8 +138,8 @@ jobs:
       CREDHUB_CLIENT: ((credhub_client))
       CREDHUB_SECRET: ((credhub_secret))
       CREDHUB_SERVER: ((credhub_server))
-      PREFIX: ((credhub_prefix))
-      INTERPOLATION_PATHS: ((foundation))/versions
+      PREFIX: /platform-automation/((environment))
+      INTERPOLATION_PATHS: environments/((environment))/versions
     input_mapping:
       files: config
     output_mapping:
@@ -148,7 +148,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/download-product.yml
     params:
-      CONFIG_FILE: ((foundation))/versions/harbor.yml
+      CONFIG_FILE: environments/((environment))/versions/harbor.yml
     output_mapping: {downloaded-stemcell: harbor-stemcell}
   - in_parallel:
     - put: harbor-product
@@ -178,8 +178,8 @@ jobs:
       CREDHUB_CLIENT: ((credhub_client))
       CREDHUB_SECRET: ((credhub_secret))
       CREDHUB_SERVER: ((credhub_server))
-      PREFIX: ((credhub_prefix))
-      INTERPOLATION_PATHS: ((foundation))/versions
+      PREFIX: /platform-automation/((environment))
+      INTERPOLATION_PATHS: environments/((environment))/versions
     input_mapping:
       files: config
     output_mapping:
@@ -188,7 +188,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/download-product.yml
     params:
-      CONFIG_FILE: ((foundation))/versions/opsman.yml
+      CONFIG_FILE: environments/((environment))/versions/opsman.yml
   - in_parallel:
     - put: opsman-product
       params:
@@ -214,8 +214,8 @@ jobs:
       CREDHUB_CLIENT: ((credhub_client))
       CREDHUB_SECRET: ((credhub_secret))
       CREDHUB_SERVER: ((credhub_server))
-      PREFIX: ((credhub_prefix))
-      INTERPOLATION_PATHS: ((foundation))/versions
+      PREFIX: /platform-automation/((environment))
+      INTERPOLATION_PATHS: environments/((environment))/versions
     input_mapping:
       files: config
     output_mapping:
@@ -224,7 +224,7 @@ jobs:
     image: platform-automation-image
     file: platform-automation-tasks/tasks/download-product.yml
     params:
-      CONFIG_FILE: ((foundation))/versions/pks.yml
+      CONFIG_FILE: environments/((environment))/versions/pks.yml
     output_mapping: {downloaded-stemcell: pks-stemcell}
   - in_parallel:
     - put: pks-product
