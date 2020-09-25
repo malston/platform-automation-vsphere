@@ -74,12 +74,27 @@ resources:
       regexp: installation-(.*).zip
       skip_ssl_verification: true
 
-  - name: platform-automation
-    type: pivnet
+  - name: platform-automation-tasks
+    type: s3
     source:
-      api_token: ((pivnet_token))
-      product_slug: ((platform_automation_slug))
-      product_version: ((platform_automation_version))
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.pivnet_products))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: platform-automation-tasks-(.*).zip
+      disable_ssl: ((s3.disable_ssl))
+      skip_ssl_verification: ((s3.skip_ssl_verification))
+      endpoint: ((s3.endpoint))
+  
+  - name: platform-automation-image
+    type: s3
+    source:
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.pivnet_products))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: platform-automation-image-(.*).tgz
+      disable_ssl: ((s3.disable_ssl))
+      skip_ssl_verification: ((s3.skip_ssl_verification))
+      endpoint: ((s3.endpoint))
 
   - name: config
     type: git
@@ -109,23 +124,21 @@ jobs:
     serial_groups: [install]
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-          - get: config
-          - get: state
-          - get: opsman-product
-            trigger: true
-            params:
-              globs:
-                - '*.ova'
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
+        - get: state
+        - get: opsman-product
+          trigger: true
+          params:
+            globs:
+              - '*.ova'
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: create-vm
@@ -184,18 +197,16 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-            passed: [install-opsman]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-          - get: config
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+          passed: [install-opsman]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: export-installation
@@ -215,25 +226,23 @@ jobs:
     serial_groups: [install]
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-            passed: [install-opsman]
-          - get: config
-          - get: state
-          - get: opsman-product
-            trigger: true
-            params:
-              globs:
-                - '*.ova'
-          - get: installation
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+          passed: [install-opsman]
+        - get: config
+        - get: state
+        - get: opsman-product
+          trigger: true
+          params:
+            globs:
+              - '*.ova'
+        - get: installation
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: upgrade-opsman
@@ -280,22 +289,20 @@ jobs:
   - name: upload-and-stage-pks
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-            passed: [upgrade-opsman]
-          - get: config
-          - get: pks-stemcell
-            trigger: true
-          - get: pks-product
-            trigger: true
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+          passed: [upgrade-opsman]
+        - get: config
+        - get: pks-stemcell
+          trigger: true
+        - get: pks-product
+          trigger: true
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: upload-and-stage-product
@@ -318,22 +325,20 @@ jobs:
   - name: upload-and-stage-harbor
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-            passed: [upgrade-opsman]
-          - get: config
-          - get: harbor-stemcell
-            trigger: true
-          - get: harbor-product
-            trigger: true
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+          passed: [upgrade-opsman]
+        - get: config
+        - get: harbor-stemcell
+          trigger: true
+        - get: harbor-product
+          trigger: true
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: upload-and-stage-product
@@ -356,23 +361,21 @@ jobs:
   - name: configure-pks
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-          - get: config
-          - get: pks-stemcell
-            trigger: true
-            passed: [upload-and-stage-pks]
-          - get: pks-product
-            trigger: true
-            passed: [upload-and-stage-pks]
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
+        - get: pks-stemcell
+          trigger: true
+          passed: [upload-and-stage-pks]
+        - get: pks-product
+          trigger: true
+          passed: [upload-and-stage-pks]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: configure-product
@@ -388,23 +391,21 @@ jobs:
   - name: configure-harbor
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-          - get: config
-          - get: harbor-stemcell
-            trigger: true
-            passed: [upload-and-stage-harbor]
-          - get: harbor-product
-            trigger: true
-            passed: [upload-and-stage-harbor]
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
+        - get: harbor-stemcell
+          trigger: true
+          passed: [upload-and-stage-harbor]
+        - get: harbor-product
+          trigger: true
+          passed: [upload-and-stage-harbor]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: configure-product
@@ -420,29 +421,27 @@ jobs:
   - name: apply-changes
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: platform-automation-tasks
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*tasks*"]
-          - get: config
-          - get: harbor-stemcell
-            trigger: true
-            passed: [configure-harbor]
-          - get: harbor-product
-            trigger: true
-            passed: [configure-harbor]
-          - get: pks-stemcell
-            trigger: true
-            passed: [configure-pks]
-          - get: pks-product
-            trigger: true
-            passed: [configure-pks]
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
+        - get: harbor-stemcell
+          trigger: true
+          passed: [configure-harbor]
+        - get: harbor-product
+          trigger: true
+          passed: [configure-harbor]
+        - get: pks-stemcell
+          trigger: true
+          passed: [configure-pks]
+        - get: pks-product
+          trigger: true
+          passed: [configure-pks]
       - task: credhub-interpolate
         <<: *credhub-interpolate
       - task: apply-changes
@@ -456,13 +455,19 @@ jobs:
   - name: upgrade-cluster
     plan:
       - in_parallel:
-          - get: platform-automation-image
-            resource: platform-automation
-            params:
-              unpack: true
-              globs: ["*image*"]
-          - get: config
-            passed: [apply-changes]
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: config
+          # passed: [apply-changes]
+      - task: login
+        file: repo/tasks/pks-login/task.yml
+        image: platform-automation-image
+        params:
+          PKS_API_URL: ((pks_api_url))
+          PKS_USER: ((pks_user))
+          PKS_PASSWORD: ((pks_password))
       - task: upgrade-cluster
         image: platform-automation-image
         file: repo/tasks/upgrade-cluster/task.yml

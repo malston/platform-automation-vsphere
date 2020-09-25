@@ -56,6 +56,8 @@ function main() {
     done
 }
 
+cp pks-config/creds.yml ~/.pks/creds.yml
+
 cluster="${1:-$CLUSTER}"
 password="${2:-$PKS_PASSWORD}"
 
