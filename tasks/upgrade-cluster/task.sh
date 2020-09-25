@@ -8,7 +8,7 @@ function login_pks_k8s_cluster() {
 	local cluster="${1}"
 	local password="${2}"
 
-	printf "Logging into k8s cluster (%s)..." "${cluster}"
+	printf "Logging into k8s cluster (%s)...\n" "${cluster}"
 	echo "${password}" | pks get-credentials "${cluster}" > /dev/null 2>&1
 
 	return $?
@@ -20,7 +20,7 @@ function main() {
 
     if ! login_pks_k8s_cluster "${cluster}" "${password}"; then
         echo
-        printf "Failed to login to cluster '%s'" "${cluster}" 
+        printf "Failed to login to cluster '%s'\n" "${cluster}"
         exit 1
     fi
 
@@ -32,7 +32,7 @@ function main() {
     while [[ $(bosh -d "service-instance_${cluster_uuid}" tasks --column=state | head -3 | awk '{print $1}') =~ processing ]]; do
         current_task_id="$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}')"
         if [[ "$current_task_id" != "$task_id" ]]; then
-            printf "Logging output from task '%s'" "$current_task_id"
+            printf "Logging output from task '%s'\n" "$current_task_id"
             bosh task "$task_id" >> task.log 2>&1
         fi
         task_id="$current_task_id"
