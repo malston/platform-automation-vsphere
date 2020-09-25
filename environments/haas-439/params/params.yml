@@ -1,5 +1,6 @@
 ---
 environment: haas-439
+cluster: cluster1
 
 s3:
   buckets:

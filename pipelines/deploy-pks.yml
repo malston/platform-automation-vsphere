@@ -455,26 +455,22 @@ jobs:
   - name: upgrade-cluster
     plan:
       - in_parallel:
-        - get: platform-automation-image
-          params:
-            unpack: true
-            globs: ["*image*"]
-        - get: config
+        - get: repo
+          resource: config
           # passed: [apply-changes]
       - task: login
         file: repo/tasks/pks-login/task.yml
-        image: platform-automation-image
-        input_mapping:
-          repo: config
         params:
           PKS_API_URL: ((pks_api_url))
           PKS_USER: ((pks_user))
           PKS_PASSWORD: ((pks_password))
       - task: upgrade-cluster
-        image: platform-automation-image
         file: repo/tasks/upgrade-cluster/task.yml
-        input_mapping:
-          repo: config
         params:
-          CLUSTER: cluster1
+          CLUSTER: ((cluster))
           PKS_PASSWORD: ((pks_password))
+          BOSH_ENVIRONMENT: ((bosh_environment))
+          BOSH_CLIENT: ((bosh_client))
+          BOSH_CLIENT_SECRET: ((bosh_client_secret))
+          BOSH_CA_CERT: ((bosh_ca_cert))
+          BOSH_ALL_PROXY: ((bosh_all_proxy))
