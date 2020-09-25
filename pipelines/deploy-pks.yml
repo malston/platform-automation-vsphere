@@ -468,7 +468,7 @@ jobs:
         file: repo/tasks/upgrade-cluster/task.yml
         params:
           CLUSTER: ((cluster))
-          PKS_USER: (pks_user))
+          PKS_USER: ((pks_user))
           PKS_PASSWORD: ((pks_password))
           BOSH_ENVIRONMENT: ((bosh_environment))
           BOSH_CLIENT: ((bosh_client))
