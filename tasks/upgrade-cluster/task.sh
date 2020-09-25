@@ -30,7 +30,14 @@ function main() {
 
     cluster_uuid=$(pks cluster "${cluster}" --json | jq -r .uuid)
 
+    while [[ $(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}') == '' ]]; do
+        sleep 3
+    done
     first_task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}' || true)
+    if [[ $first_task_id == '' ]]; then
+	    echo "Could not find task for service-instance_${cluster_uuid}"
+	    exit 1
+    fi
     {
         last_task_id=""
         task_id=$first_task_id
@@ -41,7 +48,8 @@ function main() {
                 bosh task "$task_id" >> task.log 2>&1
                 last_task_id=$task_id
             fi
-            task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}')
+            sleep 15
+            task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}' || true)
         done
     } &
     process_id=$!
@@ -53,6 +61,7 @@ function main() {
     wait $process_id
     kill $tailpid
     last_task_id="$(bosh tasks --recent | head -1 | awk '{print $1}' || true)"
+    # printf "\nlast task: '%s', first task: '%s'\n" "$last_task_id" "$first_task_id"
     for (( i=first_task_id; i<=last_task_id; i++ )); do
         bosh task "$i" >> tasks.log 2>&1
     done
