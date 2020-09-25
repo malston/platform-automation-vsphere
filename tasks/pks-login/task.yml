@@ -1,0 +1,22 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: malston/k8s-mgmt
+    tag: 0.0.2
+
+inputs:
+  - name: repo
+
+outputs:
+- name: pks-config
+
+params:
+  PKS_API_URL:
+  PKS_USER:
+  PKS_PASSWORD:
+
+run:
+  path: repo/tasks/pks-login/task.sh
