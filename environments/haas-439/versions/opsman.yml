@@ -6,11 +6,11 @@ pivnet-file-glob: "*.ova"
 pivnet-product-slug: ops-manager
 
 ## Either product-version OR product-version-regex is required
-# product-version: 2.9.9
+product-version: 2.9.10
 
 ## Note that the regex mustn't be quoted,
 ## as escape characters for the regex will confuse yaml parsers.
 # product-version-regex: ^1\.2\..*$
-product-version-regex: ^2\.9\.\d+
+# product-version-regex: ^2\.9\.\d+.*
 
 # stemcell-iaas: vsphere
