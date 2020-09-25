@@ -56,6 +56,7 @@ function main() {
     done
 }
 
+mkdir -p ~/.pks
 cp pks-config/creds.yml ~/.pks/creds.yml
 
 cluster="${1:-$CLUSTER}"

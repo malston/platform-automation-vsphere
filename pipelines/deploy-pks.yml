@@ -464,6 +464,8 @@ jobs:
       - task: login
         file: repo/tasks/pks-login/task.yml
         image: platform-automation-image
+        input_mapping:
+          repo: config
         params:
           PKS_API_URL: ((pks_api_url))
           PKS_USER: ((pks_user))
