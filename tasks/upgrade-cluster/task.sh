@@ -20,7 +20,7 @@ function main() {
     local username="${2}"
     local password="${3}"
 
-    if ! login_pks_k8s_cluster "${cluster}" "${password}"; then
+    if ! login_pks_k8s_cluster "${cluster}" "${username}" "${password}"; then
         echo
         printf "Failed to login to cluster '%s'\n" "${cluster}"
         exit 1
