@@ -5,18 +5,20 @@ set -e
 set -o pipefail
 
 function login_pks_k8s_cluster() {
-	local cluster="${1}"
-	local password="${2}"
+    local cluster="${1}"
+    local username="${2}"
+    local password="${3}"
 
-	printf "Logging into k8s cluster (%s)...\n" "${cluster}"
-	echo "${password}" | pks get-credentials "${cluster}" > /dev/null 2>&1
+    printf "Logging into k8s cluster (%s) with user (%s)...\n" "${cluster}" "${username}"
+    echo "${password}" | pks get-credentials "${cluster}" > /dev/null 2>&1
 
-	return $?
+    return $?
 }
 
 function main() {
     local cluster="${1}"
-    local password="${2}"
+    local username="${2}"
+    local password="${3}"
 
     if ! login_pks_k8s_cluster "${cluster}" "${password}"; then
         echo
@@ -60,10 +62,16 @@ mkdir -p ~/.pks
 cp pks-config/creds.yml ~/.pks/creds.yml
 
 cluster="${1:-$CLUSTER}"
-password="${2:-$PKS_PASSWORD}"
+username="${2:-$PKS_USER}"
+password="${3:-$PKS_PASSWORD}"
 
 if [[ -z "${cluster}" ]]; then
     echo "PKS cluster is required"
+    exit 1
+fi
+
+if [[ -z "${username}" ]]; then
+    echo "PKS username is required"
     exit 1
 fi
 
@@ -72,4 +80,4 @@ if [[ -z "${password}" ]]; then
     exit 1
 fi
 
-main "$cluster" "$password"
+main "$cluster" "$username" "$password"

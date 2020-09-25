@@ -2,7 +2,7 @@
 
 function login_pks() {
 	(
-		echo "Logging into PKS (${PKS_API_URL})..."
+		echo "Logging into PKS (${PKS_API_URL}) with user (${PKS_USER})..."
 		pks login -a "${PKS_API_URL}" -u "${PKS_USER}" -p "${PKS_PASSWORD}" -k
 	)
 }

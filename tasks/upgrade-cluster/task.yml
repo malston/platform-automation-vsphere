@@ -13,6 +13,7 @@ inputs:
 
 params:
   CLUSTER:
+  PKS_USER:
   PKS_PASSWORD:
   BOSH_ENVIRONMENT:
   BOSH_CLIENT:
