@@ -452,3 +452,22 @@ jobs:
           env: vars
         params:
           ENV_FILE: environments/((environment))/env/env.yml
+
+  - name: upgrade-cluster
+    plan:
+      - in_parallel:
+          - get: platform-automation-image
+            resource: platform-automation
+            params:
+              unpack: true
+              globs: ["*image*"]
+          - get: config
+            passed: [apply-changes]
+      - task: upgrade-cluster
+        image: platform-automation-image
+        file: repo/tasks/upgrade-cluster/task.yml
+        input_mapping:
+          repo: config
+        params:
+          CLUSTER: cluster1
+          PKS_PASSWORD: ((pks_password))
