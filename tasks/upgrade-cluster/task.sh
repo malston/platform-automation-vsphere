@@ -28,24 +28,32 @@ function main() {
 
     cluster_uuid=$(pks cluster "${cluster}" --json | jq -r .uuid)
 
-    task_id=""
+    first_task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}' || true)
     {
-        while [[ $(bosh -d "service-instance_${cluster_uuid}" tasks --column=state | head -3 | awk '{print $1}') =~ processing ]]; do
-            current_task_id="$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}')"
-            printf "\ncurrent task: '%s', last task: '%s'\n" "$current_task_id" "$task_id"
-            if [[ "$current_task_id" != "$task_id" ]]; then
-                printf "Logging output from task '%s'\n" "$current_task_id"
-                bosh task "$current_task_id" >> task.log 2>&1
+        last_task_id=""
+        task_id=$first_task_id
+        while [[ $task_id != '' ]]; do
+            # printf "\nlast task: '%s', current task: '%s'\n" "$last_task_id" "$task_id"
+            if [[ "$last_task_id" != "$task_id" ]]; then
+                # printf "Logging output from task '%s'\n" "$task_id"
+                bosh task "$task_id" >> task.log 2>&1
+                last_task_id=$task_id
             fi
-            task_id="$current_task_id"
+            task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}')
         done
     } &
     process_id=$!
-    sleep 10
+    while [ ! -f task.log ]; do
+        sleep 1
+    done
     tail -f task.log &
     tailpid=$!
     wait $process_id
     kill $tailpid
+    last_task_id="$(bosh tasks --recent | head -1 | awk '{print $1}' || true)"
+    for (( i=first_task_id; i<=last_task_id; i++ )); do
+        bosh task "$i" >> tasks.log 2>&1
+    done
 }
 
 cluster="${1:-$CLUSTER}"
