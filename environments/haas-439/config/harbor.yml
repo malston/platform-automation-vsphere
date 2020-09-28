@@ -1,7 +1,7 @@
 product-name: harbor-container-registry
 product-properties:
   .harbor-app.static_ips:
-    value: 172.16.2.22
+    value: 172.16.2.12
   .properties.admin_password:
     value:
       secret: ((harbor_admin_password))
@@ -12,23 +12,31 @@ product-properties:
     selected_option: db_auth
     value: db_auth
   .properties.clair_updater_interval:
-    value: 0
+    value: 1
   .properties.customize_container_network:
     selected_option: default
     value: default
   .properties.hostname:
     value: ((harbor_hostname))
+  .properties.initial_delay_minutes:
+    value: 60
+  .properties.log_insight:
+    selected_option: disabled
+    value: disabled
   .properties.no_proxy:
     value: 127.0.0.1,localhost,ui,registry
   .properties.registry_storage:
     selected_option: filesystem
     value: filesystem
+  .properties.server_cert_ca:
+    value: ((harbor_server_cert_ca))
   .properties.server_cert_key:
     value:
       cert_pem: ((harbor_server_cert_pem))
       private_key_pem: ((harbor_private_key_pem))
-  .properties.server_cert_ca:
-    value: ((harbor_server_cert_ca))
+  .properties.vm_monitor:
+    selected_option: no_monitor
+    value: no_monitor
   .properties.with_clair:
     value: true
   .properties.with_notary:
@@ -38,21 +46,43 @@ network-properties:
     name: PKS-Services
   other_availability_zones:
   - name: pks-az1
-  - name: pks-az2
-  - name: pks-az3
   singleton_availability_zone:
     name: pks-az1
 resource-config:
   harbor-app:
+    max_in_flight: 1
+    additional_networks: []
+    additional_vm_extensions: []
+    instance_type:
+      id: automatic
     instances: automatic
+    nsx:
+      lbs: []
+      security_groups: []
+    nsxt:
+      lb:
+        server_pools: []
+      ns_groups: []
+      vif_type: null
     persistent_disk:
       size_mb: automatic
-    instance_type:
-      id: automatic
+    swap_as_percent_of_memory_size: automatic
   smoke-testing:
-    instances: automatic
+    max_in_flight: 1
+    additional_networks: []
+    additional_vm_extensions: []
     instance_type:
       id: automatic
+    instances: automatic
+    nsx:
+      lbs: []
+      security_groups: []
+    nsxt:
+      lb:
+        server_pools: []
+      ns_groups: []
+      vif_type: null
+    swap_as_percent_of_memory_size: automatic
 errand-config:
   smoke-testing:
     post-deploy-state: when-changed
