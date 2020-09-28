@@ -13,11 +13,11 @@ __DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
  source "${__DIR}/target-concourse-credhub.sh" ||  \
  echo "target-concourse-credhub not found"
 
-products="pks"
+pipelines=(deploy-pks install-dependencies)
 team="main"
 
-for product in $products; do
-    PREFIX="/concourse/${team}/deploy-${product}-${ENVIRONMENT_NAME}"
+for pipeline in "${pipelines[@]}"; do
+    PREFIX="/concourse/${team}/${pipeline}-${ENVIRONMENT_NAME}"
 
     credhub set -n "$PREFIX/credhub_server" -v "$CREDHUB_SERVER" -t value
     credhub set -n "$PREFIX/credhub_client" -v "$CREDHUB_CLIENT" -t value
