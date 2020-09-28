@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 __PWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
