@@ -4,7 +4,7 @@ pks_api_private_key: ((pks_certificate.private_key))
 nsx_cert_root_ca: ((nsx_ca.certificate))
 nsx_superuser_cert_public_key: ((nsx_superuser.certificate))
 nsx_superuser_cert_private_key: ((nsx_superuser.private_key))
-nsx_floating_ip_pool_id: d9ebb9a6-867c-4d83-a060-354d9fb8c879
-nsx_pods_ip_block_id: 5f3f4501-93c5-4af7-a0bd-94c0a5a8a07e
-nsx_nodes_ip_block_id: 707772d6-3f58-43a8-8a6d-b5dbc472a6e6
-nsx_t0_router_id: 76b18cb2-4492-4bc0-8a0f-01eb85b16a6e
+nsx_floating_ip_pool_id: d8e64c3e-0658-46d9-bc29-13665c3cdc8b
+nsx_pods_ip_block_id: ca92ef76-330f-461f-9cc4-a08bb41241bf
+nsx_nodes_ip_block_id: 3a8b5266-a9e8-4cc6-993f-0783cdb0dc22
+nsx_t0_router_id: feb2b5c0-c160-4525-a084-2a69a230465f
