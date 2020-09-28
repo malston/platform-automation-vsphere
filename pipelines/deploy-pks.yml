@@ -193,34 +193,6 @@ jobs:
         params:
           file: installation/installation*.zip
 
-  - name: export-installation
-    serial: true
-    plan:
-      - in_parallel:
-        - get: platform-automation-image
-          params:
-            unpack: true
-            globs: ["*image*"]
-          passed: [install-opsman]
-        - get: platform-automation-tasks
-          params:
-            unpack: true
-            globs: ["*tasks*"]
-        - get: config
-      - task: credhub-interpolate
-        <<: *credhub-interpolate
-      - task: export-installation
-        image: platform-automation-image
-        file: platform-automation-tasks/tasks/export-installation.yml
-        input_mapping:
-          env: vars
-        params:
-          ENV_FILE: environments/((environment))/env/env.yml
-          INSTALLATION_FILE: installation-$timestamp.zip
-      - put: installation
-        params:
-          file: installation/installation*.zip
-
   - name: upgrade-opsman
     serial: true
     serial_groups: [install]
@@ -234,14 +206,14 @@ jobs:
           params:
             unpack: true
             globs: ["*tasks*"]
-          passed: [install-opsman]
         - get: config
         - get: state
         - get: opsman-product
-          trigger: true
           params:
             globs:
               - '*.ova'
+          trigger: true
+          passed: [install-opsman]
         - get: installation
       - task: credhub-interpolate
         <<: *credhub-interpolate
@@ -297,8 +269,8 @@ jobs:
           params:
             unpack: true
             globs: ["*tasks*"]
-          passed: [upgrade-opsman]
         - get: config
+          passed: [upgrade-opsman]
         - get: pks-stemcell
           trigger: true
         - get: pks-product
@@ -333,8 +305,8 @@ jobs:
           params:
             unpack: true
             globs: ["*tasks*"]
-          passed: [upgrade-opsman]
         - get: config
+          passed: [upgrade-opsman]
         - get: harbor-stemcell
           trigger: true
         - get: harbor-product
@@ -451,6 +423,33 @@ jobs:
           env: vars
         params:
           ENV_FILE: environments/((environment))/env/env.yml
+
+  - name: export-installation
+    serial: true
+    plan:
+      - in_parallel:
+        - get: platform-automation-image
+          params:
+            unpack: true
+            globs: ["*image*"]
+        - get: platform-automation-tasks
+          params:
+            unpack: true
+            globs: ["*tasks*"]
+        - get: config
+      - task: credhub-interpolate
+        <<: *credhub-interpolate
+      - task: export-installation
+        image: platform-automation-image
+        file: platform-automation-tasks/tasks/export-installation.yml
+        input_mapping:
+          env: vars
+        params:
+          ENV_FILE: environments/((environment))/env/env.yml
+          INSTALLATION_FILE: installation-$timestamp.zip
+      - put: installation
+        params:
+          file: installation/installation*.zip
 
   - name: upgrade-cluster
     plan:
