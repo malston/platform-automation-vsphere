@@ -34,11 +34,14 @@ function main() {
     while [[ $(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}') == '' ]]; do
         sleep 3
     done
+    cat upgrade.log
+
     first_task_id=$(bosh -d "service-instance_${cluster_uuid}" tasks --column=id | head -3 | awk '{print $1}' || true)
     if [[ $first_task_id == '' ]]; then
 	    echo "Could not find task for service-instance_${cluster_uuid}"
 	    exit 1
     fi
+
     {
         last_task_id=""
         task_id=$first_task_id
@@ -62,7 +65,9 @@ function main() {
     wait $process_id
     kill $tailpid
     wait $pks_process_id
-    printf "\nFinished upgrading cluster '%s'\n" "${cluster}"
+    printf "\nFinished upgrading cluster '%s'\n" "${cluster}" >> upgrade.log
+    pks cluster "${cluster}" --details >> upgrade.log
+
     last_task_id="$(bosh tasks --recent | head -1 | awk '{print $1}' || true)"
     # printf "\nlast task: '%s', first task: '%s'\n" "$last_task_id" "$first_task_id"
     for (( i=first_task_id; i<=last_task_id; i++ )); do
