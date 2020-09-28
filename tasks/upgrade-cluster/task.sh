@@ -65,6 +65,9 @@ function main() {
     for (( i=first_task_id; i<=last_task_id; i++ )); do
         bosh task "$i" >> tasks.log 2>&1
     done
+    printf "\n\n---------------------------------------------------------------------------\n"
+    cat upgrade.log
+    cat tasks.log
 }
 
 mkdir -p ~/.pks
