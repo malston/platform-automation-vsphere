@@ -35,7 +35,7 @@ product-properties:
     value: true
 network-properties:
   network:
-    name: services
+    name: PKS-Services
   other_availability_zones:
   - name: pks-az1
   - name: pks-az2
