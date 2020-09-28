@@ -11,6 +11,6 @@ pivnet-product-slug: pivotal-container-service
 ## Note that the regex mustn't be quoted,
 ## as escape characters for the regex will confuse yaml parsers.
 # product-version-regex: ^1\.2\..*$
-product-version-regex: ^1\.8\.[0-9]*.*
+product-version-regex: ^1\.9\.[0-9]*.*
 
 stemcell-iaas: vsphere
