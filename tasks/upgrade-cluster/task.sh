@@ -27,6 +27,7 @@ function main() {
     fi
 
     pks upgrade-cluster "${cluster}" --non-interactive > upgrade.log 2>&1 &
+    pks_process_id=$!
 
     cluster_uuid=$(pks cluster "${cluster}" --json | jq -r .uuid)
 
@@ -60,12 +61,14 @@ function main() {
     tailpid=$!
     wait $process_id
     kill $tailpid
+    wait $pks_process_id
+    printf "\nFinished upgrading cluster '%s'\n" "${cluster}"
     last_task_id="$(bosh tasks --recent | head -1 | awk '{print $1}' || true)"
     # printf "\nlast task: '%s', first task: '%s'\n" "$last_task_id" "$first_task_id"
     for (( i=first_task_id; i<=last_task_id; i++ )); do
         bosh task "$i" >> tasks.log 2>&1
     done
-    printf "\n\n---------------------------------------------------------------------------\n"
+    printf "\n\n-------------------------- COMPLETE LOG OUTPUT ----------------------------------\n"
     cat upgrade.log
     cat tasks.log
 }
