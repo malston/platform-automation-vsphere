@@ -2,8 +2,7 @@
 
 ## Setup
 
-* Apply this operations file to configure [ldap authentication](https://concourse-ci.org/ldap-auth.html):
-https://github.com/concourse/concourse-bosh-deployment/blob/master/cluster/operations/ldap.yml
+* Apply this [operations file](https://github.com/concourse/concourse-bosh-deployment/blob/master/cluster/operations/ldap.yml) to configure [ldap authentication](https://concourse-ci.org/ldap-auth.html):
 
 ## Usage
 
