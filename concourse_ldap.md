@@ -29,7 +29,7 @@ This can be done by applying operation files to the bosh deployment.
     ```yaml
     roles:
     - name: member
-    ldap:
+      ldap:
         users: ["somebody"]
         groups: ["ConcourseUsers"]
     ```
