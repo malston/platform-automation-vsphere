@@ -13,7 +13,7 @@ s3:
 
 git_repository_url: git@github.com:malston/platform-automation-vsphere.git
 
-opsman_version: ^2.9.[0-9]+$
+opsman_version: ^2.10.[0-9]+$
 opsman_product_slug: ops-manager
 
 platform_automation_slug: platform-automation
