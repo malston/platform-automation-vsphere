@@ -23,7 +23,7 @@ This can be done by applying operation files to the bosh deployment.
 
 [Admin](https://concourse-ci.org/user-roles.html#concourse-admin) is a special user attribute granted only to [owners](https://concourse-ci.org/user-roles.html#team-owner-role) of the main team.
 
-* Use this [operations file](https://github.com/concourse/concourse-bosh-deployment/blob/master/cluster/operations/add-main-team-auth-config.yml) to configure [roles](https://concourse-ci.org/user-roles.html) for the main team:
+* Use this [operations file](https://github.com/concourse/concourse-bosh-deployment/blob/master/cluster/operations/add-main-team-auth-config.yml) to configure the other [roles](https://concourse-ci.org/user-roles.html) for the main team:
 
     ```yaml
     roles:
