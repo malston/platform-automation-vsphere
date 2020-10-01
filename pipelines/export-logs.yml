@@ -15,6 +15,36 @@ resources:
       private_key: ((config.private_key))
       branch: master
 
+  - name: events-install-opsman-logs
+    type: s3
+    source:
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.logs))
+      endpoint: ((s3.endpoint))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: events-install-opsman-(.*).log
+      skip_ssl_verification: true
+
+  - name: events-upgrade-opsman-logs
+    type: s3
+    source:
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.logs))
+      endpoint: ((s3.endpoint))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: events-upgrade-opsman-(.*).log
+      skip_ssl_verification: true
+
+  - name: events-upload-and-stage-pks-logs
+    type: s3
+    source:
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.logs))
+      endpoint: ((s3.endpoint))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: events-upload-and-stage-pks-(.*).log
+      skip_ssl_verification: true
+
   - name: events-configure-pks-logs
     type: s3
     source:
@@ -81,6 +111,7 @@ jobs:
   - name: install-opsman-logs
     public: true
     plan:
+      - get: repo
       - get: concourse-build-resource # for task YAML
       - get: install-opsman-build
         trigger: true
@@ -109,10 +140,20 @@ jobs:
         file: concourse-build-resource/tasks/show-logs/task.yml
         input_mapping:
           build: install-opsman-build
+      - task: export-logs
+        file: repo/tasks/export-logs/task.yml
+        input_mapping:
+          build: install-opsman-build
+        params:
+          JOB_NAME: install-opsman
+      - put: events-install-opsman-logs
+        params:
+          file: logs/event*.log
 
   - name: upgrade-opsman-logs
     public: true
     plan:
+      - get: repo
       - get: concourse-build-resource # for task YAML
       - get: upgrade-opsman-build
         trigger: true
@@ -141,10 +182,20 @@ jobs:
         file: concourse-build-resource/tasks/show-logs/task.yml
         input_mapping:
           build: upgrade-opsman-build
+      - task: export-logs
+        file: repo/tasks/export-logs/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+        params:
+          JOB_NAME: upgrade-opsman
+      - put: events-upgrade-opsman-logs
+        params:
+          file: logs/event*.log
 
   - name: upload-and-stage-pks-logs
     public: true
     plan:
+      - get: repo
       - get: concourse-build-resource # for task YAML
       - get: upload-and-stage-pks-build
         trigger: true
@@ -173,6 +224,15 @@ jobs:
         file: concourse-build-resource/tasks/show-logs/task.yml
         input_mapping:
           build: upload-and-stage-pks-build
+      - task: export-logs
+        file: repo/tasks/export-logs/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+        params:
+          JOB_NAME: upload-and-stage-pks
+      - put: events-upload-and-stage-pks-logs
+        params:
+          file: logs/event*.log
 
   - name: configure-pks-logs
     public: true
