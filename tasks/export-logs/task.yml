@@ -14,7 +14,7 @@ outputs:
 - name: logs
 
 params:
-  EXPORT_FILE_NAME: events-$timestamp.log
+  JOB_NAME:
 
 run:
   path: repo/tasks/export-logs/task.sh

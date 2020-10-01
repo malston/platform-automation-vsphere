@@ -22,7 +22,7 @@ resources:
       bucket: ((s3.buckets.logs))
       endpoint: ((s3.endpoint))
       secret_access_key: ((s3_secret_access_key))
-      regexp: event-(.*).log
+      regexp: event*.log
       skip_ssl_verification: true
 
   - name: install-opsman-build
@@ -210,7 +210,9 @@ jobs:
         file: repo/tasks/export-logs/task.yml
         input_mapping:
           build: configure-pks-build
+        params:
+          JOB_NAME: configure-pks
       - put: logs
         params:
-          file: logs/event-(.*).log
+          file: logs/event*.log
 
