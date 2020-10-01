@@ -158,10 +158,6 @@ jobs:
       - get: upgrade-opsman-build
         trigger: true
         version: every
-      # - task: pass-if-the-build-passed
-      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
-      #   input_mapping:
-      #     build: upgrade-opsman-build
       - task: show-build
         file: concourse-build-resource/tasks/show-build/task.yml
         input_mapping:
@@ -200,10 +196,6 @@ jobs:
       - get: upload-and-stage-pks-build
         trigger: true
         version: every
-      # - task: pass-if-the-build-passed
-      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
-      #   input_mapping:
-      #     build: upload-and-stage-pks-build
       - task: show-build
         file: concourse-build-resource/tasks/show-build/task.yml
         input_mapping:
@@ -242,30 +234,6 @@ jobs:
       - get: configure-pks-build
         trigger: true
         version: every
-      # - task: pass-if-the-build-passed
-      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
-      # - task: show-build
-      #   file: concourse-build-resource/tasks/show-build/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
-      # - task: show-plan
-      #   file: concourse-build-resource/tasks/show-plan/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
-      # - task: show-resources
-      #   file: concourse-build-resource/tasks/show-resources/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
-      # - task: show-job
-      #   file: concourse-build-resource/tasks/show-job/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
-      # - task: show-logs
-      #   file: concourse-build-resource/tasks/show-logs/task.yml
-      #   input_mapping:
-      #     build: configure-pks-build
       - task: export-logs
         file: repo/tasks/export-logs/task.yml
         input_mapping:
