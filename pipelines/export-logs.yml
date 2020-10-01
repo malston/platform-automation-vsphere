@@ -15,15 +15,14 @@ resources:
       private_key: ((config.private_key))
       branch: master
 
-  - name: logs
+  - name: events-configure-pks-logs
     type: s3
     source:
       access_key_id: ((s3_access_key_id))
       bucket: ((s3.buckets.logs))
       endpoint: ((s3.endpoint))
       secret_access_key: ((s3_secret_access_key))
-      regexp: event*.log
-      skip_download: true
+      regexp: events-configure-pks-(.*).log
       skip_ssl_verification: true
 
   - name: install-opsman-build
@@ -213,7 +212,7 @@ jobs:
           build: configure-pks-build
         params:
           JOB_NAME: configure-pks
-      - put: logs
+      - put: events-configure-pks-logs
         params:
           file: logs/event*.log
 
