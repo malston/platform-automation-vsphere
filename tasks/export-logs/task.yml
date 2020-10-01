@@ -11,7 +11,7 @@ inputs:
 - name: build
 
 outputs:
-- name: events
+- name: logs
 
 params:
   EXPORT_FILE_NAME: events-$timestamp.log
