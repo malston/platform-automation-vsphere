@@ -1,0 +1,216 @@
+---
+resource_types:
+  - name: concourse-build
+    type: docker-image
+    check_every: 30m
+    source:
+      repository: malston/concourse-build-resource
+      tag: v0.12.0-rc.8
+
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: ((config.uri))
+      private_key: ((config.private_key))
+      branch: master
+
+  - name: logs
+    type: s3
+    source:
+      access_key_id: ((s3_access_key_id))
+      bucket: ((s3.buckets.logs))
+      endpoint: ((s3.endpoint))
+      secret_access_key: ((s3_secret_access_key))
+      regexp: event-(.*).log
+      skip_ssl_verification: true
+
+  - name: install-opsman-build
+    type: concourse-build
+    check_every: 30m # try to be neighbourly
+    source:
+      concourse_url: https://concourse.haas-439.pez.vmware.com
+      team: main
+      job: install-opsman
+      pipeline: deploy-pks-((environment))
+      username: admin
+      password: password
+
+  - name: upgrade-opsman-build
+    type: concourse-build
+    check_every: 30m # try to be neighbourly
+    source:
+      concourse_url: https://concourse.haas-439.pez.vmware.com
+      team: main
+      job: upgrade-opsman
+      pipeline: deploy-pks-((environment))
+      username: admin
+      password: password
+
+  - name: upload-and-stage-pks-build
+    type: concourse-build
+    check_every: 30m # try to be neighbourly
+    source:
+      concourse_url: https://concourse.haas-439.pez.vmware.com
+      team: main
+      job: upload-and-stage-pks
+      pipeline: deploy-pks-((environment))
+      username: admin
+      password: password
+      # initial_build_id: 14
+
+  - name: configure-pks-build
+    type: concourse-build
+    check_every: 30m # try to be neighbourly
+    source:
+      concourse_url: https://concourse.haas-439.pez.vmware.com
+      team: main
+      job: configure-pks
+      pipeline: deploy-pks-((environment))
+      username: admin
+      password: password
+      # initial_build_id: 14
+
+  - name: concourse-build-resource # to retrieve utility task YAML
+    type: git
+    source:
+      uri: https://github.com/malston/concourse-build-resource.git
+      tag: v0.12.0-rc.8
+
+jobs:
+  - name: install-opsman-logs
+    public: true
+    plan:
+      - get: concourse-build-resource # for task YAML
+      - get: install-opsman-build
+        trigger: true
+        version: every
+      # - task: pass-if-the-build-passed
+      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
+      #   input_mapping:
+      #     build: install-opsman-build
+      - task: show-build
+        file: concourse-build-resource/tasks/show-build/task.yml
+        input_mapping:
+          build: install-opsman-build
+      - task: show-plan
+        file: concourse-build-resource/tasks/show-plan/task.yml
+        input_mapping:
+          build: install-opsman-build
+      - task: show-resources
+        file: concourse-build-resource/tasks/show-resources/task.yml
+        input_mapping:
+          build: install-opsman-build
+      - task: show-job
+        file: concourse-build-resource/tasks/show-job/task.yml
+        input_mapping:
+          build: install-opsman-build
+      - task: show-logs
+        file: concourse-build-resource/tasks/show-logs/task.yml
+        input_mapping:
+          build: install-opsman-build
+
+  - name: upgrade-opsman-logs
+    public: true
+    plan:
+      - get: concourse-build-resource # for task YAML
+      - get: upgrade-opsman-build
+        trigger: true
+        version: every
+      # - task: pass-if-the-build-passed
+      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
+      #   input_mapping:
+      #     build: upgrade-opsman-build
+      - task: show-build
+        file: concourse-build-resource/tasks/show-build/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+      - task: show-plan
+        file: concourse-build-resource/tasks/show-plan/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+      - task: show-resources
+        file: concourse-build-resource/tasks/show-resources/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+      - task: show-job
+        file: concourse-build-resource/tasks/show-job/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+      - task: show-logs
+        file: concourse-build-resource/tasks/show-logs/task.yml
+        input_mapping:
+          build: upgrade-opsman-build
+
+  - name: upload-and-stage-pks-logs
+    public: true
+    plan:
+      - get: concourse-build-resource # for task YAML
+      - get: upload-and-stage-pks-build
+        trigger: true
+        version: every
+      # - task: pass-if-the-build-passed
+      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
+      #   input_mapping:
+      #     build: upload-and-stage-pks-build
+      - task: show-build
+        file: concourse-build-resource/tasks/show-build/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+      - task: show-plan
+        file: concourse-build-resource/tasks/show-plan/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+      - task: show-resources
+        file: concourse-build-resource/tasks/show-resources/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+      - task: show-job
+        file: concourse-build-resource/tasks/show-job/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+      - task: show-logs
+        file: concourse-build-resource/tasks/show-logs/task.yml
+        input_mapping:
+          build: upload-and-stage-pks-build
+
+  - name: configure-pks-logs
+    public: true
+    plan:
+      - get: repo
+      - get: concourse-build-resource # for task YAML
+      - get: configure-pks-build
+        trigger: true
+        version: every
+      # - task: pass-if-the-build-passed
+      #   file: concourse-build-resource/tasks/build-pass-fail/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      # - task: show-build
+      #   file: concourse-build-resource/tasks/show-build/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      # - task: show-plan
+      #   file: concourse-build-resource/tasks/show-plan/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      # - task: show-resources
+      #   file: concourse-build-resource/tasks/show-resources/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      # - task: show-job
+      #   file: concourse-build-resource/tasks/show-job/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      # - task: show-logs
+      #   file: concourse-build-resource/tasks/show-logs/task.yml
+      #   input_mapping:
+      #     build: configure-pks-build
+      - task: export-logs
+        file: repo/tasks/export-logs/task.yml
+        input_mapping:
+          build: configure-pks-build
+      - put: logs
+        params:
+          file: logs/event-(.*).log
+
