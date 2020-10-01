@@ -23,6 +23,7 @@ resources:
       endpoint: ((s3.endpoint))
       secret_access_key: ((s3_secret_access_key))
       regexp: event*.log
+      skip_download: true
       skip_ssl_verification: true
 
   - name: install-opsman-build
