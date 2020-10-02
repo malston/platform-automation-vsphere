@@ -20,7 +20,7 @@ kubectl config use-context wcp.haas-423.pez.vmware.com
 
 ### Create a namespace
 
-You have to do this from the Workload Management section in vCenter.
+You have to do this from the Workload Management section in vCenter. Make sure to set the storage class to `pacific-gold-storage-policy`.
 
 ### Create the cluster
 
