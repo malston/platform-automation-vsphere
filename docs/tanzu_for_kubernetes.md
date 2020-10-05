@@ -27,3 +27,13 @@ You have to do this from the Workload Management section in vCenter. Make sure t
 ```sh
 kubectl apply -f ./k8s/clusters/basic.yaml
 ```
+
+### Login
+
+```sh
+kubectl vsphere login --server=wcp.haas-423.pez.vmware.com \
+    --tanzu-kubernetes-cluster-name tkg-cluster-1 \
+    --tanzu-kubernetes-cluster-namespace ns1 \
+    --vsphere-username administrator@vsphere.local \
+    --insecure-skip-tls-verify
+```
