@@ -37,3 +37,19 @@ kubectl vsphere login --server=wcp.haas-423.pez.vmware.com \
     --vsphere-username administrator@vsphere.local \
     --insecure-skip-tls-verify
 ```
+
+### Security
+
+Tanzu Kubernetes Grid Service provisions Tanzu Kubernetes clusters with the PodSecurityPolicy Admission Controller enabled. This means that pod security policy is required to deploy workloads.
+
+https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-kubernetes/GUID-CD033D1D-BAD2-41C4-A46F-647A560BAEAB.html
+
+Tanzu Kubernetes clusters include default PodSecurityPolicy that you can bind to for privileged and restricted workload deployment.
+
+```sh
+kubectl create rolebinding rolebinding-default-privileged-sa-ns_default \
+    --namespace=default --clusterrole=psp:vmware-system-privileged \
+    --group=system:serviceaccounts
+```
+
+Then you can deploy the [Kubernetes Guestbook application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/).
