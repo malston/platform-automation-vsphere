@@ -1,0 +1,8 @@
+---
+image: malston/concourse
+imageTag: 6.3-ubuntu
+postgresql:
+  image:
+    registry: docker.io
+    repository: malston/postgres
+    tag: 0.0.2

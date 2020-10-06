@@ -1,0 +1,10 @@
+---
+image: 10.213.249.66/ns1/concourse
+imageTag: 6.3-ubuntu
+imagePullSecrets: ["regcred"] # Remove if registry is public
+postgresql:
+  image:
+    registry: 10.213.249.66
+    repository: ns1/postgres
+    tag: 0.0.2
+    pullSecrets: ["regcred"] # Remove if registry is public
