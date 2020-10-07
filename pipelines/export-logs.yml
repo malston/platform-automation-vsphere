@@ -105,6 +105,7 @@ resources:
     type: git
     source:
       uri: https://github.com/malston/concourse-build-resource.git
+      branch: master
 
 jobs:
   - name: install-opsman-logs
