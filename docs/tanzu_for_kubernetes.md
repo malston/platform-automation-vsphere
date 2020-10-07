@@ -142,3 +142,24 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
     ```sh
     kubectl apply -f k8s/contour/ingress-test.yaml
     ```
+
+## CI/CD
+
+Installing the Concourse Helm chart using the documentation [here](https://docs.pivotal.io/p-concourse/v6/).
+
+There are some helper scripts to assist in adding the harbor root ca to your local docker daemon as well as the one used by the nodes a Kubernetes cluster.
+
+1. Deploy the Concourse Helm chart.
+
+```
+cd concourse-helm
+./install.sh
+```
+
+Once Concourse is deployed, you can use this [example](https://cnr.eng.vmware.com/ci-cd/guides/building-and-deploying-with-concourse-ci/) to deploy the [spring-boot-sample](https://github.com/alexbrand/spring-boot-concourse-sample) app to it.
+
+I created a [fork](https://github.com/malston/spring-boot-concourse-sample) of it so I could add a [service account](https://github.com/malston/spring-boot-concourse-sample/blob/master/ci/concourse-service-account.yaml) and deploy the app to a specific [namespace](https://github.com/malston/spring-boot-concourse-sample/commit/bd920731f21321e12044a400e52ac675a3a35be0).
+
+![alt text](./deploy-kubernetes.png "Deploy Kubernetes")
+
+The [kubernetes](https://github.com/zlabjp/kubernetes-resource) Concourse resource is no longer maintained, but you could easily [accomplish the same thing](https://github.com/zlabjp/kubernetes-resource/blob/master/assets/out) with a custom task.
