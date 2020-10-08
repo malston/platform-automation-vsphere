@@ -100,51 +100,17 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
     kubectl create namespace projectcontour
     ```
 
-<!-- 1. Create role for the contour service account to be able to create privileged containers. The role references the `vmware-system-privileged` PSP.
-
-    ```sh
-    kubectl create -f k8s/contour/contour-role.yaml
-    ```
-
-1. Create a role binding for the contour service account
-
-    ```sh
-    kubectl create rolebinding contour-leaderelection \
-        --namespace=projectcontour --role=contour-leaderelection \
-        --serviceaccount=projectcontour:contour
-    ```
-
-    or
-
-    ```sh
-    cat <<EOF | kubectl apply -f -
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    kind: RoleBinding
-    metadata:
-      name: contour-leaderelection
-      namespace: projectcontour
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: Role
-      name: contour-leaderelection
-    subjects:
-    - kind: ServiceAccount
-      name: contour
-      namespace: projectcontour
-    EOF
-    ``` -->
-
 1. Deploy Contour
 
     ```sh
     kubectl apply -f k8s/contour/contour.yaml
     ```
 
-__NOTE__: If you're running [multiple ingress controllers](https://projectcontour.io/docs/main/deploy-options/), or running on a cloud provider that natively handles ingress, you can specify the annotation `kubernetes.io/ingress.class: "contour"` on all ingresses that you would like Contour to claim. You can customize the class name with the `--ingress-class-name` flag at runtime. If the `kubernetes.io/ingress.class` annotation is present with a value other than `"contour"`, Contour will ignore that ingress.
+    __NOTE__: If you're running [multiple ingress controllers](https://projectcontour.io/docs/main/deploy-options/), or running on a cloud provider that natively handles ingress, you can specify the annotation `kubernetes.io/ingress.class: "contour"` on all ingresses that you would like Contour to claim. You can customize the class name with the `--ingress-class-name` flag at runtime. If the `kubernetes.io/ingress.class` annotation is present with a value other than `"contour"`, Contour will ignore that ingress.
 
-__NB__: If you're not getting an `EXTERNAL-IP` address then you need to check the `kube-controller-manager` logs. Some indication of what's happening should appear in the those logs. Contour doesn't provision Load Balancers. Envoy doesn't care how the traffic gets to it as long as it happens. So you may have to check with the cloud provider to see how it's supposed to be configured.
+    __NB__: If you're not getting an `EXTERNAL-IP` address then you need to check the `kube-controller-manager` logs. Some indication of what's happening should appear in the those logs. Contour doesn't provision Load Balancers. Envoy doesn't care how the traffic gets to it as long as it happens. So you may have to check with the cloud provider to see how it's supposed to be configured.
 
-In this deployment, Contour created the [certs](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process) for communication over gRPC between Envoy and Contour using the `contour-certgen` job. To create the certs manually, follow these [instructions](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process).
+    In this deployment, Contour created the [certs](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process) for communication over gRPC between Envoy and Contour using the `contour-certgen` job. To create the certs manually, follow these [instructions](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process).
 
 1. Deploy ingress test
 
@@ -160,7 +126,7 @@ In this deployment, Contour created the [certs](https://projectcontour.io/docs/v
     {"message":"Hello"}
     ```
 
-The VMware docs have you deploy an example that uses the standard Kubernetes Ingress object, however, Contour has expanded functionality of the Ingress object using the HTTPProxy CRD. To read more about this, see their documentation [here](https://projectcontour.io/docs/main/httpproxy/).
+    The VMware docs have you deploy an example that uses the standard Kubernetes Ingress object, however, Contour has expanded functionality of the Ingress object using the HTTPProxy CRD. To read more about this, see their documentation [here](https://projectcontour.io/docs/main/httpproxy/).
 
 1. Deploy httpproxy test
 
