@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: hello
+  namespace: demo
 spec:
   selector:
     app: hello
@@ -15,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello
+  namespace: demo
 spec:
   replicas: 3
   selector:
@@ -41,6 +43,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nihao
+  namespace: demo
 spec:
   selector:
     app: nihao
@@ -54,6 +57,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nihao
+  namespace: demo
 spec:
   replicas: 3
   selector:
@@ -114,6 +118,7 @@ apiVersion: projectcontour.io/v1
 kind: HTTPProxy
 metadata:
   name: hello-ingress
+  namespace: demo
 spec:
   virtualhost:
     fqdn: hello.haas-423.pez.vmware.com # Domain Need to Point Envoy SVC Load Balancer IP to this fqdn
