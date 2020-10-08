@@ -9,3 +9,8 @@
 creds.yml
 *.tar
 *.crt
+concourse-helm/helm-cli/darwin/helm
+concourse-helm/helm-cli/linux/helm
+concourse-helm/images/concourse.tar.name
+concourse-helm/images/helm.tar.name
+concourse-helm/images/postgres.tar.name
