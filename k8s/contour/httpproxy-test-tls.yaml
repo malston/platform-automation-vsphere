@@ -1,0 +1,132 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: backend
+        track: stable
+    spec:
+      # serviceAccountName: test-sa
+      containers:
+        - name: hello
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nihao
+spec:
+  selector:
+    app: nihao
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nihao
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nihao
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: nihao
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: nihao
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+  namespace: www-admin
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: selfsigned-cert
+  namespace: www-admin
+spec:
+  dnsNames:
+    - hello.haas-423.pez.vmware.com
+  secretName: selfsigned-cert-tls
+  issuerRef:
+    name: selfsigned-issuer
+---
+apiVersion: projectcontour.io/v1
+kind: TLSCertificateDelegation
+metadata:
+  name: selfsigned-cert-tls
+  namespace: www-admin
+spec:
+  delegations:
+    - secretName: selfsigned-cert-tls
+      targetNamespaces:
+      - demo
+      - concourse
+    # - secretName: another-com-wildcard
+    #   targetNamespaces:
+    #   - "*"
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: hello-ingress
+spec:
+  virtualhost:
+    fqdn: hello.haas-423.pez.vmware.com # Domain Need to Point Envoy SVC Load Balancer IP to this fqdn
+    tls:
+      secretName: www-admin/selfsigned-cert-tls
+  routes:
+    - conditions:
+      - prefix: /hello # matches `haas-423.pez.vmware.com/hello` or `haas-423.pez.vmware.com/hello/*`
+      services:
+      - name: hello
+        port: 80
+    - conditions:
+      - prefix: /nihao # matches `haas-423.pez.vmware.com/nihao` or `haas-423.pez.vmware.com/nihao/*`
+      services:
+      - name: nihao
+        port: 80

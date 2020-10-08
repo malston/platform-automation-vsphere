@@ -1,0 +1,97 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: hello
+        tier: backend
+        track: stable
+    spec:
+      # serviceAccountName: test-sa
+      containers:
+        - name: hello
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nihao
+spec:
+  selector:
+    app: nihao
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nihao
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nihao
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: nihao
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: nihao
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: hello-ingress
+spec:
+  virtualhost:
+    fqdn: hello.local # Domain Need to Point Envoy SVC Load Balancer IP to this fqdn
+    # tls:
+    #   secretName: webappsecret
+  routes:
+    - conditions:
+      - prefix: /hello # matches `hello.local/hello` or `hello.local/hello/*`
+      services:
+      - name: hello
+        port: 80
+    - conditions:
+      - prefix: /nihao # matches `hello.local/nihao` or `hello.local/nihao/*`
+      services:
+      - name: nihao
+        port: 80

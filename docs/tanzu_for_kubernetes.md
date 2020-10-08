@@ -137,11 +137,77 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
     kubectl apply -f k8s/contour/contour.yaml
     ```
 
-1. Deploy test
+__NOTE__: If you're running [multiple ingress controllers](https://projectcontour.io/docs/main/deploy-options/), or running on a cloud provider that natively handles ingress, you can specify the annotation `kubernetes.io/ingress.class: "contour"` on all ingresses that you would like Contour to claim. You can customize the class name with the `--ingress-class-name` flag at runtime. If the `kubernetes.io/ingress.class` annotation is present with a value other than `"contour"`, Contour will ignore that ingress.
+
+__NB__: If you're not getting an `EXTERNAL-IP` address then you need to check the `kube-controller-manager` logs. Some indication of what's happening should appear in the those logs. Contour doesn't provision Load Balancers. Envoy doesn't care how the traffic gets to it as long as it happens. So you may have to check with the cloud provider to see how it's supposed to be configured.
+
+In this deployment, Contour created the [certs](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process) for communication over gRPC between Envoy and Contour using the `contour-certgen` job. To create the certs manually, follow these [instructions](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process).
+
+1. Deploy ingress test
 
     ```sh
     kubectl apply -f k8s/contour/ingress-test.yaml
     ```
+
+    ```sh
+    export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    curl http://$LOAD_BALANCER_IP:80/hello
+    {"message":"Hello"}
+    curl http://$LOAD_BALANCER_IP:80/nihao
+    {"message":"Hello"}
+    ```
+
+The VMware docs have you deploy an example that uses the standard Kubernetes Ingress object, however, Contour has expanded functionality of the Ingress object using the HTTPProxy CRD. To read more about this, see their documentation [here](https://projectcontour.io/docs/main/httpproxy/).
+
+1. Deploy httpproxy test
+
+    ```sh
+    kubectl apply -f k8s/contour/httpproxy-test.yaml
+    ```
+
+    ```sh
+    export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    curl -H "Host: hello.local" http://$LOAD_BALANCER_IP:80/hello
+    {"message":"Hello"}
+    curl -H "Host: hello.local" http://$LOAD_BALANCER_IP:80/nihao
+    {"message":"Hello"}
+    ```
+
+1. Deploy httproxy tls test
+
+    * Create a namespace for tls delegation
+
+    ```sh
+    kubectl create ns www-admin
+    ```
+
+    * Install Cert Manager
+
+    ```sh
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
+    ```
+
+    * Verify the Installation
+
+    ```sh
+    kubectl get pods --namespace cert-manager
+    ```
+
+    * Deploy the app
+
+    ```sh
+    kubectl apply -f k8s/contour/httpproxy-test-tls.yaml
+    ```
+
+    ```sh
+    export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    curl -k https://hello.haas-423.pez.vmware.com/hello
+    {"message":"Hello"}
+    curl -k https://hello.haas-423.pez.vmware.com/nihao
+    {"message":"Hello"}
+    ```
+
+
 
 ## CI/CD
 
@@ -163,3 +229,5 @@ I created a [fork](https://github.com/malston/spring-boot-concourse-sample) of i
 ![alt text](./deploy-kubernetes.png "Deploy Kubernetes")
 
 The [kubernetes](https://github.com/zlabjp/kubernetes-resource) Concourse resource is no longer maintained, but you could easily [accomplish the same thing](https://github.com/zlabjp/kubernetes-resource/blob/master/assets/out) with a custom task.
+
+### Flux
