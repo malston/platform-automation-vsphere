@@ -3,7 +3,10 @@
 ## Connect to the Supervisor Cluster as a vCenter Single Sign-On User
 
 ```sh
-kubectl vsphere login --server=wcp.haas-423.pez.vmware.com --vsphere-username administrator@vsphere.local --insecure-skip-tls-verify
+kubectl vsphere login \
+    --server=wcp.haas-423.pez.vmware.com \
+    --vsphere-username administrator@vsphere.local \
+    --insecure-skip-tls-verify
 ```
 
 ### Check which namespace you are currently in (*)
@@ -177,37 +180,35 @@ The VMware docs have you deploy an example that uses the standard Kubernetes Ing
 
     * Create a namespace for tls delegation
 
-    ```sh
-    kubectl create ns www-admin
-    ```
+        ```sh
+        kubectl create ns www-admin
+        ```
 
     * Install Cert Manager
 
-    ```sh
-    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
-    ```
+        ```sh
+        kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
+        ```
 
     * Verify the Installation
 
-    ```sh
-    kubectl get pods --namespace cert-manager
-    ```
+        ```sh
+        kubectl get pods --namespace cert-manager
+        ```
 
     * Deploy the app
 
-    ```sh
-    kubectl apply -f k8s/contour/httpproxy-test-tls.yaml
-    ```
+        ```sh
+        kubectl apply -f k8s/contour/httpproxy-test-tls.yaml
+        ```
 
-    ```sh
-    export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    curl -k https://hello.haas-423.pez.vmware.com/hello
-    {"message":"Hello"}
-    curl -k https://hello.haas-423.pez.vmware.com/nihao
-    {"message":"Hello"}
-    ```
-
-
+        ```sh
+        export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+        curl -k https://hello.haas-423.pez.vmware.com/hello
+        {"message":"Hello"}
+        curl -k https://hello.haas-423.pez.vmware.com/nihao
+        {"message":"Hello"}
+        ```
 
 ## CI/CD
 
