@@ -90,17 +90,11 @@ Then run:
 sudo systemctl restart docker
 ```
 
-### Ingress
+### Install Contour for Ingress
 
-Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-68AF0CE7-EA54-4D22-A3E6-0CEC2DF284C2.html?hWord=N4IghgNiBcIJYDsDmAnApgZwyAvkA).
+ The following steps include the procedure taken from [Tanzu Kubernetes Ingress Example](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware-vsphere-with-tanzu/GUID-68AF0CE7-EA54-4D22-A3E6-0CEC2DF284C2.html?hWord=N4IghgNiBcIJYDsDmAnApgZwyAvkA) to deploy the Contour ingress controller.
 
-1. Create the namespace for contour
-
-    ```sh
-    kubectl create namespace projectcontour
-    ```
-
-1. Deploy Contour
+1. Deploy Contour with the changes specified in the example
 
     ```sh
     kubectl apply -f k8s/contour/contour.yaml
@@ -112,7 +106,9 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
 
     In this deployment, Contour created the [certs](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process) for communication over gRPC between Envoy and Contour using the `contour-certgen` job. To create the certs manually, follow these [instructions](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process).
 
-1. Deploy ingress test
+#### Using Contour
+
+1. Deploy Ingress example
 
     ```sh
     kubectl apply -f k8s/contour/ingress-test.yaml
@@ -128,7 +124,7 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
 
     The VMware docs have you deploy an example that uses the standard Kubernetes Ingress object, however, Contour has expanded functionality of the Ingress object using the HTTPProxy CRD. To read more about this, see their documentation [here](https://projectcontour.io/docs/main/httpproxy/).
 
-1. Deploy httpproxy test
+1. Deploy HTTPProxy example
 
     ```sh
     kubectl apply -f k8s/contour/httpproxy-test.yaml
@@ -142,7 +138,7 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
     {"message":"Hello"}
     ```
 
-1. Deploy httproxy tls test
+1. Deploy HTTPProxy example with TLS
 
     * Create a namespace for tls delegation
 
@@ -150,7 +146,7 @@ Follow these [instructions](https://docs.vmware.com/en/VMware-vSphere/7.0/vmware
         kubectl create ns www-admin
         ```
 
-    * Install Cert Manager
+    * Install [Cert Manager](https://cert-manager.io/docs/installation/kubernetes/#installing-with-regular-manifests)
 
         ```sh
         kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.0.2/cert-manager.yaml
