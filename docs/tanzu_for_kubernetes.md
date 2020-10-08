@@ -165,7 +165,6 @@ sudo systemctl restart docker
         ```
 
         ```sh
-        export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
         curl -k https://hello.haas-423.pez.vmware.com/hello
         {"message":"Hello"}
         curl -k https://hello.haas-423.pez.vmware.com/nihao
