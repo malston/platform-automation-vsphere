@@ -114,6 +114,8 @@ sudo systemctl restart docker
     kubectl apply -f k8s/contour/ingress-test.yaml
     ```
 
+1. Test Ingress example
+
     ```sh
     export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     curl http://$LOAD_BALANCER_IP:80/hello
@@ -129,6 +131,8 @@ sudo systemctl restart docker
     ```sh
     kubectl apply -f k8s/contour/httpproxy-test.yaml
     ```
+
+1. Test HTTPProxy example
 
     ```sh
     export LOAD_BALANCER_IP=$(kubectl -n projectcontour get service envoy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
@@ -163,6 +167,8 @@ sudo systemctl restart docker
         ```sh
         kubectl apply -f k8s/contour/httpproxy-test-tls.yaml
         ```
+
+    * Test
 
         ```sh
         curl -k https://hello.haas-423.pez.vmware.com/hello
