@@ -106,7 +106,7 @@ sudo systemctl restart docker
 
     In this deployment, Contour created the [certs](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process) for communication over gRPC between Envoy and Contour using the `contour-certgen` job. To create the certs manually, follow these [instructions](https://projectcontour.io/docs/v1.9.0/grpc-tls-howto/#manual-tls-certificate-generation-process).
 
-#### Using Contour
+#### Contour Examples
 
 1. Deploy Ingress example
 
