@@ -20,5 +20,7 @@ web:
 concourse:
   web:
     externalUrl: http://concourse.haas-423.pez.vmware.com
+    kubernetes:
+      createTeamNamespaces: true
 secrets:
   localUsers: "admin:password,test:test"
