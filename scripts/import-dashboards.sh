@@ -49,12 +49,10 @@ function get_dashboard_dir() {
 function folder_exists_by_id() {
   local folder_id="${1}"
 
-  if [[ ! "$folder_id" = 'null' ]]; then
+  if [[ ! "$folder_id" = 'null' ]] && [[ -n "$folder_id" ]]; then
     folder=$(find_folder_by_id "${folder_id}")
     folder_id=$(echo $folder  | jq -r '.id | select(.type=="dash-folder")')
-  fi
-
-  if [[ ! "$folder_id" = 'null' ]] && [[ -n "$folder_id" ]]; then
+  elif [[ ! "$folder_id" = 'null' ]] && [[ -z "$folder_id" ]]; then
     return 0
   fi
 

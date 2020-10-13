@@ -1,15 +1,3 @@
 {
-  "id": 360,
-  "uid": "GwIBqj4Mk",
-  "title": "Acme Dashboards",
-  "url": "/dashboards/f/GwIBqj4Mk/acme-dashboards",
-  "hasAcl": false,
-  "canSave": true,
-  "canEdit": true,
-  "canAdmin": true,
-  "createdBy": "Anonymous",
-  "created": "2020-08-03T22:16:43Z",
-  "updatedBy": "Anonymous",
-  "updated": "2020-08-03T22:16:43Z",
-  "version": 1
+  "title": "ACME" 
 }
